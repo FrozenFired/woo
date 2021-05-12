@@ -168,7 +168,7 @@ exports.productPutImages = async(req, res) => {
 		
 		console.log(data)
 		console.log(images)
-		const product = await MdWoo.wooPut_Prom("products/"+id, {images}, "String");
+		const product = await MdWoo.wooPut_Prom("products/"+id, data, "String");
 
 		// images.forEach(img => {
 		// 	MdFile.delFile(img)
