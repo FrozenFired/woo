@@ -1,3 +1,4 @@
+0.0.6	variation new test
 0.0.5	product Put images OK!
 0.0.46	product Put images test6
 0.0.45	product Put images test5

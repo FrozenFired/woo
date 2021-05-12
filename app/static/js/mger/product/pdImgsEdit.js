@@ -26,6 +26,10 @@ $(function() {
 	})
 
 	$("#subBtnPutImgs").click(function(e) {
-		$("#productPutForm").submit();
+		$("#productPutImgsForm").submit();
+	})
+
+	$("#imgsEditBtn").click(function(e) {
+		$(".imgsEdit").toggle();
 	})
 })

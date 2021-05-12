@@ -128,17 +128,13 @@ exports.productDel = async(req, res) => {
 
 
 
-
-exports.mediasAjax = async(req, res) => {
-	
-}
-exports.mediaDel = async(req, res) => {
-	// console.log("/media")
+exports.productDelImage = async(req, res) => {
+	// console.log("/productDelImage")
 	try{
 		const crUser = req.session.crUser;
 		const id = req.params.id;
 
-		const productId = req.query.product;
+		const productId = req.query.productId;
 
 		// console.log(id)
 		const media = await MdWoo.wooDelete_Prom("media/"+id+"?force=true");
@@ -146,7 +142,7 @@ exports.mediaDel = async(req, res) => {
 		return res.redirect('/product/'+productId)
 	} catch(error) {
 		console.log(error);
-		return res.redirect('/?info=您没有权限登陆操作界面&error='+error);
+		return res.redirect('/?info=productDelImage&error='+error);
 	}
 }
 
@@ -174,10 +170,52 @@ exports.productPutImages = async(req, res) => {
 			return res.redirect('/product/'+id);
 		} else {
 			console.log(product)
-			return res.redirect('/productPutImages 更新错误');
+			return res.redirect('/?info=productPutImages 更新错误');
 		}
 	} catch(error) {
 		console.log(error);
 		return res.redirect('/?info=productPutImages &error='+error);
+	}
+};
+
+
+
+exports.productPutAttributes = async(req, res) => {
+	console.log("/productPutAttributes")
+	try{
+		const id = req.body.id;
+		const attrs= req.body.attrs;
+		const data = new Object();
+		data.attributes = new Array();
+		let i = 0;
+		for(; i<attrs.length; i++) {
+			const attr = attrs[i];
+
+			if(!attr.name || !attr.options) continue;
+
+			const attribute = new Object();
+			attribute.visible = true;
+			attribute.variation = true;
+			attribute.name = String(attr.name).toUpperCase();
+			attribute.options = new Array();
+			const options = String(attr.options).toUpperCase().split("|");
+			options.forEach(option => {
+				attribute.options.push(option.replace(/^\s*/g,""));
+			})
+
+			data.attributes.push(attribute);
+		}
+
+		const product = await MdWoo.wooPut_Prom("products/"+id, data, "String");
+
+		if(product && product.id) {
+			return res.redirect('/product/'+id);
+		} else {
+			console.log(product);
+			return res.redirect('/?info=productPutAttributes 更新错误');
+		}
+	} catch(error) {
+		console.log(error);
+		return res.redirect('/?info=productPutAttributes &error='+error);
 	}
 };

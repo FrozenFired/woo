@@ -87,49 +87,15 @@ h3.text-secondary.text-center.p-2 下架
 			textarea.form-control.iptNewBlurUpd(type="text", rows="3", id="iptNewBlurUpd-"+product.id+"-short_description", value=short_description, data-url="/productPut/"+product.id, data-key="short_description", data-type="String", style="display:none")
 
 
-.row.py-3.border-bottom.rounded
-	.col-3
-		.title images
-		.desp 产品图片 Array
-		//- button.btn.btn-warning.showImagesBtn(type="button") 修改图片
-		//- input#orgImages(type="hidden", value=product.images)
-		button.btn.btn-success#subBtnPutImgs(type="button") 更新图片
-	.col-9
-		form#productPutForm(method="post", action="/productPutImages", enctype="multipart/form-data")
-			input(type="hidden", name="id", value=product.id)
-			.row.border.rounded.p-2.mt-2
-				- let sub = -1;
-				each image in product.images
-					- sub++;
-					.col-2
-						//- input(type="hidden", name="data[images]["+sub+"][src]", value=image.src)
-						input(type="hidden", name="data[images]["+sub+"][id]", value=image.id)
-						input(type="hidden", name="data[images]["+sub+"][name]", value=image.name)
-						input(type="hidden", name="data[images]["+sub+"][alt]", value=image.alt)
+.py-3.border-bottom.rounded
+	include ./editImages
 
-						img.css-img-neat.border.rounded(src=image.src, width="100%", height="150px")
-						.text-center
-							a.text-danger(href="/mediaDel/"+image.id+"?product="+product.id) [删除]
-					//- .col-10
-						.row.mt-2
-							.col-2 id
-							.col-10 #{image.id}
-						.row.mt-2
-							.col-2 src
-							.col-10 #{image.src}
-						.row.mt-2
-							.col-2 name
-							.col-10 #{image.name}
-						.row.mt-2
-							.col-2 alt
-							.col-10 #{image.alt}
-			.row#newImgs
-				.col-2
-					img#crtImgs.rounded-circle(src="/icon/img.jpg", width="100%")
-			input#uploadImgs.btn.btn-info.btn-block(type="file", name="fls", multiple, style="display:none")
 
 div(style="height: 100px")
 .border.px-3
+	.py-3.border-bottom.rounded
+		include ./editAttributes
+
 	.row.py-3.border-bottom.rounded
 		.col-3.col-md-3 类型 / type:
 		.col-9.col-md-3
@@ -226,16 +192,12 @@ div(style="height: 100px")
 			.col-3 在同一个订单中是否只能被买一件
 	else if product.type == "variable"
 		-a;
-		each variation in variations
+		if product.attributes && product.attributes.length > 0
 			-a;
-			include ./variations
+			include ./variationPost
 
+			if variations && variations.length > 0
+				-a;
+				include ./variations
 
-div(style="height: 100px")
-
-
-div(style="height: 100px")
-
-
-
-div(style="height: 100px")
+div(style="height: 300px")

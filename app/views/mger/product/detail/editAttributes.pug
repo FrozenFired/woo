@@ -1,0 +1,40 @@
+.row
+	.col-3
+		.title attributes
+		.desp 产品属性 Array
+		button.mr-4.btn.btn-link.text-warning#attrEdit(type="button") 修改
+		button.attrInput.btn.btn-success#subBtnPutAttrs(type="button" style="display:none") 提交
+	.col-9
+		form#productPutAttrForm(method="post", action="/productPutAttributes")
+			input(type="hidden", name="id", value=product.id)
+			- sub = -1;
+			each attribute in product.attributes
+				- sub++;
+				.border.rounded.p-2.mt-2
+					.row.mt-2
+						.col-3
+							.attrText #{attribute.name}
+							.attrInput(style="display:none")
+								input.form-control(type="text", name="attrs["+sub+"][name]", value=attribute.name)
+						.col-9
+							- i = 0;
+							- options = "";
+							.attrText
+								each option in  attribute.options
+									- i++;
+									- options += option;
+									span #{option}
+									if i != attribute.options.length
+										-a;
+										- options += "|";
+										span.mx-3 |
+							.attrInput(style="display:none")
+								input.form-control(type="text", name="attrs["+sub+"][options]", value=options)
+			- sub++;
+			.border.rounded.p-2.mt-2.row.attrInput(style="display:none")
+				.col-4
+					input.form-control(type="text", name="attrs["+sub+"][name]", placeholder="产品属性.(如 color, size)")
+				.col-8
+					input.form-control(type="text", name="attrs["+sub+"][options]", placeholder="属性值 用 | 分割.(如: red | blu)")
+
+script(src="/js/mger/product/pdAttrEdit.js")

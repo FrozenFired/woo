@@ -5,8 +5,8 @@ block content
 		nav(aria-label="breadcrumb")
 			ol.breadcrumb
 				li.breadcrumb-item: a(href="/mger") 操作页面
-				li.breadcrumb-item: a(href="/products") 产品列表
-				li.breadcrumb-item.active(aria-current="page") 产品: [#{product.id}] #{product.name}
+				li.breadcrumb-item: a(href="/product/"+product.id) 产品
+				li.breadcrumb-item.active(aria-current="page") 产品sku: [#{variation.id}]
 
 		if errorInfo
 			-a;
@@ -17,8 +17,4 @@ block content
 		else
 			.basicPage
 				include ./detail/basic
-			//- .imagePage(style="display:none")
-				include ./detail/images
-
-	script(src="/js/woo/wooPut.js")
-	script(src="/js/mger/product/detail.js")
+			

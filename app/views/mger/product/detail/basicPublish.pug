@@ -97,16 +97,26 @@ h3.bg-success.text-center.p-2 发布
 div(style="height: 100px")
 .border.px-3
 	.row.py-3.border-bottom.rounded
+		.col-3
+			.title attributes
+			.desp 产品属性 Array
+		.col-9
+			each attribute in product.attributes
+				-a;
+				.border.rounded.p-2.mt-2
+					.row.mt-2
+						.col-4 #{attribute.name}
+						.col-8
+							- i = 0;
+							each option in  attribute.options
+								- i++;
+								span #{option}
+								if i != attribute.options.length
+									-a;
+									span.mx-3 |
+	.row.py-3.border-bottom.rounded
 		.col-3.col-md-3 类型 / type:
-		.col-9.col-md-3
-			select.putObjSelChange.form-control(data-url="/productPut/"+product.id, data-key="type", data-type="String")
-				each key in Conf.product.type.arr
-					- val = Conf.product.type.lang[key];
-					if product.type == key
-						-a;
-						option(value=key, selected="selected") #{val} / #{key}
-					else
-						option(value=key) #{val} / #{key}
+		.col-9.col-md-3 #{Conf.product.type.lang[product.type]} / #{product.type}
 	if product.type == "simple"
 		-a;
 		.row.py-3.border-bottom.rounded
@@ -155,16 +165,49 @@ div(style="height: 100px")
 			.col-3 在同一个订单中是否只能被买一件
 	else if product.type == "variable"
 		-a;
-		each variation in variations
+		h3.mt-5 产品SKU列表： 
+		table.table.table-triped
+			thead
+				tr
+					th #{variations.length}
+					th img
+					th 售价
+					th 打折价
+					th 是否在售
+					th 打折
+					th 缺货
+					th 销量
+			tbody
+				each variation in variations
+					-a;
+					tr
+						td
+							input(id="cb-select"+variation.id type="checkbox" name="post[]" value=variation.id)
+						td
+							a(href="/variation/"+variation.id+"/"+product.id)
+								if variation.image
+									-a;
+									img(width=50, src=variation.image.src)
+								else
+									span #{variation.id}
+						td #{variation.regular_price}
+						td #{variation.sale_price}
+						td
+							if !variation.purchasable
+								-a;
+								span.text-danger 否
+						td
+							if variation.on_sale
+								-a;
+								span 是
+						td
+							if variation.backordered
+								-a;
+								span.text-danger 是
+						td #{variation.total_sales}
+		//- each variation in variations
 			-a;
 			include ./variations
 
 
-div(style="height: 100px")
-
-
-div(style="height: 100px")
-
-
-
-div(style="height: 100px")
+div(style="height: 300px")
