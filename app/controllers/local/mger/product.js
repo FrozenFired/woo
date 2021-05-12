@@ -166,13 +166,9 @@ exports.productPutImages = async(req, res) => {
 		})
 		data.status = "private";
 		
-		console.log(data)
-		console.log(images)
 		const product = await MdWoo.wooPut_Prom("products/"+id, data, "String");
 
-		// images.forEach(img => {
-		// 	MdFile.delFile(img)
-		// })
+		images.forEach(img => {MdFile.delFile(img) }); // 刪除本地服务器的图片
 
 		if(product && product.id) {
 			return res.redirect('/product/'+id);
