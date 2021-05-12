@@ -3,7 +3,7 @@ const path = require('path');
 
 exports.delFile = (picDel) => {
 	try{
-		fs.unlink(path.join(__dirname, '../../public' + picDel), (err) => {});
+		fs.unlink(path.join(__dirname, '../../../public' + picDel), (err) => {});
 	} catch(error) {
 		// console.log("MdFile delFile Error: " + error);
 	}
