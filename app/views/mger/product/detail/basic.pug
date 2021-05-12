@@ -93,27 +93,39 @@ h3.text-secondary.text-center.p-2 下架
 		.desp 产品图片 Array
 		//- button.btn.btn-warning.showImagesBtn(type="button") 修改图片
 		//- input#orgImages(type="hidden", value=product.images)
+		button.btn.btn-success#subBtnPutImgs(type="button") 更新图片
 	.col-9
-		.row.border.rounded.p-2.mt-2
-			each image in product.images
-				-a;
+		form#productPutForm(method="post", action="/productPutImages", enctype="multipart/form-data")
+			input(type="hidden", name="id", value=product.id)
+			.row.border.rounded.p-2.mt-2
+				- let sub = -1;
+				each image in product.images
+					- sub++;
+					.col-2
+						input(type="hidden", name="data[images]["+sub+"][id]", value=image.id)
+						input(type="hidden", name="data[images]["+sub+"][name]", value=image.name)
+						input(type="hidden", name="data[images]["+sub+"][alt]", value=image.alt)
+
+						img.css-img-neat.border.rounded(src=image.src, width="100%", height="150px")
+						.text-center
+							a.text-danger(href="/mediaDel/"+image.id+"?product="+product.id) [删除]
+					//- .col-10
+						.row.mt-2
+							.col-2 id
+							.col-10 #{image.id}
+						.row.mt-2
+							.col-2 src
+							.col-10 #{image.src}
+						.row.mt-2
+							.col-2 name
+							.col-10 #{image.name}
+						.row.mt-2
+							.col-2 alt
+							.col-10 #{image.alt}
+			.row#newImgs
 				.col-2
-					img.css-img-neat.border.rounded(src=image.src, width="100%", height="150px")
-					.text-center
-						a.text-danger(href="/mediaDel/"+image.id+"?product="+product.id) [删除]
-				//- .col-10
-					.row.mt-2
-						.col-2 id
-						.col-10 #{image.id}
-					.row.mt-2
-						.col-2 src
-						.col-10 #{image.src}
-					.row.mt-2
-						.col-2 name
-						.col-10 #{image.name}
-					.row.mt-2
-						.col-2 alt
-						.col-10 #{image.alt}
+					img#crtImgs.rounded-circle(src="/icon/img.jpg", width="100%")
+			input#uploadImgs.btn.btn-info.btn-block(type="file", name="fls", multiple, style="display:none")
 
 div(style="height: 100px")
 .border.px-3

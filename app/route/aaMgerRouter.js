@@ -35,10 +35,10 @@ module.exports = function(app){
 	app.get('/productDel/:id', MdRole.mgerIsLogin, Product.productDel)
 	app.put('/productPut/:id', MdRole.mgerIsLogin, Product.productPutAjax)
 	/* -------------------------------- Media -------------------------------- */
-	app.get('/mediasAjax', MdRole.mgerIsLogin, Product.mediasAjax)
-	app.post('/productPutImages', MdRole.mgerIsLogin, Product.productPutImagesAjax)
+	app.post('/productPutImages', MdRole.mgerIsLogin, postForm, MdFile.newFiles, Product.productPutImages)
 	app.get('/mediaDel/:id', MdRole.mgerIsLogin, Product.mediaDel)
 
+	app.get('/mediasAjax', MdRole.mgerIsLogin, Product.mediasAjax)
 	app.get('/medias', MdRole.mgerIsLogin, Media.medias)
 
 

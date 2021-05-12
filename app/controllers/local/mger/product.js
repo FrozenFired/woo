@@ -150,23 +150,38 @@ exports.mediaDel = async(req, res) => {
 	}
 }
 
-exports.productPutImagesAjax = async(req, res) => {
+exports.productPutImages = async(req, res) => {
 	// console.log("/productPutImages")
 	try{
 		const id = req.body.id;
-		const images = req.body.images;
+		let data= req.body.data;
+		if(!data) data = new Object();
+
+		const images = req.body.files;
+		if(!data.images) data.images = new Array();
+		images.forEach(img => {
+			const image = new Object();
+			image.src=process.env.DNS+img
+			data.images.push(image)
+		})
+		data.status = "private";
+		
+		console.log(data)
 		console.log(images)
 		const product = await MdWoo.wooPut_Prom("products/"+id, {images}, "String");
+
+		images.forEach(img => {
+			MdFile.delFile(img)
+		})
+
 		if(product && product.id) {
-			return res.json({status: 200, product})
+			return res.redirect('/product/'+id);
 		} else {
 			console.log(product)
-			return res.json({status: 500, message: "操作错误"})
+			return res.redirect('/productPutImages 更新错误');
 		}
-
-		return res.json({status: 200})
 	} catch(error) {
 		console.log(error);
-		return res.json({status: 500, message: "productPutImages Error: "+error})
+		return res.redirect('/?info=productPutImages &error='+error);
 	}
 };

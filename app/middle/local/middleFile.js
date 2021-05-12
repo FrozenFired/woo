@@ -46,6 +46,7 @@ const recuPics = (fl, fgName) => {
 				const photoName = Date.now() + '_' + fgName + '.' + type;	// 图片名称 code_2340.jpg
 				const photoSrc = path.join(__dirname, '../../../public/upload/');	// niu/public/upload/***/
 				const photo = photoSrc + photoName;
+				console.log(photo)
 				fs.writeFile(photo, data, (err) => {
 					resolve('/upload/'+photoName);
 				});

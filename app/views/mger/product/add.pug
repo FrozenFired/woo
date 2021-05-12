@@ -36,9 +36,12 @@ block content
 							input.form-check-input.cbxIpt.cbxIpt-categories(type="checkbox" name="data[categories]["+i+"][id]" id="cbxIpt-categories-"+category.id value=category.id)
 							label.form-check-label(for="cbxIpt-categories-"+category.id) #{category.name}
 			.form-group.row
-				label.col-4.col-sm-2.col-form-label(for="imagesIpt") 产品图片
-				.col-8.col-sm-10
-					input#imagesIpt.form-control(type="file", name="fls", multiple)
+				label.col-3.col-sm-2.col-form-label(for="imagesIpt") 产品图片
+				input#uploadImgs.btn.btn-info.btn-block(type="file", name="fls", multiple, style="display:none")
+				.col-9
+					.row#newImgs
+						.col-2
+							img#crtImgs.rounded-circle(src="/icon/img.jpg", width="100%")
 
 			
 			//- input(type="text" name="data[images][0][src]" value="https://www.poliform.it/ContentsFiles/19-10-07_OMAR-POLIFORM-VILLA-106-7774B-RID.jpg")
@@ -49,3 +52,4 @@ block content
 				.offset-sm-10.col-sm-2
 					button.btn.btn-success.btn-block#createPdBtn(type="submit") 提交
 	script(src="/js/mger/product/add.js")
+	script(src="/js/mger/product/imagesEdit.js")
