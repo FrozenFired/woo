@@ -162,7 +162,7 @@ exports.productPutImages = async(req, res) => {
 		images.forEach(img => {
 			const image = new Object();
 			image.src=process.env.DNS+img
-			data.images.unshift(image)
+			data.images.push(image)
 		})
 		data.status = "private";
 		
