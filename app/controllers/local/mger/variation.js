@@ -33,15 +33,15 @@ exports.variationPost = async(req, res) => {
 		const productId= req.body.productId;
 		const data= req.body.data;
 		if(image) {
-			// data.image = new Object();
-			// data.image.src = process.env.DNS + image;
+			data.image = new Object();
+			data.image.src = process.env.DNS + image;
 			console.log(image)
 		}
 		data.status = "publish";
 		console.log(data)
 		const variation = await MdWoo.wooPost_Prom("products/"+productId+"/variations", data);
 		console.log(variation)
-		// if(image) MdFile.delFile(image);
+		if(image) MdFile.delFile(image);
 		if(variation && variation.id) return res.redirect("/product/"+productId);
 		return res.redirect('/?info=variationPost 创建错误');
 	} catch(error) {
