@@ -102,9 +102,10 @@ h3.text-secondary.text-center.p-2 下架
 				each image in product.images
 					- sub++;
 					.col-2
-						input(type="hidden", name="data[images]["+sub+"][id]", value=image.id)
-						input(type="hidden", name="data[images]["+sub+"][name]", value=image.name)
-						input(type="hidden", name="data[images]["+sub+"][alt]", value=image.alt)
+						input(type="hidden", name="data[images]["+sub+"][src]", value=image.src)
+						//- input(type="hidden", name="data[images]["+sub+"][id]", value=image.id)
+						//- input(type="hidden", name="data[images]["+sub+"][name]", value=image.name)
+						//- input(type="hidden", name="data[images]["+sub+"][alt]", value=image.alt)
 
 						img.css-img-neat.border.rounded(src=image.src, width="100%", height="150px")
 						.text-center
