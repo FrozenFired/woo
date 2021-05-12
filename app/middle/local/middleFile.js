@@ -10,7 +10,7 @@ exports.delFile = (picDel) => {
 }
 
 exports.newFiles = async(req, res, next) => {
-	console.log("MdFile newFiles");
+	// console.log("MdFile newFiles");
 	try {
 		const dataFls = req.files.fls;	// 图片数据
 		const files = new Array();
@@ -37,7 +37,7 @@ exports.newFiles = async(req, res, next) => {
 }
 
 const recuPics = (fl, fgName) => {
-	console.log(`fgName: ${fgName}`)
+	// console.log(`fgName: ${fgName}`)
 	return new Promise((resolve, reject) => {
 		try {
 			const flPath = fl.path;		// 图片的位置
@@ -46,7 +46,7 @@ const recuPics = (fl, fgName) => {
 				const photoName = Date.now() + '_' + fgName + '.' + type;	// 图片名称 code_2340.jpg
 				const photoSrc = path.join(__dirname, '../../../public/upload/');	// niu/public/upload/***/
 				const photo = photoSrc + photoName;
-				console.log(photo)
+				// console.log(photo)
 				fs.writeFile(photo, data, (err) => {
 					resolve('/upload/'+photoName);
 				});

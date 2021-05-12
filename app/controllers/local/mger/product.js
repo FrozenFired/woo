@@ -170,9 +170,9 @@ exports.productPutImages = async(req, res) => {
 		console.log(images)
 		const product = await MdWoo.wooPut_Prom("products/"+id, {images}, "String");
 
-		images.forEach(img => {
-			MdFile.delFile(img)
-		})
+		// images.forEach(img => {
+		// 	MdFile.delFile(img)
+		// })
 
 		if(product && product.id) {
 			return res.redirect('/product/'+id);
