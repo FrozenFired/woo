@@ -1,0 +1,11 @@
+extends ../aalayout/layout
+
+block content
+	.container.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/ader") Home
+				li.breadcrumb-item: a(href="/adFirms") 列表
+				li.breadcrumb-item.active(aria-current="page") 详情
+		include ./detail/thisUpd
+		include ./detail/thisInfo

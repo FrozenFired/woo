@@ -1,0 +1,24 @@
+extends ../../aalayout/layout
+
+block content
+	.container.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/mger") 操作页面
+				li.breadcrumb-item: a(href="/products") 产品列表
+				li.breadcrumb-item.active(aria-current="page") 产品: [#{product.id}] #{product.name}
+
+		if errorInfo
+			-a;
+			.text-danger.text-center #{errorInfo}
+		else if product.status == "publish"
+			-a;
+			include ./detail/basicPublish
+		else
+			.basicPage
+				include ./detail/basic
+			//- .imagePage(style="display:none")
+				include ./detail/images
+
+	script(src="/js/woo/wooPut.js")
+	script(src="/js/mger/product/detail.js")

@@ -1,0 +1,16 @@
+- billing = order.billing;
+.billing.p-3
+	.border.rounded.p-3
+		h4.text-center 付款信息
+		.first_name 姓: #{billing.first_name}
+		.last_name 名: #{billing.last_name}
+		if billing.company
+			- company = billing.company;
+			.company 公司: #{company}
+		.address_1 地址1: #{billing.address_1}
+		.address_2 地址2: #{billing.address_2}
+		.city 城市: #{billing.city}
+		.country 国家: #{billing.country}
+		.postcode 邮编: #{billing.postcode}
+		.email 邮箱: #{billing.email}
+		.phone 电话: #{billing.phone}

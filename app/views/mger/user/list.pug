@@ -1,0 +1,81 @@
+extends ../../aalayout/layout
+
+block content
+	.container.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/mger") Home
+				li.breadcrumb-item.active(aria-current="page") 成员列表
+		.my-3.text-right
+			a.btn.btn-info(href="#", data-toggle="modal", data-target="#userAdd") +
+		#userAdd.modal.fade
+			.modal-dialog
+				.modal-content
+					form#updateInfo(method="post", action="/userNew")
+						.modal-header: h3 添加新用户
+						.modal-body
+							.form-group.row
+								label.col-4.col-form-label(for="codeIpt") 帐号
+								.col-8
+									input#codeIpt.form-control(type="text", name="obj[code]")
+								.offset-4.col-8.col-form-label.text-danger
+							.form-group.row
+								label.col-4.col-form-label(for="pwdIpt") 密码
+								.col-8
+									input#pwdIpt.form-control(type="text", name="obj[pwd]")
+								.offset-4.col-8.col-form-label.text-danger
+							.form-group.row
+								label.col-4.col-form-label(for="roleIpt") role
+								.col-8
+									select#roleIpt.form-control(name="obj[role]", data-style="btn-info")
+										each roleUser in Conf.roleUser
+											if roleUser.num > crUser.role
+												-a;
+												option(value=roleUser.num) #{roleUser.val}
+								.offset-4.col-8.col-form-label.text-danger
+							.form-group.row
+								label.col-4.col-form-label(for="shelfIpt") 管理上下架
+								.col-8
+									select#shelfIpt.form-control(name="obj[shelf]", data-style="btn-info")
+										each key in Object.keys(Conf.shelf)
+											if key == crUser.shelf
+												-a;
+												option(value=key, selected="selected") #{Conf.shelf[key]}
+											else
+												option(value=key) #{Conf.shelf[key]}
+							.form-group.row
+								label.col-4.col-form-label(for="langIpt") Language
+								.col-8
+									select#langIpt.form-control(name="obj[lang]", data-style="btn-info")
+										each userLang in Conf.userLang
+											-a;
+											option(value=userLang.num) #{userLang.val}
+								.offset-4.col-8.col-form-label.text-danger
+							.form-group.row
+								label.col-4.col-form-label(for="nomeIpt") Name
+								.col-8
+									input#nomeIpt.form-control(type="text", name="obj[nome]")
+								.offset-4.col-8.col-form-label.text-danger
+						.modal-footer
+							button.btn.btn-default(type="button" data-dismiss="modal") 取消
+							button.btn.btn-success(type="submit") 提交
+		table.table.table-hover.table-bordered
+			thead
+				tr
+					th 帐号
+					th 名字
+					th 角色
+			tbody
+				each user in users
+					-a;
+					tr(class="user-id-"+user._id)
+						td: a(href="/user/"+user._id) #{user.code}
+						td #{user.nome}
+						td 
+							- let role = '';
+							each roleUser in Conf.roleUser
+								- role = '';
+								if roleUser.num == user.role
+									- role = roleUser.val;
+									- break;
+							span #{role}

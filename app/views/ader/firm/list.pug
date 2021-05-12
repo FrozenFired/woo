@@ -1,0 +1,52 @@
+extends ../aalayout/layout
+
+block content
+	.container.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/ader") Home
+				li.breadcrumb-item.active(aria-current="page") 公司列表
+		.row
+			.col-12.text-right
+				a.btn.btn-warning(href="/adFirmAdd") +
+		.row.mt-3
+			.col-12
+				table.table.table-hover.table-bordered
+					thead
+						tr
+							th 编号
+							th 名称
+							th 代称
+							th 公司类型
+							th 负责人
+							th 电话
+							th 上下架
+					tbody
+						each firm in firms
+							-a;
+							tr(class="firm-id-"+firm._id)
+								td: a(href="/adFirm/"+firm._id) #{firm.code}
+								td #{firm.nome}
+								td #{firm.nick}
+								td
+									- let categ = '';
+									each categFirm in Conf.categFirm
+										-a;
+										if categFirm.num == firm.categFirm
+											- categ = categFirm.val;
+											- break;
+									span #{categ}
+								td #{firm.resp}
+								td #{firm.tel}
+								td
+									- let shf = '';
+									each shelf in Conf.shelf
+										- shf = '';
+										if shelf.num == firm.shelf
+											- shf = shelf.val;
+											- break;
+									if firm.shelf == Conf.shelf.off.num
+										-a;
+										span.text-danger #{shf}
+									else
+										span #{shf}

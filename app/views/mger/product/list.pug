@@ -1,0 +1,59 @@
+extends ../../aalayout/layout
+
+block content
+	.container.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/mger") 操作页面
+				li.breadcrumb-item.active(aria-current="page") #{title}
+
+		.text-right.my-4
+			a.btn.btn-info(href="/productAdd") 新增产品
+		table.table.table-triped
+			thead
+				tr
+					th #{products.length}
+					th img
+					th name
+					th 是否在售
+					th 打折
+					th 缺货
+					th.text-center 状态
+					th 销量
+			tbody
+				each product in products
+					-a;
+					tr
+						td
+							input(id="cb-select"+product.id type="checkbox" name="post[]" value=product.id)
+						td
+							a(href="/product/"+product.id)
+								if product.images && product.images.length > 0
+									-a;
+									img(width=50, src=product.images[0].src)
+								else
+									span #{product.id}
+						td #{product.name}
+						td
+							if !product.purchasable
+								-a;
+								span.text-danger 否
+						td
+							if product.on_sale
+								-a;
+								span 是
+						td
+							if product.backordered
+								-a;
+								span.text-danger 是
+						td
+							select.putObjSelChange.form-control(data-url="/productPut/"+product.id, data-key="status", data-type="String")
+								each key in Conf.product.status.arr
+									- val = Conf.product.status.lang[key];
+									if product.status == key
+										-a;
+										option(value=key, selected="selected") #{val} / #{key}
+									else
+										option(value=key) #{val} / #{key}
+						td #{product.total_sales}
+	script(src="/js/woo/wooPut.js")

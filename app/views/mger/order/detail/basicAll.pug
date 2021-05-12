@@ -1,0 +1,62 @@
+each firKey in Object.keys(order)
+	- firVal = order[firKey];
+	.row.border-bottom.mt-4
+		.col-md-4 #{firKey}
+		.col-md-8
+			if !firVal
+				-a;
+				span #{firVal}
+			else if firVal.constructor === Object
+				-a;
+				each secKey in Object.keys(firVal)
+					- secVal = firVal[secKey];
+					.row.border-bottom.mt-3
+						.col-md-4 #{secKey}
+						.col-md-8
+							if !secVal
+								-a;
+								span #{secVal}
+							else if secVal.constructor === Object
+								-a;
+								each thdKey in Object.keys(secVal)
+									- thdVal = secVal[thdKey];
+									.row.border-bottom.mt-3
+										.col-md-4 #{thdKey}
+										.col-md-8 #{thdVal}
+							else if secVal.constructor === Array
+								-a;
+								each thdArr in secVal
+									-a;
+									.border-bottom
+										each thdKey in Object.keys(thdArr)
+											- thdVal = thdArr[thdKey];
+											.row.mt-3
+												.col-4 #{thdKey}
+												.col-8 #{thdVal}
+							else
+								span #{secVal}
+			else if firVal.constructor === Array
+				-a;
+				each secArr in firVal
+					-a;
+					.border-bottom
+						each secKey in Object.keys(secArr)
+							- secVal = secArr[secKey];
+							.row.mt-3
+								.col-4 #{secKey}
+								.col-8
+									if !secVal
+										-a;
+										span #{secVal}
+									else if secVal.constructor === Object
+										-a;
+										each thdKey in Object.keys(secVal)
+											- thdVal = secVal[thdKey];
+											.row.border-bottom.mt-3
+												.col-md-4 #{thdKey}
+												.col-md-8 #{thdVal}
+									else
+										span #{secVal}
+			else
+				span #{firVal}
+div(style="height:100px")

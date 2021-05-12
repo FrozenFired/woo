@@ -1,0 +1,12 @@
+HTTP  = 3000 
+HTTPS = 3431
+DBSERVER = mongodb://localhost/
+DBNAME = woo
+IP = localhost
+DNS =http://localhost:8000
+CDN = http://localhost:8000
+WOOURL=https://rainbowbeauty.it
+WOOKEY=ck_4e81eb561bcb74a913d602beeecc8f25ac86f2c3
+WOOSECRET=cs_16e3d0312a07403236dcc32597e255623884a193
+USERNAME=latteireland@gmail.com
+PWD=X8R3HebC9n

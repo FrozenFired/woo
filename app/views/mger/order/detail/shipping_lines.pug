@@ -1,0 +1,39 @@
+if order.shipping_lines
+	- shipping_lines = order.shipping_lines;
+	if shipping_lines.length == 1
+		- shipping_line = shipping_lines[0];
+		.border.rounded.p-3
+			.row
+				.col-4 运费
+				.col-4 #{shipping_line.method_title}
+				.col-4.text-right #{shipping_line.total} #{order.currency}
+	else
+		table.table.table-striped
+			thead
+				tr
+					th 序号
+					th 运费名称
+					th 总价
+			tbody
+				- num = 0;
+				- totShip = 0;
+				each shipping_line in shipping_lines
+					- num++;
+					- totShip += parseFloat(shipping_line.total);
+					tr
+						td #{num}
+						td #{shipping_line.method_title}
+						td #{shipping_line.total} #{order.currency}
+				tr
+					th(colspan=2) 运费总计:
+					th #{(totShip).toFixed(2)} #{order.currency}
+		//- shipping_lines: [
+		//-     {
+		//-       id: 5,
+		//-       method_title: 'Flat rate',
+		//-       method_id: 'flat_rate',
+		//-       total: '10.00',
+		//-       total_tax: '0.00',
+		//-       taxes: []
+		//-     }
+		//-   ],

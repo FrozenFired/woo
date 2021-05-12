@@ -1,0 +1,26 @@
+extends ../../aalayout/layout
+
+block content
+	.container.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/mger") 操作页面
+				li.breadcrumb-item.active(aria-current="page") #{title}
+
+		table.table.table-triped
+			thead
+				tr
+					th #{categories.length}
+					th id
+					th name
+			tbody
+				each category in categories
+					-a;
+					tr
+						td
+							input(id="cb-select"+category.id type="checkbox" name="post[]" value=category.id)
+						td
+							a(href="/categories/"+category.id) #{category.id}
+						td
+							a(href="/categories/"+category.id) #{category.name}
+	script(src="/js/woo/wooPut.js")

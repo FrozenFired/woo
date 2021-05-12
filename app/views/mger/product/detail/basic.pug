@@ -1,0 +1,228 @@
+h3.text-secondary.text-center.p-2 下架
+.row.mb-5.py-3.border-bottom.rounded
+	.col-md-8.text-right.pt-2 状态 / status:
+	.col-md-4
+		if product.status == "publish"
+			-nt="private";
+			button.btn.btn-success.putObjBtnClick(type="button", data-url="/productPut/"+product.id, data-key="status", data-val="publish", data-type="String") 发布
+			button.ml-5.btn.btn-secondary.putObjBtnClick(type="button", data-url="/productPut/"+product.id, data-key="status", data-val=nt, data-type="String") 下架
+		else if product.status == "private"
+			-nt="publish";
+			button.btn.btn-secondary.putObjBtnClick(type="button", data-url="/productPut/"+product.id, data-key="status", data-val=nt, data-type="String") 发布
+			button.ml-5.btn.btn-success(type="button") 下架
+
+			a.ml-5.btn.btn-danger(href="/productDel/"+product.id) 删除
+		//- select.putObjSelChange.form-control.bg-warning(data-url="/productPut/"+product.id, data-key="status", data-type="String")
+			each key in Conf.product.status.arr
+				- val = Conf.product.status.lang[key];
+				if product.status == key
+					-a;
+					option(value=key, selected="selected") #{val} / #{key}
+				else
+					option(value=key) #{val} / #{key}
+
+
+.border.px-3
+	.row.py-3.border-bottom.rounded
+		.col-3 精品 / featured
+		.col-9
+			if product.featured
+				-nt="false";
+				button.mr-5.btn.btn-success(type="button") 是
+				button.btn.btn-secondary.putObjBtnClick(type="button", data-url="/productPut/"+product.id, data-key="featured", data-val=nt, data-type="Boolean") 否
+			else
+				-nt="true";
+				button.btn.btn-secondary.putObjBtnClick(type="button", data-url="/productPut/"+product.id, data-key="featured", data-val=nt, data-type="Boolean") 是
+				button.ml-5.btn.btn-success(type="button") 否
+	.row.py-3.border-bottom.rounded
+		.col-3: span.text-info.keyClickUpA(id="keyClickUpA-"+product.id+"-name") 产品名称 / name
+		.col-9
+			span.valClickUpA(id="valClickUpA-"+product.id+"-name") #{product.name}
+			input(type="hidden", id="iptOrg-"+product.id+"-name", value=product.name)
+			input.form-control.iptNewBlurUpd(type="text", id="iptNewBlurUpd-"+product.id+"-name", value=product.name, data-url="/productPut/"+product.id, data-key="name", data-type="String", style="display:none")
+	.row.py-3.border-bottom.rounded
+		.col-3: span.text-info.keyClickUpA(id="keyClickUpA-"+product.id+"-slug") 唯一编号 / slug
+		.col-3
+			span.valClickUpA(id="valClickUpA-"+product.id+"-slug") #{product.slug}
+			input(type="hidden", id="iptOrg-"+product.id+"-slug", value=product.slug)
+			input.form-control.iptNewBlurUpd(type="text", id="iptNewBlurUpd-"+product.id+"-slug", value=product.slug, data-url="/productPut/"+product.id, data-key="slug", data-type="String", style="display:none")
+		.col-6 #{product.permalink}
+	.row.py-3.border-bottom.rounded
+		.col-3
+			.title categories
+			.desp 产品分类 Array
+		.col-9
+			each category in categories
+				- flag = false;
+				each categ in product.categories
+					-a;
+					if category.id == categ.id
+						- flag = true;
+						- break;
+				if flag == true
+					-a;
+					.form-check.form-check-inline
+						input.form-check-input.cbxIpt.cbxIpt-categories(type="checkbox" id="cbxIpt-categories-"+category.id value=category.id checked)
+						label.form-check-label(for="cbxIpt-categories-"+category.id) #{category.name}
+				else
+					.form-check.form-check-inline
+						input.form-check-input.cbxIpt.cbxIpt-categories(type="checkbox" id="cbxIpt-categories-"+category.id value=category.id)
+						label.form-check-label(for="cbxIpt-categories-"+category.id) #{category.name}
+			button.btn.btn-info.cbxBtnSubmit(type="button", data-url="/productPut/"+product.id, data-type="categories", data-key="categories") 提交
+	- let description = product.description;
+	- description = description.substring(3, description.length - 5);
+	//- .row.py-3.border-bottom.rounded
+		.col-3: span.text-info.keyClickUpA(id="keyClickUpA-"+product.id+"-description") 产品描述 / description
+		.col-9
+			span.valClickUpA(id="valClickUpA-"+product.id+"-description") #{description}
+			input(type="hidden", id="iptOrg-"+product.id+"-description", value=description)
+			textarea.form-control.iptNewBlurUpd(type="text", rows="3", id="iptNewBlurUpd-"+product.id+"-description", value=description, data-url="/productPut/"+product.id, data-key="description", data-type="String", style="display:none")
+	- let short_description = product.short_description;
+	- short_description = short_description.substring(3, short_description.length - 5);
+	.row.py-3.rounded
+		.col-3: span.text-info.keyClickUpA(id="keyClickUpA-"+product.id+"-short_description") 产品简述 / short_description
+		.col-9
+			span.valClickUpA(id="valClickUpA-"+product.id+"-short_description") #{short_description}
+			input(type="hidden", id="iptOrg-"+product.id+"-short_description", value=short_description)
+			textarea.form-control.iptNewBlurUpd(type="text", rows="3", id="iptNewBlurUpd-"+product.id+"-short_description", value=short_description, data-url="/productPut/"+product.id, data-key="short_description", data-type="String", style="display:none")
+
+
+.row.py-3.border-bottom.rounded
+	.col-3
+		.title images
+		.desp 产品图片 Array
+		//- button.btn.btn-warning.showImagesBtn(type="button") 修改图片
+		//- input#orgImages(type="hidden", value=product.images)
+	.col-9
+		.row.border.rounded.p-2.mt-2
+			each image in product.images
+				-a;
+				.col-2
+					img.css-img-neat.border.rounded(src=image.src, width="100%", height="150px")
+					.text-center
+						a.text-danger(href="/mediaDel/"+image.id+"?product="+product.id) [删除]
+				//- .col-10
+					.row.mt-2
+						.col-2 id
+						.col-10 #{image.id}
+					.row.mt-2
+						.col-2 src
+						.col-10 #{image.src}
+					.row.mt-2
+						.col-2 name
+						.col-10 #{image.name}
+					.row.mt-2
+						.col-2 alt
+						.col-10 #{image.alt}
+
+div(style="height: 100px")
+.border.px-3
+	.row.py-3.border-bottom.rounded
+		.col-3.col-md-3 类型 / type:
+		.col-9.col-md-3
+			select.putObjSelChange.form-control(data-url="/productPut/"+product.id, data-key="type", data-type="String")
+				each key in Conf.product.type.arr
+					- val = Conf.product.type.lang[key];
+					if product.type == key
+						-a;
+						option(value=key, selected="selected") #{val} / #{key}
+					else
+						option(value=key) #{val} / #{key}
+	if product.type == "simple"
+		-a;
+		.row.py-3.border-bottom.rounded
+			.col-3: span.text-info.keyClickUpA(id="keyClickUpA-"+product.id+"-sku") 单位 / sku
+			.col-9
+				span.valClickUpA(id="valClickUpA-"+product.id+"-sku") #{product.sku}
+				input(type="hidden", id="iptOrg-"+product.id+"-sku", value=product.sku)
+				input.form-control.iptNewBlurUpd(type="text", id="iptNewBlurUpd-"+product.id+"-sku", value=product.sku, data-url="/productPut/"+product.id, data-key="sku", data-type="String", style="display:none")
+		.row.py-3.border-bottom.rounded
+			.col-3: span.text-info.keyClickUpA(id="keyClickUpA-"+product.id+"-regular_price") 价格 / regular_price
+			.col-9
+				span.valClickUpA(id="valClickUpA-"+product.id+"-regular_price") #{product.regular_price}
+				input(type="hidden", id="iptOrg-"+product.id+"-regular_price", value=product.regular_price)
+				input.form-control.iptNewBlurUpd(type="text", id="iptNewBlurUpd-"+product.id+"-regular_price", value=product.regular_price, data-url="/productPut/"+product.id, data-key="regular_price", data-type="String", style="display:none")
+		.row.py-3.border-bottom.rounded
+			.col-3: span.text-info.keyClickUpA(id="keyClickUpA-"+product.id+"-sale_price") 折扣价 / sale_price
+			.col-9
+				span.valClickUpA(id="valClickUpA-"+product.id+"-sale_price") #{product.sale_price}
+				input(type="hidden", id="iptOrg-"+product.id+"-sale_price", value=product.sale_price)
+				input.form-control.iptNewBlurUpd(type="text", id="iptNewBlurUpd-"+product.id+"-sale_price", value=product.sale_price, data-url="/productPut/"+product.id, data-key="sale_price", data-type="String", style="display:none")
+
+
+		//- stock
+		.row.py-3.border-bottom.rounded
+			.col-3 是否管理库存 / manage_stock
+			.col-9
+				if product.manage_stock
+					-nt="false";
+					button.mr-5.btn.btn-success(type="button") 是
+					button.btn.btn-secondary.putObjBtnClick(type="button", data-url="/productPut/"+product.id, data-key="manage_stock", data-val=nt, data-type="Boolean") 否
+				else
+					-nt="true";
+					button.btn.btn-secondary.putObjBtnClick(type="button", data-url="/productPut/"+product.id, data-key="manage_stock", data-val=nt, data-type="Boolean") 是
+					button.ml-5.btn.btn-success(type="button") 否
+		if product.manage_stock
+			-a;
+			.row.ml-3.py-3.border-bottom.rounded
+				.col-3: span.text-info.keyClickUpA(id="keyClickUpA-"+product.id+"-stock_quantity") 库存数量 / stock_quantity
+				.col-9
+					span.valClickUpA(id="valClickUpA-"+product.id+"-stock_quantity") #{product.stock_quantity}
+					input(type="hidden", id="iptOrg-"+product.id+"-stock_quantity", value=product.stock_quantity)
+					input.form-control.iptNewBlurUpd(type="number", id="iptNewBlurUpd-"+product.id+"-stock_quantity", value=product.stock_quantity, data-url="/productPut/"+product.id, data-key="stock_quantity", data-type="Number", style="display:none")
+
+			.row.ml-3.py-3.border-bottom.rounded
+				.col-3 缺货允许 / backorders:
+				.col-3
+					select.putObjSelChange.form-control(data-url="/productPut/"+product.id, data-key="backorders", data-type="String")
+						each key in Conf.product.backorders.arr
+							- val = Conf.product.backorders.lang[key];
+							if product.backorders == key
+								-a;
+								option(value=key, selected="selected") #{val} / #{key}
+							else
+								option(value=key) #{val} / #{key}
+				.col-3
+				.col-3 在缺货的情况下， 是否允许客户下单
+		else
+			.row.py-3.border-bottom.rounded
+				.col-3 库存状态 / stock_status:
+				.col-3
+					select.putObjSelChange.form-control(data-url="/productPut/"+product.id, data-key="stock_status", data-type="String")
+						each key in Conf.product.stock_status.arr
+							- val = Conf.product.stock_status.lang[key];
+							if product.stock_status == key
+								-a;
+								option(value=key, selected="selected") #{val} / #{key}
+							else
+								option(value=key) #{val} / #{key}
+
+		.row.py-3.rounded
+			.col-3 唯一购买 / sold_individually
+			.col-3
+				if product.sold_individually
+					-nt="false";
+					button.mr-5.btn.btn-success(type="button") 是
+					button.btn.btn-secondary.putObjBtnClick(type="button", data-url="/productPut/"+product.id, data-key="sold_individually", data-val=nt, data-type="Boolean") 否
+				else
+					-nt="true";
+					button.btn.btn-secondary.putObjBtnClick(type="button", data-url="/productPut/"+product.id, data-key="sold_individually", data-val=nt, data-type="Boolean") 是
+					button.ml-5.btn.btn-success(type="button") 否
+
+			.col-3
+			.col-3 在同一个订单中是否只能被买一件
+	else if product.type == "variable"
+		-a;
+		each variation in variations
+			-a;
+			include ./variations
+
+
+div(style="height: 100px")
+
+
+div(style="height: 100px")
+
+
+
+div(style="height: 100px")

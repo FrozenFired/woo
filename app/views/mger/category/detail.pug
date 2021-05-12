@@ -1,0 +1,18 @@
+extends ../../aalayout/layout
+
+block content
+	.container.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/mger") 操作页面
+				li.breadcrumb-item: a(href="/categories") 分类列表
+				li.breadcrumb-item.active(aria-current="page") 分类: [#{category.id}] #{category.name}
+
+		if errorInfo
+			-a;
+			.text-danger.text-center #{errorInfo}
+		else
+			include ./detail/basic
+
+
+	script(src="/js/woo/wooPut.js")

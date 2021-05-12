@@ -1,0 +1,26 @@
+extends ../../aalayout/layout
+
+block content
+	.container.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/mger") 操作页面
+				li.breadcrumb-item: a(href="/orders") 订单列表
+				li.breadcrumb-item.active(aria-current="page") #{title}
+
+		if errorInfo
+			-a;
+			.text-danger.text-center #{errorInfo}
+		else
+			//- include ./detail/basicAll
+			include ./detail/basic
+
+			.row.mt-3
+				.col-md-6
+					include ./detail/billing
+				.col-md-6
+					include ./detail/shipping
+
+			include ./detail/line_items
+			include ./detail/shipping_lines
+	script(src="/js/woo/wooPut.js")

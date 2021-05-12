@@ -1,0 +1,58 @@
+a.btn.btn-info(href="#", data-toggle="modal", data-target="#upMgerInfo") 修改信息
+
+#upMgerInfo.modal.fade
+	.modal-dialog
+		.modal-content
+			form#updateInfo(method="post", action="/userUpdInfo", enctype="multipart/form-data")
+				.modal-header: h3 设置
+				.modal-body
+					input(type="hidden", name="obj[_id]", value=user._id)
+					if user._id != crUser._id
+						-a;
+						.form-group.row
+							label.col-4.col-form-label(for="roleIpt") 权限
+							.col-8
+								select#roleIpt.form-control(name="obj[role]", data-style="btn-info")
+									each roleUser in Conf.roleUser
+										if roleUser.num > crUser.role
+											if roleUser.num == user.role
+												-a;
+												option(value=roleUser.num, selected="selected") #{roleUser.val}
+											else
+												option(value=roleUser.num) #{roleUser.val}
+					if crUser.role != Conf.roleUser.customer.num
+						-a;
+						.form-group.row
+							label.col-4.col-form-label(for="shelfIpt") 上下架
+							.col-8
+								select#shelfIpt.form-control(name="obj[shelf]", data-style="btn-info")
+									each key in Object.keys(Conf.shelf)
+										if user.shelf == key
+											-a;
+											option(value=key, selected="selected") #{Conf.shelf[key]}
+										else
+											option(value=key) #{Conf.shelf[key]}
+					if user.role == Conf.roleUser.customer.num || user.role == Conf.roleUser.seller.num
+						-a;
+						.form-group.row
+							label.col-4.col-form-label(for="percentIpt") 加点数
+							.col-8
+								input#percentIpt.form-control(type="number", name="obj[percent]" value=user.percent, autocomplete="off")
+					.form-group.row
+						label.col-4.col-form-label(for="nomeIpt") 名字
+						.col-8
+							input#nomeIpt.form-control(type="text", name="obj[nome]" value=user.nome, autocomplete="off")
+					.form-group.row
+						label.col-4.col-form-label(for="iptLang") 语言
+						.col-8
+							select#iptLang.form-control(name="obj[lang]", data-style="btn-info")
+								each userLang in Conf.userLang
+									-a;
+									if userLang.num == user.lang
+										-a;
+										option(value=userLang.num, selected="selected") #{userLang.val}
+									else
+										option(value=userLang.num) #{userLang.val}
+				.modal-footer
+					button.btn.btn-default(type="button" data-dismiss="modal") 取消
+					button.btn.btn-success(type="submit") 确认

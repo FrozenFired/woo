@@ -1,0 +1,70 @@
+extends ../aalayout/layout
+
+block content
+	.container.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/ader") Home
+				li.breadcrumb-item: a(href="/adUsers") 用户列表
+				li.breadcrumb-item.active(aria-current="page") 添加用户
+		hr
+		form#adUserNew-Form(method="post", action="/adUserNew")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="codeIpt")#codeLabel.text-info 帐号
+				.col-8.col-sm-6
+					input#codeIpt.form-control(type="text", name="obj[code]")
+				.offset-4.offset-sm-2.col-8.col-sm-6#codeOpt.text-danger(style="display:none")
+					span 用户账户长度[#{Stint.extent.user.code.min}, #{Stint.extent.user.code.max}]的英文字母或数字
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="pwdIpt")#pwdLabel.text-info 密码
+				.col-8.col-sm-6
+					input#pwdIpt.form-control(type="text", name="obj[pwd]")
+				.offset-4.offset-sm-2.col-8.col-sm-6#pwdOpt.text-danger(style="display:none")
+					span 用户密码长度[#{Stint.extent.user.pwd.min}, #{Stint.extent.user.pwd.max}]
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="firmIpt")#firmLabel.text-info 公司
+				.col-8.col-sm-6
+					select#firmIpt.form-control(name="obj[firm]", data-style="btn-info")
+						option(value=0) 请选择
+						each firm in firms
+							-a;
+							option(value=firm._id) #{firm.code}
+				.offset-4.offset-sm-2.col-8.col-sm-6#firmOpt.text-danger(style="display:none") 请选择公司
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="roleIpt")#roleLabel.text-info 角色
+				.col-8.col-sm-6
+					select#roleIpt.form-control(name="obj[role]", data-style="btn-info")
+						option(value=0) 请选择
+						each roleUser in Conf.roleUser
+							-a;
+							option(value=roleUser.num) #{roleUser.val}
+				.offset-4.offset-sm-2.col-8.col-sm-6#roleOpt.text-danger(style="display:none") 请选择用户角色
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="shelfIpt")#shelfLabel 上下架
+				.col-8.col-sm-6
+					select#shelfIpt.form-control(name="obj[shelf]", data-style="btn-info")
+						each shelf in Conf.shelf
+							-a;
+							if shelf.num == Conf.shelf.put.num
+								-a;
+								option(value=shelf.num, selected="selected") #{shelf.val}
+							else
+								option(value=shelf.num) #{shelf.val}
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="langIpt") Language
+				.col-8.col-sm-6
+					select#langIpt.form-control(name="obj[lang]", data-style="btn-info")
+						each userLang in Conf.userLang
+							-a;
+							option(value=userLang.num) #{userLang.val}
+				.offset-4.col-8.col-form-label.text-danger
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="nomeIpt") 用户姓名
+				.col-8.col-sm-6
+					input#nomeIpt.form-control(type="text", name="obj[nome]")
+				.offset-4.col-8.col-form-label.text-danger
+			.form-group.row
+				.offset-sm-6.col-sm-2
+					input.btn.btn-success.btn-block(type="submit" value="添加")
+	input#extent(type="hidden", value=Stint.extent.user)
+	script(src="/js/ader/userEdit.js")

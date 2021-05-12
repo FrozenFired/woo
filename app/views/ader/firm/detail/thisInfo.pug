@@ -1,0 +1,48 @@
+table.mt-3.table.table-hover.bg-light
+	tr
+		td <strong>公司编号:</strong>
+		td #{firm.code}
+	tr
+		td <strong>公司名称:</strong>
+		td #{firm.nome}
+	tr
+		td <strong>公司代称:</strong>
+		td #{firm.nick}
+	tr
+		td <strong>类型:</strong>
+		td 
+			- let categ = '';
+			each categFirm in Conf.categFirm
+				- categ = '';
+				if categFirm.num == firm.categFirm
+					- categ = categFirm.val;
+					- break;
+			span #{categ}
+	tr
+		td <strong>上下架:</strong>
+		td 
+			- let shf = '';
+			each shelf in Conf.shelf
+				- shf = '';
+				if shelf.num == firm.shelf
+					- shf = shelf.val;
+					- break;
+			span #{shf}
+	tr
+		td <strong>国家:</strong>
+		td #{firm.country}
+	tr
+		td <strong>负责人:</strong> 
+		td #{firm.resp}
+	tr
+		td <strong>地址:</strong>
+		td #{firm.addr}
+	tr
+		td <strong>电话:</strong>
+		td #{firm.tel}
+	tr
+		td <strong>邮件:</strong>
+		td #{firm.email}
+	tr
+		td <strong>备注:</strong>
+		td #{firm.note}

@@ -1,0 +1,47 @@
+extends ../aalayout/layout
+
+block content
+	.container.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/ader") Home
+				li.breadcrumb-item.active(aria-current="page") 用户列表
+		.row
+			.col-12.text-right
+				a.btn.btn-warning(href="/adUserAdd") +
+		.row.mt-3
+			.col-12
+				table.table.table-hover.table-bordered
+					thead
+						tr
+							th 账户
+							th 名字
+							th 上下架
+							th 角色
+							th 公司
+					tbody
+						each user in users
+							-a;
+							tr(class="user-id-"+user._id)
+								td: a(href="/aduser/"+user._id) #{user.code}
+								td #{user.nome}
+								td
+									- let role = '';
+									each roleUser in Conf.roleUser
+										- role = '';
+										if roleUser.num == user.role
+											- role = roleUser.val;
+											- break;
+									span #{role}
+								td
+									- let yn = '';
+									each shelf in Conf.shelf
+										- yn = '';
+										if shelf.num == user.shelf
+											- yn = shelf.val;
+											- break;
+									span #{yn}
+								td
+									if user.firm
+										-firm = user.firm;
+										span #{firm.code}

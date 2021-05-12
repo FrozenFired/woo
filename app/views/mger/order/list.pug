@@ -1,0 +1,31 @@
+extends ../../aalayout/layout
+
+block content
+	.container-fluid.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/mger") 操作页面
+				li.breadcrumb-item.active(aria-current="page") #{title}
+
+		table.table.table-striped
+			thead
+				tr
+					th #{orders.length}
+					th 编号
+					th 时间
+					th 价格
+					th 客户
+					th 状态
+			tbody
+				each order in orders
+					- let status = order.status.replace(/-/, "_");
+
+					tr
+						td
+							input(id="cb-select"+order.id type="checkbox" name="post[]" value=order.id)
+						td
+							a(href="/orders/"+order.id) #{order.number}
+						td #{moment(order.date_created).format("YYYY/MM/DD HH:mm:ss")}
+						td #{order.total} #{order.currency}
+						td #{order.customer_id}
+						td #{Conf.order.status.lang[status]}

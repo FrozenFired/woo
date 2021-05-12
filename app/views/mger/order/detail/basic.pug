@@ -1,0 +1,36 @@
+.row
+	.col-md-6
+		.code 订单号: #{order.number}
+	.col-6.col-md-3
+		.status 状态: #{order.status}
+	.col-6.col-md-3
+		.cter 客人: #{order.customer_id}
+	.col-6.col-md-3
+		.total 订单总额: #{order.total} #{order.currency}
+.row
+	.col-6.col-md-3
+		.date_created 开始: 
+			if order.date_created
+				- date_created = order.date_created;
+				span #{moment(date_created).format("YY年MM月DD日")}
+	.col-6.col-md-3
+		.date_modified 最近更新: 
+			if order.date_modified
+				- date_modified = order.date_modified;
+				span #{moment(date_modified).format("YY年MM月DD日")}
+if order.customer_note
+	- customer_note = order.customer_note;
+	.customer_note 客户留言: #{customer_note}
+
+.mt-3
+	if order.status != "on-hold"
+		- nt = "on-hold";
+		button.mr-5.btn.btn-warning.putObjBtnClick(type="button", data-url="/orderPut/"+order.id, data-key="status", data-val=nt, data-type="String") #{nt}
+	if order.status != "processing"
+		- nt = "processing";
+		button.mr-5.btn.btn-warning.putObjBtnClick(type="button", data-url="/orderPut/"+order.id, data-key="status", data-val=nt, data-type="String") #{nt}
+	if order.status != "completed"
+		- nt = "completed";
+		button.mr-5.btn.btn-warning.putObjBtnClick(type="button", data-url="/orderPut/"+order.id, data-key="status", data-val=nt, data-type="String") #{nt}
+
+	//- pending, processing, on-hold, completed, cancelled, refunded, failed and trash. Default is pending.

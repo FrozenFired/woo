@@ -1,0 +1,39 @@
+table.table.table-striped
+	thead
+		tr
+			th 序号
+			th 产品名称
+			th sku
+			th 数量
+			th 单价
+			th.text-right 总价
+	tbody
+		- num = 0;
+		- tot = 0;
+		each line_item in order.line_items
+			- num++;
+			- tot += parseFloat(line_item.subtotal);
+			tr
+				td #{num}
+				td #{line_item.name}
+				td sku
+				td #{line_item.quantity}
+				td #{line_item.price} #{order.currency}
+				td.text-right #{line_item.subtotal} #{order.currency}
+		tr
+			th(colspan=5) 货值:
+			th.text-right #{(tot).toFixed(2)} #{order.currency}
+		//- id: 3,
+		//- name: 'Printed Green Tshirt',
+		//- sku: '',
+		//- product_id: 168,
+		//- variation_id: 0,
+		//- quantity: 2,
+		//- tax_class: '',
+		//- price: '28.00',
+		//- subtotal: '56.00',
+		//- subtotal_tax: '0.00',
+		//- total: '56.00',
+		//- total_tax: '0.00',
+		//- taxes: [],
+		//- meta: []

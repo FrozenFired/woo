@@ -1,0 +1,80 @@
+.row
+	.col-12.text-right
+		a.btn.btn-warning(href="#", data-toggle="modal", data-target="#upInfo") 修改
+
+#upInfo.modal.fade
+	.modal-dialog
+		.modal-content
+			form#adFirmUpd-Form(method="post", action="/adFirmUpd")
+				.modal-header: h3 update Information
+				.modal-body
+					input(type="hidden", name="obj[_id]", value=firm._id)
+					.form-group.row
+						label.col-4.col-form-label(for="codeIpt")#codeLabel.text-info 公司编号
+						.col-8
+							input#codeIpt.form-control(type="text", name="obj[code]", value=firm.code)
+						.offset-4.col-8#codeOpt.text-danger(style="display:none")
+							span 公司编号长度必须为#{Stint.extent.firm.code.len}的英文字母
+					.form-group.row
+						label.col-4.col-form-label(for="nomeIpt")#nomeLabel.text-info 公司名称
+						.col-8
+							input#nomeIpt.form-control(type="text", name="obj[nome]", value=firm.nome)
+						.offset-4.col-8#nomeOpt.text-danger(style="display:none")
+							span 请输入公司名称 至少#{Stint.extent.firm.nome.min}位
+					.form-group.row
+						label.col-4.col-form-label(for="nickIpt")#nickLabel.text-info 公司代称
+						.col-8
+							input#nickIpt.form-control(type="text", name="obj[nick]", value=firm.nome)
+						.offset-4.col-8#nickOpt.text-danger(style="display:none")
+							span 请输入公司代称 至少#{Stint.extent.firm.nick.min}位
+					.form-group.row
+						label.col-4.col-form-label(for="categFirmIpt")#categFirmLabel 公司类型
+						.col-8
+							select#categFirmIpt.form-control(name="obj[categFirm]", data-style="btn-info")
+								each categFirm in Conf.categFirm
+									if categFirm.num == firm.categFirm
+										-a;
+										option(value=categFirm.num, selected="selected") #{categFirm.val}
+									else
+										option(value=categFirm.num) #{categFirm.val}
+					.form-group.row
+						label.col-4.col-form-label(for="shelfIpt")#shelfLabel 上下架
+						.col-8
+							select#shelfIpt.form-control(name="obj[shelf]", data-style="btn-info")
+								each shelf in Conf.shelf
+									if shelf.num == firm.shelf
+										-a;
+										option(value=shelf.num, selected="selected") #{shelf.val}
+									else
+										option(value=shelf.num) #{shelf.val}
+						.offset-4.col-8#shelfOpt.text-danger(style="display:none") 请选择上下架
+					.form-group.row
+						label.col-4.col-form-label(for="countryIpt") 国家
+						.col-8
+							input#countryIpt.form-control(type="text", name="obj[country]", value=firm.country)
+					.form-group.row
+						label.col-4.col-form-label(for="respIpt") 负责人
+						.col-8
+							input#respIpt.form-control(type="text", name="obj[resp]", value=firm.resp)
+					.form-group.row
+						label.col-4.col-form-label(for="addrIpt") 地址
+						.col-8
+							input#addrIpt.form-control(type="text", name="obj[addr]", value=firm.addr)
+					.form-group.row
+						label.col-4.col-form-label(for="telIpt") 电话
+						.col-8
+							input#telIpt.form-control(type="text", name="obj[tel]", value=firm.tel)
+					.form-group.row
+						label.col-4.col-form-label(for="emailIpt") 邮件
+						.col-8
+							input#emailIpt.form-control(type="text", name="obj[email]", value=firm.email)
+					.form-group.row
+						label.col-4.col-form-label(for="noteIpt") 备注
+						.col-8
+							input#noteIpt.form-control(type="hidden", value=firm.note)
+							textarea.form-control#noteArea(name="obj[note]",rows="3", placeholder="公司备注")
+				.modal-footer
+					button.btn.btn-default(type="button" data-dismiss="modal") 取消
+					button.btn.btn-success(type="submit") 提交
+input#extent(type="hidden", value=Stint.extent.firm)
+script(src="/js/ader/firmEdit.js")

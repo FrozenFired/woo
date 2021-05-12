@@ -1,0 +1,54 @@
+extends ../../aalayout/layout
+
+block content
+	.container.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/mger") Home
+				li.breadcrumb-item: a(href="/users") 成员列表
+				li.breadcrumb-item.active(aria-current="page") 用户信息
+		if crUser._id == user._id || user.role != 1
+			-a;
+			.row
+				.col-8
+					if crUser._id == user._id
+						-a;
+						a.btn.btn-danger(href="/logout") 退出
+				.col-2
+					include ./updPwd
+				.col-2.text-right
+					include ./updInfo
+		.row.mt-3
+			table.table.border
+				tr
+					td 帐号:
+					td #{user.code}
+				tr
+					td 名字:
+					td #{user.nome}
+				tr
+					td 角色:
+					td
+						- let role = '';
+						each roleUser in Conf.roleUser
+							- role = '';
+							if roleUser.num == user.role
+								- role = roleUser.val;
+								- break;
+						span #{role}
+				tr
+					td 加点:
+					td #{user.percent} %
+				tr
+					td 语言:
+					td
+						- let lang = '';
+						each userLang in Conf.userLang
+							- lang = '';
+							if userLang.num == user.lang
+								- lang = userLang.val;
+								- break;
+						span #{lang}
+				tr
+					td 代号:
+					td #{user.cd}

@@ -1,0 +1,37 @@
+extends ./aalayout/layout
+
+block content
+	if !crUser
+		-a;
+		.text-right.mr-5
+			a.btn.btn-info(href="#", data-toggle="modal", data-target="#login") login
+		#login.modal.fade
+			.modal-dialog
+				.modal-content
+					form#loginUser-FormModal(method="post", action="/loginUser")
+						.modal-header: h3 Login
+						.modal-body
+							.form-group.row
+								label.col-4.col-form-label.text-right(for="codeIpt") 账户
+								.col-8
+									input.form-control#codeIpt(type="text", name="code", placeholder="Please input your code")
+							.form-group.row
+								label.col-4.col-form-label.text-right(for="pwdIpt") 密码
+								.col-8
+									input.form-control#pwdIpt(type="password", name="pwd", placeholder="Your password")
+						.modal-footer
+							button.btn.btn-default(type="button" data-dismiss="modal") 取消
+							button.btn.btn-success#loginUser-BtnModal(type="submit") 提交
+	else
+		.text-right.mr-5
+			a.btn.btn-info(href="/mger") manager
+	.container
+		h2.text-danger #{info}
+		div.text-danger #{error}
+		if redirectUrl
+			-a;
+			a.btn.btn-warning(href=redirectUrl) 返回
+		div(style="height:400px")
+
+		div(style="height:1200px")
+

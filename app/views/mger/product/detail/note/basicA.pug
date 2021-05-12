@@ -1,0 +1,406 @@
+.my-5
+	.p-5
+		span.mr-3 说明: 
+		span.mr-3(style="background-color: #F5DEB3") #F5DEB3背景为 只读
+		span.mr-3(style="background-color: #C0C0C0") #F5DEB3背景为 不重要
+		span.mr-3.text-danger: span.bg-white 此字体为 不明白是什么
+		span.mr-3.text-info: span.bg-white 此字体为 不知在哪设置
+		span.mr-3.text-warning: span.bg-white 此字体为 知道设置但不知道作用
+	.p-5.border.text-danger
+		h4 代码中未找到控制的
+		ul
+			li 当库存被管理时: 低库存警戒值
+
+div(style="display:none")
+.row.py-3.border-bottom.rounded(style="background-color: #F5DEB3")
+	.col-3 id
+	.col-6 #{product.id}
+	.col-3 唯一标识符 Number(ID)
+.row.py-3.border-bottom.rounded
+	.col-3 name
+	.col-6 #{product.name}
+	.col-3 产品名称 String
+.row.py-3.border-bottom.rounded(style="background-color: #C0C0C0")
+	.col-3 slug
+	.col-6 #{product.slug}
+	.col-3 slug String --- Product slug.
+.row.py-3.border-bottom.rounded
+	.col-3 permalink
+	.col-6 #{product.permalink}
+	.col-3 产品的url String --- 改变后slug自动改变.
+
+.row.py-3.border-bottom.rounded.mt-3.border-top
+	.col-3 type
+	.col-6 #{product.type}
+	.col-3 产品类型 String(enum) [simple, grouped, external, variable] (simple)
+.row.py-3.border-bottom.rounded
+	.col-3 status
+	.col-6 #{product.status}
+	.col-3 发布状态 String(enum) [draft, pending, private, publish] (publish) 只用 publish 和 private
+.row.py-3.border-bottom.rounded
+	.col-3 featured
+	.col-6 #{product.featured}
+	.col-3 精品 Boolean(false)
+
+.row.py-3.border-bottom.rounded
+	.col-3 description
+	.col-6 #{product.description}
+	.col-3 产品描述 String(html) 需要html标签
+.row.py-3.border-bottom.rounded
+	.col-3 short_description
+	.col-6 #{product.short_description}
+	.col-3 产品简述 String(html) 需要html标签
+.row.py-3.border-bottom.rounded(style="background-color: #F5DEB3")
+	.col-3.text-warning: span.bg-white sku
+	.col-6 #{product.sku}
+	.col-3 sku String --- Unique identifier.
+//- h3.mt-3 产品销售价格
+.row.py-3.border-bottom.rounded(style="background-color: #F5DEB3")
+	.col-3 price
+	.col-6 #{product.price}
+	.col-3 产品售价 String(float)
+.row.py-3.border-bottom.rounded
+	.col-3 regular_price
+	.col-6 #{product.regular_price}
+	.col-3 产品标价 String(float)
+.row.py-3.border-bottom.rounded
+	.col-3 sale_price
+	.col-6 #{product.sale_price}
+	.col-3 打折价格 String(float)
+.row.py-3.border-bottom.rounded(style="background-color: #C0C0C0")
+	.col-3 date_on_sale_from
+	.col-6 #{product.date_on_sale_from}
+	.col-3 打折开始 Date
+.row.py-3.border-bottom.rounded(style="background-color: #C0C0C0")
+	.col-3 date_on_sale_from_gmt
+	.col-6 #{product.date_on_sale_from_gmt}
+	.col-3 打折开始 Date
+.row.py-3.border-bottom.rounded(style="background-color: #C0C0C0")
+	.col-3 date_on_sale_to
+	.col-6 #{product.date_on_sale_to}
+	.col-3 打折结束 Date
+.row.py-3.border-bottom.rounded(style="background-color: #C0C0C0")
+	.col-3 date_on_sale_to_gmt
+	.col-6 #{product.date_on_sale_to_gmt}
+	.col-3 打折结束 Date
+.row.py-3.border-bottom.rounded(style="background-color: #F5DEB3")
+	.col-3 price_html
+	.col-6 #{product.price_html}
+	.col-3 产品售价 String
+.row.py-3.border-bottom.rounded(style="background-color: #F5DEB3")
+	.col-3 on_sale
+	.col-6 #{product.on_sale}
+	.col-3 * 是否在打折 Boolean
+.row.py-3.border-bottom.rounded(style="background-color: #F5DEB3")
+	.col-3 purchasable
+	.col-6 #{product.purchasable}
+	.col-3 能否售卖 Boolean
+.row.py-3.border-bottom.rounded(style="background-color: #F5DEB3")
+	.col-3 total_sales
+	.col-6 #{product.total_sales}
+	.col-3 总计售卖 Number
+
+
+
+
+//- stock
+.row.py-3.border-bottom.rounded.mt-3.border-top
+	.col-3 stock_status
+	.col-6 #{product.stock_status}
+	.col-3 库存状态 String(enum) [instock, outofstock, onbackorder](instock)
+.row.py-3.border-bottom.rounded
+	.col-3 manage_stock
+	.col-6 #{product.manage_stock}
+	.col-3 是否管理库存 Boolean(false)
+.row.ml-3.py-3.border-bottom.rounded
+	.col-3 stock_quantity
+	.col-6 #{product.stock_quantity}
+	.col-3 库存数量 Number
+.row.ml-3.py-3.border-bottom.rounded
+	.col-3 backorders
+	.col-6 #{product.backorders}
+	.col-3 在manage_stock为true的状态下生效。是否允许缺货状态下单 String(enum) [no, notify, yes](no)
+.row.ml-3.py-3.border-bottom.rounded(style="background-color: #F5DEB3")
+	.col-3 backorders_allowed
+	.col-6 #{product.backorders_allowed}
+	.col-3 是否允许缺货 Boolean. backorders的选择结果
+.row.ml-3.py-3.border-bottom.rounded(style="background-color: #F5DEB3")
+	.col-3 backordered
+	.col-6 #{product.backordered}
+	.col-3 是否缺货 Boolean
+
+.row.py-3.border-bottom.rounded
+	.col-3 sold_individually
+	.col-6 #{product.sold_individually}
+	.col-3 在同一个订单中是否只能被买一次 Boolean
+
+
+
+
+
+
+.row.py-3.border-bottom.rounded
+	.col-3
+		.title categories
+		.desp 产品分类 Array
+	.col-9
+		each categorie in product.categories
+			-a;
+			.border.rounded.p-2.mt-2
+				each key in Object.keys(categorie)
+					- val = categorie[key];
+					.row.mt-2
+						.col-6 #{key}
+						.col-6 #{val}
+.row.py-3.border-bottom.rounded
+	.col-3
+		.title tags
+		.desp 产品标签 Array
+	.col-9
+		each tag in product.tags
+			-a;
+			.border.rounded.p-2.mt-2
+				each key in Object.keys(tag)
+					- val = tag[key];
+					.row.mt-2
+						.col-6 #{key}
+						.col-6 #{val}
+.row.py-3.border-bottom.rounded
+	.col-3
+		.title images
+		.desp 产品图片 Array
+	.col-9
+		each image in product.images
+			-a;
+			.row.border.rounded.p-2.mt-2
+				.col-4
+					img(src=image.src, width="100%")
+				.col-8
+					each key in Object.keys(image)
+						- val = image[key];
+						.row.mt-2
+							.col-6 #{key}
+							.col-6 #{val}
+.row.py-3.border-bottom.rounded
+	.col-3
+		.title attributes
+		.desp 产品属性 Array
+	.col-9
+		each attribute in product.attributes
+			-a;
+			.border.rounded.p-2.mt-2
+				each key in Object.keys(attribute)
+					- val = attribute[key];
+					.row.mt-2
+						.col-6 #{key}
+						.col-6 #{val}
+.row.py-3.border-bottom.rounded
+	.col-3
+		.title.text-danger: span.bg-white default_attributes
+		.desp 产品默认属性 Array
+	.col-9
+		each default_attribute in product.default_attributes
+			-a;
+			.border.rounded.p-2.mt-2
+				each key in Object.keys(default_attribute)
+					- val = default_attribute[key];
+					.row.mt-2
+						.col-6 #{key}
+						.col-6 #{val}
+.row.py-3.border-bottom.rounded(style="background-color: #F5DEB3")
+	.col-3
+		.title.text-danger: span.bg-white variations
+		.desp 产品变量 Array --- List of variations IDs.
+	.col-9
+		each variation in product.variations
+			-a;
+			.border.rounded.p-2.mt-2
+				each key in Object.keys(variation)
+					- val = variation[key];
+					.row.mt-2
+						.col-6 #{key}
+						.col-6 #{val}
+.row.py-3.border-bottom.rounded
+	.col-3
+		.title.text-danger: span.bg-white grouped_products
+		.desp 产品组列表 Array --- List of grouped products ID.
+	.col-9
+		each grouped_product in product.grouped_products
+			-a;
+			.border.rounded.p-2.mt-2
+				each key in Object.keys(grouped_product)
+					- val = grouped_product[key];
+					.row.mt-2
+						.col-6 #{key}
+						.col-6 #{val}
+
+
+.row.py-3.border-bottom.rounded(style="background-color: #C0C0C0").mt-3.border-top
+	.col-3 reviews_allowed
+	.col-6 #{product.reviews_allowed}
+	.col-3 是否允许评论 Boolean(true)
+.row.py-3.border-bottom.rounded(style="background-color: #F5DEB3")
+	.col-3.text-danger: span.bg-white average_rating
+	.col-6 #{product.average_rating}
+	.col-3 average_rating Boolean --- Reviews average rating.
+.row.py-3.border-bottom.rounded(style="background-color: #F5DEB3")
+	.col-3 rating_count
+	.col-6 #{product.rating_count}
+	.col-3 评论数量 Number
+
+
+.row.py-3.border-bottom.rounded(style="background-color: #F5DEB3").mt-3.border-top
+	.col-3.text-info: span.bg-white related_ids
+	.col-6 #{product.related_ids}
+	.col-3 关联产品 Array(ID) ---(不知道在哪里设置) List of related products IDs.
+.row.py-3.border-bottom.rounded(style="background-color: #F5DEB3")
+	.col-3.text-warning: span.bg-white upsell_ids
+	.col-6 #{product.upsell_ids}
+	.col-3 upsell_ids Array ---在Linked Products中设置, 不知道在哪显示。 List of up-sell products IDs.
+.row.py-3.border-bottom.rounded(style="background-color: #F5DEB3")
+	.col-3.text-warning: span.bg-white cross_sell_ids
+	.col-6 #{product.cross_sell_ids}
+	.col-3 cross_sell_ids Array ---在Linked Products中设置, 不知道在哪显示。 List of cross-sell products IDs.
+
+
+.row.py-3.border-bottom.rounded(style="background-color: #F5DEB3").mt-3.border-top
+	.col-3.text-danger: span.bg-white shipping_required
+	.col-6 #{product.shipping_required}
+	.col-3 是否需要运输 Boolean --- Shows if the product need to be shipped.
+.row.py-3.border-bottom.rounded(style="background-color: #F5DEB3")
+	.col-3.text-danger: span.bg-white shipping_taxable
+	.col-6 #{product.shipping_taxable}
+	.col-3 是否要交税 Boolean --- Shows whether or not the product shipping is taxable.
+.row.py-3.border-bottom.rounded(style="background-color: #C0C0C0")
+	.col-3.text-danger: span.bg-white shipping_class
+	.col-6 #{product.shipping_class}
+	.col-3 shipping_class String --- Shipping class slug.
+.row.py-3.border-bottom.rounded(style="background-color: #F5DEB3")
+	.col-3.text-danger: span.bg-white shipping_class_id
+	.col-6 #{product.shipping_class_id}
+	.col-3 Shipping class ID Number(ID) --- Shipping class ID
+.row.py-3.border-bottom.rounded(style="background-color: #F5DEB3")
+	.col-3 weight
+	.col-6 #{product.weight}
+	.col-3 产品重量 String(float)
+.row.py-3.border-bottom.rounded(style="background-color: #F5DEB3")
+	.col-3 dimensions
+	.col-9
+		.row.mt-2
+			.col-3 length
+			.col-6 #{product.dimensions.length}
+			.col-3 产品长度 String(float)
+		.row.mt-2
+			.col-3 width
+			.col-6 #{product.dimensions.width}
+			.col-3 产品宽度 String(float)
+		.row.mt-2
+			.col-3 height
+			.col-6 #{product.dimensions.height}
+			.col-3 产品高度 String(float)
+
+
+.row.py-3.border-bottom.rounded(style="background-color: #C0C0C0").mt-3.border-top
+	.col-3.text-danger: span.bg-white tax_status
+	.col-6 #{product.tax_status}
+	.col-3 税务状态 String(enum) [taxable, shipping, none](taxable) ---Tax status. Options: taxable, shipping and none. Default is taxable.
+.row.py-3.border-bottom.rounded(style="background-color: #C0C0C0")
+	.col-3.text-danger: span.bg-white tax_class
+	.col-6 #{product.tax_class}
+	.col-3 tax_class String --- Tax class.
+
+
+
+.row.py-3.border-bottom.rounded(style="background-color: #C0C0C0").mt-3.border-top
+	.col-3.text-danger: span.bg-white parent_id
+	.col-6 #{product.parent_id}
+	.col-3 parent_id Number(ID) Product parent ID.
+.row.py-3.border-bottom.rounded(style="background-color: #C0C0C0")
+	.col-3.text-warning: span.bg-white purchase_note
+	.col-6 #{product.purchase_note}
+	.col-3 采购须知 String advanced中设置, 怎么显示?
+.row.py-3.border-bottom.rounded(style="background-color: #C0C0C0")
+	.col-3.text-warning: span.bg-white menu_order
+	.col-6 #{product.menu_order}
+	.col-3 menu_order Number --- 在Advanced中设置, 不知道作用。used to custom sort products.
+
+
+
+
+//- h3.mt-3 无实物产品 如果是虚拟产品 则要设置是否能够下载
+.row.py-3.border-bottom.rounded(style="background-color: #C0C0C0").mt-3.border-top
+	.col-3 virtual
+	.col-6 #{product.virtual}
+	.col-3 是否为虚拟产品 Boolean(false)
+.row.py-3.border-bottom.rounded(style="background-color: #C0C0C0")
+	.col-3 downloadable
+	.col-6 #{product.downloadable}
+	.col-3 能否下载 Boolean(false)
+.row.py-3.border-bottom.rounded(style="background-color: #C0C0C0")
+	.col-3 downloads
+	.col-6 #{product.downloads}
+	.col-3 文件下载列表 Array
+.row.py-3.border-bottom.rounded(style="background-color: #C0C0C0")
+	.col-3 download_limit
+	.col-6 #{product.download_limit}
+	.col-3 购买后能够下载的次数 Number
+.row.py-3.border-bottom.rounded(style="background-color: #C0C0C0")
+	.col-3 download_expiry
+	.col-6 #{product.download_expiry}
+	.col-3 下载过期天数 Number
+.row.py-3.border-bottom.rounded(style="background-color: #C0C0C0")
+	.col-3.text-info: span.bg-white catalog_visibility
+	.col-6 #{product.catalog_visibility}
+	.col-3 是否可见产品类型 String(enum) [visible, catalog, search, hidden] (visible) --- Catalog visibility.
+//- 外部产品
+.row.py-3.border-bottom.rounded(style="background-color: #C0C0C0").mt-3.border-top
+	.col-3 external_url
+	.col-6 #{product.external_url}
+	.col-3 引用外部产品的连接 String
+.row.py-3.border-bottom.rounded(style="background-color: #C0C0C0")
+	.col-3 button_text
+	.col-6 #{product.button_text}
+	.col-3 引用外部产品的按钮文字 String
+
+
+.row.py-3.border-bottom.rounded(style="background-color: #C0C0C0").mt-3.border-top
+	.col-3
+		.title.text-danger: span.bg-white meta_data
+		.desp meta_data Array Meta data
+	.col-9
+		each meta_dt in product.meta_data
+			-a;
+			.border.rounded.p-2.mt-2
+				each key in Object.keys(meta_dt)
+					- val = meta_dt[key];
+					.row.mt-2
+						.col-6 #{key}
+						.col-6 #{val}
+
+
+
+
+.row.py-3.border-bottom.rounded(style="background-color: #F5DEB3").mt-3.border-top
+	.col-3 date_created
+	.col-6 #{moment(product.date_created).format("YYYY/MM/DD HH:mm:ss")}
+	.col-3 创建时间 Date
+.row.py-3.border-bottom.rounded(style="background-color: #F5DEB3")
+	.col-3 date_created_gmt
+	.col-6 #{moment(product.date_created_gmt).format("YYYY/MM/DD HH:mm:ss")}
+	.col-3 创建时间 Date
+.row.py-3.border-bottom.rounded(style="background-color: #F5DEB3")
+	.col-3 date_modified
+	.col-6 #{moment(product.date_modified).format("YYYY/MM/DD HH:mm:ss")}
+	.col-3 修改时间 Date
+.row.py-3.border-bottom.rounded(style="background-color: #F5DEB3")
+	.col-3 date_modified_gmt
+	.col-6 #{moment(product.date_modified_gmt).format("YYYY/MM/DD HH:mm:ss")}
+	.col-3 修改时间 Date
+
+
+
+
+
+
+
+div(style="height: 200px")

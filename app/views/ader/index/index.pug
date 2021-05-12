@@ -1,0 +1,32 @@
+extends ../aalayout/layout
+
+block content
+	.container.mt-3
+		.row.text-center
+			.col-6.col-lg-3.mt-3
+				a(href="/adNations")
+					img(src="/icon/indicate.png", width="50px", height="50px")
+				a.btn.btn-default.btn-lg.btn-block.text-dark(href="/adNations") 国家列表
+			.col-6.col-lg-3.mt-3
+				a(href="/adBnCategFirs")
+					img(src="/icon/indicate.png", width="50px", height="50px")
+				a.btn.btn-default.btn-lg.btn-block.text-dark(href="/adBnCategFirs") 品牌一级分类
+			.col-6.col-lg-3.mt-3
+				a(href="/adBnCategSecs")
+					img(src="/icon/indicate.png", width="50px", height="50px")
+				a.btn.btn-default.btn-lg.btn-block.text-dark(href="/adBnCategSecs") 品牌二级级分类
+		.row.text-center
+			.col-6.col-lg-3.mt-3
+				a(href="/adUsers")
+					img(src="/icon/indicate.png", width="50px", height="50px")
+				a.btn.btn-default.btn-lg.btn-block.text-dark(href="/adUsers") 用户列表
+			.col-6.col-lg-3.mt-3
+				a(href="/adFirms")
+					img(src="/icon/indicate.png", width="50px", height="50px")
+				a.btn.btn-default.btn-lg.btn-block.text-dark(href="/adFirms") 公司列表
+		hr
+		//- .row.text-center
+		//- 	.col-6.col-lg-3.mt-3
+		//- 		a(href="/adBnCategSecProof")
+		//- 			img(src="/icon/indicate.png", width="50px", height="50px")
+		//- 		a.btn.btn-default.btn-lg.btn-block.text-danger(href="/adBnCategSecProof") 校准二级分类

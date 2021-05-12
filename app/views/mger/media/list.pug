@@ -1,0 +1,27 @@
+extends ../../aalayout/layout
+
+block content
+	.container-fluid.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/mger") 操作页面
+				li.breadcrumb-item.active(aria-current="page") #{title}
+		table.table.table-striped
+			thead
+				tr
+					th #{medias.length}
+					th 编号
+					th img
+					th slug
+					th media_type
+			tbody
+				each media in medias
+					-a;
+					tr
+						td
+							input(id="cb-select"+media.id type="checkbox" name="post[]" value=media.id)
+						td #{media.id}
+						td
+							img.css-img-neat(src=media.source_url, height="30px")
+						td #{media.slug}
+						td #{media.media_type}

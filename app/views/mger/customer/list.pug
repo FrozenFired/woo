@@ -1,0 +1,35 @@
+extends ../../aalayout/layout
+
+block content
+	.container-fluid.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/mger") 操作页面
+				li.breadcrumb-item.active(aria-current="page") #{title}
+
+		table.table.table-striped
+			thead
+				tr
+					th #{customers.length}
+					th 编号
+					th email
+					th 用户名
+					th 姓
+					th 名
+					th 下单数量
+					th 下单总金额
+					//- th 最近一次下单
+			tbody
+				each customer in customers
+					-a;
+					tr
+						td
+							input(id="cb-select"+customer.id type="checkbox" name="post[]" value=customer.id)
+						td #{customer.id}
+						td #{customer.email}
+						td #{customer.username}
+						td #{customer.first_name}
+						td #{customer.last_name}
+						td #{customer.orders_count}
+						td #{customer.total_spent}
+						//- td #{moment(customer.last_order.date).format("YYYY/MM/DD")}

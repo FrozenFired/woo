@@ -1,0 +1,14 @@
+- shipping = order.shipping;
+.shipping.p-3
+	.border.rounded.p-3
+		h4.text-center 发货信息
+		.first_name 姓: #{shipping.first_name}
+		.last_name 名: #{shipping.last_name}
+		if shipping.company
+			- company = shipping.company;
+			.company 公司: #{company}
+		.address_1 地址1: #{shipping.address_1}
+		.address_2 地址2: #{shipping.address_2}
+		.city 城市: #{shipping.city}
+		.country 国家: #{shipping.country}
+		.postcode 邮编: #{shipping.postcode}
