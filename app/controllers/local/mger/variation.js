@@ -149,7 +149,7 @@ exports.variationPutImages = async(req, res) => {
 				const delMedia = await MdWoo.wooDelete_Prom("media/"+media.id+"?force=true");
 			}
 		}
-
+		console.log(data)
 		const variation = await MdWoo.wooPut_Prom("products/"+product_id+"/variations/"+id, data, "String");
 
 		if(!variation || !variation.id) {
