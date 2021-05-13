@@ -150,15 +150,11 @@ exports.variationPutImages = async(req, res) => {
 				const delMedia = await MdWoo.wooDelete_Prom("media/"+media.id+"?force=true");
 			}
 		}
-		console.log(data)
 		const variation = await MdWoo.wooPut_Prom("products/"+product_id+"/variations/"+id, data, "String");
 
-		if(!variation || !variation.id) {
-			if(image) MdFile.delFile(image);
-			return res.redirect('/?info=variationPutImages 图片更新错误');
-		} else {
-			return res.redirect("/product/"+product_id);
-		}
+		if(image) MdFile.delFile(image);
+		if(!variation || !variation.id) return res.redirect('/?info=variationPutImages 图片更新错误');
+		return res.redirect("/variation/"+id);
 	} catch(error) {
 		console.log(error);
 		return res.redirect('/?info=variationPutImages &error='+error);
