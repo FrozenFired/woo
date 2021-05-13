@@ -65,7 +65,7 @@ exports.variationPutAjax = async(req, res) => {
 	}
 }
 
-exports.variationDel = async(req, res) => {
+exports.variationDelAjax = async(req, res) => {
 	try {
 		const id = req.params.id;
 		const product_id = req.query.product_id;
@@ -74,11 +74,22 @@ exports.variationDel = async(req, res) => {
 		if(product.status == "publish") return res.json({status: 500, message: "variationDel 请先下架产品再删除 SKU"});
 
 		const variation = await MdWoo.wooDelete_Prom("products/"+product_id+"/variations/"+id);
-		if(variation && variation.id) {
-			return res.json({status: 200, variation})
-		} else {
-			return res.json({status: 500, message: "操作错误"})
+		if(!variation || !variation.id) return res.json({status: 500, message: "variationDelAjax 删除SKU失败"});
+		let images = product.images;
+		if(!images) images = new Array();
+		const image = variation.image;
+
+		if(image) {
+			let i = 0;
+			for(; i < images.length; i++) {
+				if(image.id == images[i].id) break;
+			}
+			if(i == images.length) {
+				const delMedia = await MdWoo.wooDelete_Prom("media/"+image.id+"?force=true");
+			}
 		}
+
+		return res.json({status: 200, variation})
 	} catch(error) {
 		console.log(error);
 		return res.json({status: 500, message: "/variationPutAjax error"})

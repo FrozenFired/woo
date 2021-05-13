@@ -27,6 +27,7 @@ $(function() {
 
 	$("#subBtnPutImgs").click(function(e) {
 		$("#productPutImgsForm").submit();
+		$(".imgsEdit").hide();
 	})
 
 	$("#imgsEditBtn").click(function(e) {

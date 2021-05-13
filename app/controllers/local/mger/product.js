@@ -65,13 +65,14 @@ exports.product = async(req, res) => {
 		const crUser = req.session.crUser;
 		const id = req.params.id;
 		const product = await MdWoo.wooGet_Prom("products/"+id);
+
 		let errorInfo = null;
 		if(!product || !product.id) {
 			errorInfo = "查无此产品";
 		}
 		const categories = await MdWoo.wooGet_Prom("products/categories");
-		const variations = await MdWoo.wooGet_Prom("products/"+req.params.id+"/variations");
-		// console.log(variations[0])
+		const variations = await MdWoo.wooGet_Prom("products/"+id+"/variations");
+		// console.log(variations)
 
 		return res.render('./mger/product/detail', {
 			title: '产品: '+product.name,
@@ -108,9 +109,18 @@ exports.productDel = async(req, res) => {
 		const id = req.params.id;
 
 		const product = await MdWoo.wooGet_Prom("products/"+id);
-		if(product.status == "publish") return res.redirect('/?info=请先下架 再删除');
-		const images = product.images;
+		if(product.status == "publish") return res.redirect('/?info=productDel 请先下架 再删除');
+		let images = product.images;
+		if(!images) images = new Array();
+
+		const variations = await MdWoo.wooGet_Prom("products/"+id+"/variations");
+		variations.forEach(variation => {
+			images.push(variation.image);
+		})
+
 		const delObject = await MdWoo.wooDelete_Prom("products/"+id);
+		if(!delObject || !delObject.id) return res.redirect("/?info=productDel 产品删除失败");
+
 		images.forEach(async(media) => {
 			const delMedia = await MdWoo.wooDelete_Prom("media/"+media.id+"?force=true");
 		})

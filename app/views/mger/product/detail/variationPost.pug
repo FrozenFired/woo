@@ -1,7 +1,7 @@
 if product.status != "publish"
 	-a;
 	.my-5
-		button.btn.btn-warning#variationAddBtn(type="button") 新SKU
+		button.btn.btn-warning#variationAddBox(type="button") 新SKU
 	//- #variationAddPage.my-5
 	#variationAddPage.my-5(style="display:none")
 		form#variationPostForm(method="post", action="/variationPost", enctype="multipart/form-data")
@@ -21,16 +21,16 @@ if product.status != "publish"
 			.row.border.rounded.py-3
 				if variations && variations.length > 0
 					- regular_price = variations[0].regular_price;
-					- sales_price = variations[0].sales_price;
+					- sale_price = variations[0].sale_price;
 				label.text-right.col-4.col-sm-2.col-form-label(for="regular_priceIpt") 售价
 				.col-8.col-sm-2
 					input#regular_priceIpt.form-control(type="text", name="data[regular_price]", value=regular_price)
 				.offset-4.offset-sm-2.col-8.col-sm-10#regular_priceOpt.text-danger(style="display:none")
 					span 请输入产品售价
-				label.text-right.col-4.col-sm-2.col-form-label(for="sales_priceIpt")#sales_priceLabel 折扣价
+				label.text-right.col-4.col-sm-2.col-form-label(for="sale_priceIpt")#sale_priceLabel 折扣价
 				.col-8.col-sm-2
-					input#sales_priceIpt.form-control(type="text", name="data[sales_price]", value=sales_price)
-				.offset-4.offset-sm-2.col-8.col-sm-10#sales_priceOpt.text-danger(style="display:none")
+					input#sale_priceIpt.form-control(type="text", name="data[sale_price]", value=sale_price)
+				.offset-4.offset-sm-2.col-8.col-sm-10#sale_priceOpt.text-danger(style="display:none")
 					span 请输入产品折扣价
 			.row.border.rounded.py-3
 				label.col-3.col-sm-2.col-form-label(for="imagesIpt") 产品图片

@@ -44,7 +44,7 @@ module.exports = function(app){
 	app.get('/variation/:id', MdRole.mgerIsLogin, Variation.variation)
 	app.post('/variationPost', MdRole.mgerIsLogin, postForm, MdFile.newFiles, Variation.variationPost)
 	app.put('/variationPut/:id', MdRole.mgerIsLogin, Variation.variationPutAjax)
-	app.delete('/variationDel/:id', MdRole.mgerIsLogin, Variation.variationDel)
+	app.delete('/variationDel/:id', MdRole.mgerIsLogin, Variation.variationDelAjax)
 	/* -------------------------------- Media -------------------------------- */
 	app.post('/variationPutImages', MdRole.mgerIsLogin, postForm, MdFile.newFiles, Variation.variationPutImages)
 	app.get('/variationDelImage/:id', MdRole.mgerIsLogin, Variation.variationDelImage)

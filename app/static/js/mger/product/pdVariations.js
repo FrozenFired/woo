@@ -8,6 +8,7 @@ $(() => {
 		const id = target.data("id");
 		const product_id = target.data("product_id");
 		
+		$(".variationDelElem").toggle();
 		$.ajax({
 			type: "DELETE",
 			url: "/variationDel/"+id+"?product_id="+product_id,

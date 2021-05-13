@@ -1,5 +1,5 @@
 $(() => {
-	$("#variationAddBtn").click(function(e) {
+	$("#variationAddBox").click(function(e) {
 		$("#variationAddPage").toggle();
 	})
 
@@ -11,6 +11,8 @@ $(() => {
 		} else if(!jsFunc_isFloat(regular_price)) {
 			alert("售价请输入数字");
 			e.preventDefault();
+		} else {
+			$("#variationPostForm").hide();
 		}
 	})
 })
