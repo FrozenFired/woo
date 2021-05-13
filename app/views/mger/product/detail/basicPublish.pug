@@ -115,13 +115,13 @@ div(style="height: 100px")
 									-a;
 									span.mx-3 |
 	.row.py-3.border-bottom.rounded
+			.col-3 单位 / sku
+			.col-9 #{product.sku}
+	.row.py-3.border-bottom.rounded
 		.col-3.col-md-3 类型 / type:
 		.col-9.col-md-3 #{Conf.product.type.lang[product.type]} / #{product.type}
 	if product.type == "simple"
 		-a;
-		.row.py-3.border-bottom.rounded
-			.col-3 单位 / sku
-			.col-9 #{product.sku}
 		.row.py-3.border-bottom.rounded
 			.col-3 价格 / regular_price
 			.col-9 #{product.regular_price}

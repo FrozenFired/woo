@@ -95,6 +95,12 @@ div(style="height: 100px")
 .border.px-3
 	.py-3.border-bottom.rounded
 		include ./editAttributes
+	.row.py-3.border-bottom.rounded
+		.col-3: span.text-info.keyClickUpA(id="keyClickUpA-"+product.id+"-sku") 单位 / sku
+		.col-9
+			span.valClickUpA(id="valClickUpA-"+product.id+"-sku") #{product.sku}
+			input(type="hidden", id="iptOrg-"+product.id+"-sku", value=product.sku)
+			input.form-control.iptNewBlurUpd(type="text", id="iptNewBlurUpd-"+product.id+"-sku", value=product.sku, data-url="/productPut/"+product.id, data-key="sku", data-type="String", placeholder="售卖单位 [如 个 盒 份 公斤]", style="display:none")
 
 	.row.py-3.border-bottom.rounded
 		.col-3.col-md-3 类型 / type:
@@ -109,12 +115,6 @@ div(style="height: 100px")
 						option(value=key) #{val} / #{key}
 	if product.type == "simple"
 		-a;
-		.row.py-3.border-bottom.rounded
-			.col-3: span.text-info.keyClickUpA(id="keyClickUpA-"+product.id+"-sku") 单位 / sku
-			.col-9
-				span.valClickUpA(id="valClickUpA-"+product.id+"-sku") #{product.sku}
-				input(type="hidden", id="iptOrg-"+product.id+"-sku", value=product.sku)
-				input.form-control.iptNewBlurUpd(type="text", id="iptNewBlurUpd-"+product.id+"-sku", value=product.sku, data-url="/productPut/"+product.id, data-key="sku", data-type="String", style="display:none")
 		.row.py-3.border-bottom.rounded
 			.col-3: span.text-info.keyClickUpA(id="keyClickUpA-"+product.id+"-regular_price") 价格 / regular_price
 			.col-9

@@ -75,9 +75,9 @@ exports.variationDelAjax = async(req, res) => {
 
 		const variation = await MdWoo.wooDelete_Prom("products/"+product_id+"/variations/"+id);
 		if(!variation || !variation.id) return res.json({status: 500, message: "variationDelAjax 删除SKU失败"});
+		const image = variation.image;
 		let images = product.images;
 		if(!images) images = new Array();
-		const image = variation.image;
 
 		if(image) {
 			let i = 0;
@@ -121,29 +121,42 @@ exports.variationDelImage = async(req, res) => {
 exports.variationPutImages = async(req, res) => {
 	// console.log("/variationPutImages")
 	try{
+		let image = null;
+		if(req.body.files) {
+			image = req.body.files[0];
+		}
+		if(!image) return res.redirect('/?info=variationPutImages 请上传图片'); 
+
+		const data = new Object();
+		data.image = image;
+
 		const id = req.body.id;
 		const product_id = req.body.product_id;
-		let data= req.body.data;
-		if(!data) data = new Object();
 
-		const images = req.body.files;
-		if(!data.images) data.images = new Array();
-		images.forEach(img => {
-			const image = new Object();
-			image.src=process.env.DNS+img
-			data.images.push(image)
-		})
-		data.status = "private";
-		
+		const product = await MdWoo.wooGet_Prom("products/"+product_id);
+		if(!product || !product.id) return res.redirect('/?info=variationPutImages 没有找到此产品');
+		const org = await MdWoo.wooGet_Prom("products/"+product_id+"/variations/"+id);
+		if(!org || !org.id) return res.redirect('/?info=variationPutImages 没有找到此产品SKU');
+		const media = org.image;
+		let images = product.images;
+		if(!images) images = new Array();
+		if(media) {
+			let i = 0;
+			for(; i < images.length; i++) {
+				if(media.id == images[i].id) break;
+			}
+			if(i == images.length) {
+				const delMedia = await MdWoo.wooDelete_Prom("media/"+media.id+"?force=true");
+			}
+		}
+
 		const variation = await MdWoo.wooPut_Prom("products/"+product_id+"/variations/"+id, data, "String");
 
-		images.forEach(img => {MdFile.delFile(img) }); // 刪除本地服务器的图片
-
-		if(variation && variation.id) {
-			return res.redirect('/variation/'+id);
+		if(!variation || !variation.id) {
+			if(image) MdFile.delFile(image);
+			return res.redirect('/?info=variationPutImages 图片更新错误');
 		} else {
-			console.log(variation)
-			return res.redirect('/?info=variationPutImages 更新错误');
+			return res.redirect("/product/"+product_id);
 		}
 	} catch(error) {
 		console.log(error);

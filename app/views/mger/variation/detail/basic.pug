@@ -11,48 +11,21 @@
 	.col-3
 		.title image
 		.desp 产品图片 Array
-		//- button.btn.btn-warning.showImagesBtn(type="button") 修改图片
-		//- input#orgImages(type="hidden", value=product.images)
-		button.btn.btn-success#subBtnPutImg(type="button") 更新图片
+		button.mr-5.btn.btn-link.text-warning#imgEditBtn(type="button") 修改图片
+		button.btn.btn-success#subBtnPutImg.imgEdit(type="button" style="display:none") 更新图片
 	.col-9
 		form#productPutImgForm(method="post", action="/variationPutImages", enctype="multipart/form-data")
 			input(type="hidden", name="id", value=variation.id)
-			.row.border.rounded.p-2.mt-2
-				.col-2
-					//- input(type="hidden", name="data[images]["+sub+"][src]", value=variation.image.src)
-					input(type="hidden", name="data[image][id]", value=variation.image.id)
-					input(type="hidden", name="data[image][name]", value=variation.image.name)
-					input(type="hidden", name="data[image][alt]", value=variation.image.alt)
-
-					img.css-img-neat.border.rounded(src=variation.image.src, width="100%", height="150px")
-					.text-center
-						a.text-danger(href="/variationDelImage/"+variation.image.id+"?variation="+variation.id+"&product="+product.id) [删除]
-				//- .col-10
-					.row.mt-2
-						.col-2 id
-						.col-10 #{variation.image.id}
-					.row.mt-2
-						.col-2 src
-						.col-10 #{variation.image.src}
-					.row.mt-2
-						.col-2 name
-						.col-10 #{variation.image.name}
-					.row.mt-2
-						.col-2 alt
-						.col-10 #{variation.image.alt}
-			.row#newImg
-				.col-2
-					img#crtImg.rounded-circle(src="/icon/img.jpg", width="100%")
+			input(type="hidden", name="product_id", value=product.id)
 			input#uploadImg.btn.btn-info.btn-block(type="file", name="fls", style="display:none")
+			- image = "/icon/img.jpg";
+			if variation.image && variation.image.src
+				-image = variation.image.src;
+			img#crtImg(src=image, width="150px")
+script(src="/js/mger/attribute/attrImgEdit.js")
 
 div(style="height: 100px")
 .border.px-3
-	.row.py-3.border-bottom.rounded
-		.col-3: span.text-info.keyClickUpA(id="keyClickUpA-"+variation.id+"-sku") 单位 / sku
-		.col-9
-			span.valClickUpA(id="valClickUpA-"+variation.id+"-sku") #{variation.sku}
-			input(type="hidden", id="iptOrg-"+variation.id+"-sku", value=variation.sku)
-			input.form-control.iptNewBlurUpd(type="text", id="iptNewBlurUpd-"+variation.id+"-sku", value=variation.sku, data-url="/variationPut/"+variation.id, data-key="sku", data-type="String", style="display:none")
 	.row.py-3.border-bottom.rounded
 		.col-3: span.text-info.keyClickUpA(id="keyClickUpA-"+variation.id+"-regular_price") 价格 / regular_price
 		.col-9

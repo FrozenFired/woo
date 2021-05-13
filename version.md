@@ -1,3 +1,4 @@
+0.0.71	variation Put image test1
 0.0.7	variationDel
 0.0.63	variation new OK
 0.0.62	variation new test2
