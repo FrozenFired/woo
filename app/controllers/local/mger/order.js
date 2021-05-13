@@ -1,14 +1,26 @@
 const MdWoo = require('../../../middle/woo/middleWoo');
+const Conf = require('../../../config/conf');
 
 exports.orders = async(req, res) => {
 	// console.log("/orders")
 	try{
-		const crUser = req.session.crUser;
-		const orders = await MdWoo.wooGet_Prom("orders");
+		let url = "orders?";
+		let errorInfo = null;
 
+		if(req.query.status) {
+			if(Conf.order.status.arr.includes(req.query.status)) {
+				url += "&status="+req.query.status;
+			} else {
+				errorInfo = "订单状态参数错误"
+			}
+		}
+
+		const crUser = req.session.crUser;
+		const orders = await MdWoo.wooGet_Prom(url);
 		return res.render('./mger/order/list', {
 			title: '订单列表',
 			crUser,
+			errorInfo,
 			orders,
 		})
 	} catch(error) {
@@ -29,7 +41,7 @@ exports.order = async(req, res) => {
 			errorInfo = "查无此订单";
 		}
 		return res.render('./mger/order/detail', {
-			title: '订单: '+order.name,
+			title: '订单: '+order.number,
 			crUser,
 			order,
 		})

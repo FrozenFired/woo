@@ -25,6 +25,7 @@
 			img#crtImg(src=image, width="150px")
 script(src="/js/mger/attribute/attrImgEdit.js")
 
+
 div(style="height: 100px")
 .border.px-3
 	.row.py-3.border-bottom.rounded
@@ -32,13 +33,13 @@ div(style="height: 100px")
 		.col-9
 			span.valClickUpA(id="valClickUpA-"+variation.id+"-regular_price") #{variation.regular_price}
 			input(type="hidden", id="iptOrg-"+variation.id+"-regular_price", value=variation.regular_price)
-			input.form-control.iptNewBlurUpd(type="text", id="iptNewBlurUpd-"+variation.id+"-regular_price", value=variation.regular_price, data-url="/variationPut/"+variation.id, data-key="regular_price", data-type="String", style="display:none")
+			input.form-control.iptNewBlurUpd(type="text", id="iptNewBlurUpd-"+variation.id+"-regular_price", value=variation.regular_price, data-url="/variationPut/"+variation.id+"?product_id="+product.id, data-key="regular_price", data-type="String", style="display:none")
 	.row.py-3.border-bottom.rounded
 		.col-3: span.text-info.keyClickUpA(id="keyClickUpA-"+variation.id+"-sale_price") 折扣价 / sale_price
 		.col-9
 			span.valClickUpA(id="valClickUpA-"+variation.id+"-sale_price") #{variation.sale_price}
 			input(type="hidden", id="iptOrg-"+variation.id+"-sale_price", value=variation.sale_price)
-			input.form-control.iptNewBlurUpd(type="text", id="iptNewBlurUpd-"+variation.id+"-sale_price", value=variation.sale_price, data-url="/variationPut/"+variation.id, data-key="sale_price", data-type="String", style="display:none")
+			input.form-control.iptNewBlurUpd(type="text", id="iptNewBlurUpd-"+variation.id+"-sale_price", value=variation.sale_price, data-url="/variationPut/"+variation.id+"?product_id="+product.id, data-key="sale_price", data-type="String", style="display:none")
 
 
 	//- stock
@@ -48,10 +49,10 @@ div(style="height: 100px")
 			if variation.manage_stock
 				-nt="false";
 				button.mr-5.btn.btn-success(type="button") 是
-				button.btn.btn-secondary.putObjBtnClick(type="button", data-url="/variationPut/"+variation.id, data-key="manage_stock", data-val=nt, data-type="Boolean") 否
+				button.btn.btn-secondary.putObjBtnClick(type="button", data-url="/variationPut/"+variation.id+"?product_id="+product.id, data-key="manage_stock", data-val=nt, data-type="Boolean") 否
 			else
 				-nt="true";
-				button.btn.btn-secondary.putObjBtnClick(type="button", data-url="/variationPut/"+variation.id, data-key="manage_stock", data-val=nt, data-type="Boolean") 是
+				button.btn.btn-secondary.putObjBtnClick(type="button", data-url="/variationPut/"+variation.id+"?product_id="+product.id, data-key="manage_stock", data-val=nt, data-type="Boolean") 是
 				button.ml-5.btn.btn-success(type="button") 否
 	if variation.manage_stock
 		-a;
@@ -60,12 +61,12 @@ div(style="height: 100px")
 			.col-9
 				span.valClickUpA(id="valClickUpA-"+variation.id+"-stock_quantity") #{variation.stock_quantity}
 				input(type="hidden", id="iptOrg-"+variation.id+"-stock_quantity", value=variation.stock_quantity)
-				input.form-control.iptNewBlurUpd(type="number", id="iptNewBlurUpd-"+variation.id+"-stock_quantity", value=variation.stock_quantity, data-url="/variationPut/"+variation.id, data-key="stock_quantity", data-type="Number", style="display:none")
+				input.form-control.iptNewBlurUpd(type="number", id="iptNewBlurUpd-"+variation.id+"-stock_quantity", value=variation.stock_quantity, data-url="/variationPut/"+variation.id+"?product_id="+product.id, data-key="stock_quantity", data-type="Number", style="display:none")
 
 		.row.ml-3.py-3.border-bottom.rounded
 			.col-3 缺货允许 / backorders:
 			.col-3
-				select.putObjSelChange.form-control(data-url="/variationPut/"+variation.id, data-key="backorders", data-type="String")
+				select.putObjSelChange.form-control(data-url="/variationPut/"+variation.id+"?product_id="+product.id, data-key="backorders", data-type="String")
 					each key in Conf.product.backorders.arr
 						- val = Conf.product.backorders.lang[key];
 						if variation.backorders == key
@@ -79,7 +80,7 @@ div(style="height: 100px")
 		.row.py-3.border-bottom.rounded
 			.col-3 库存状态 / stock_status:
 			.col-3
-				select.putObjSelChange.form-control(data-url="/variationPut/"+variation.id, data-key="stock_status", data-type="String")
+				select.putObjSelChange.form-control(data-url="/variationPut/"+variation.id+"?product_id="+product.id, data-key="stock_status", data-type="String")
 					each key in Conf.product.stock_status.arr
 						- val = Conf.product.stock_status.lang[key];
 						if variation.stock_status == key
@@ -94,10 +95,10 @@ div(style="height: 100px")
 			if variation.sold_individually
 				-nt="false";
 				button.mr-5.btn.btn-success(type="button") 是
-				button.btn.btn-secondary.putObjBtnClick(type="button", data-url="/variationPut/"+variation.id, data-key="sold_individually", data-val=nt, data-type="Boolean") 否
+				button.btn.btn-secondary.putObjBtnClick(type="button", data-url="/variationPut/"+variation.id+"?product_id="+product.id, data-key="sold_individually", data-val=nt, data-type="Boolean") 否
 			else
 				-nt="true";
-				button.btn.btn-secondary.putObjBtnClick(type="button", data-url="/variationPut/"+variation.id, data-key="sold_individually", data-val=nt, data-type="Boolean") 是
+				button.btn.btn-secondary.putObjBtnClick(type="button", data-url="/variationPut/"+variation.id+"?product_id="+product.id, data-key="sold_individually", data-val=nt, data-type="Boolean") 是
 				button.ml-5.btn.btn-success(type="button") 否
 
 		.col-3

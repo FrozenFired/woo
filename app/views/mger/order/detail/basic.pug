@@ -2,7 +2,8 @@
 	.col-md-6
 		.code 订单号: #{order.number}
 	.col-6.col-md-3
-		.status 状态: #{order.status}
+		- lang = order.status.replace(/-/, "_");
+		.status 状态: #{Conf.order.status.lang[lang]}
 	.col-6.col-md-3
 		.cter 客人: #{order.customer_id}
 	.col-6.col-md-3
@@ -23,14 +24,10 @@ if order.customer_note
 	.customer_note 客户留言: #{customer_note}
 
 .mt-3
-	if order.status != "on-hold"
-		- nt = "on-hold";
-		button.mr-5.btn.btn-warning.putObjBtnClick(type="button", data-url="/orderPut/"+order.id, data-key="status", data-val=nt, data-type="String") #{nt}
-	if order.status != "processing"
-		- nt = "processing";
-		button.mr-5.btn.btn-warning.putObjBtnClick(type="button", data-url="/orderPut/"+order.id, data-key="status", data-val=nt, data-type="String") #{nt}
-	if order.status != "completed"
-		- nt = "completed";
-		button.mr-5.btn.btn-warning.putObjBtnClick(type="button", data-url="/orderPut/"+order.id, data-key="status", data-val=nt, data-type="String") #{nt}
+	each status in Conf.order.status.arr
+		- lang = status.replace(/-/, "_");
+		if status == order.status
+			- continue;
+		button.mr-5.btn.btn-warning.putObjBtnClick(type="button", data-url="/orderPut/"+order.id, data-key="status", data-val=status, data-type="String") #{Conf.order.status.lang[lang]}
 
 	//- pending, processing, on-hold, completed, cancelled, refunded, failed and trash. Default is pending.

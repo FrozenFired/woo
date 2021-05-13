@@ -1,15 +1,44 @@
 const MdWoo = require('../../../middle/woo/middleWoo');
 const MdFile = require('../../../middle/local/middleFile');
+const Conf = require('../../../config/conf');
 
 exports.products = async(req, res) => {
 	// console.log("/products")
 	try{
+		let url = "products?";
+		let errorInfo = null;
+
+		if(req.query.search) {
+			url += "&search="+req.query.search;
+		}
+		if(req.query.status) {
+			if(Conf.product.status.arr.includes(req.query.status)) {
+				url += "&status="+req.query.status;
+			} else {
+				errorInfo = "产品状态参数错误"
+			}
+		}
+		if(req.query.featured) {
+			if(["true", "false"].includes(req.query.featured)) {
+				url += "&featured="+req.query.featured;
+			} else {
+				errorInfo = "产品精选参数错误"
+			}
+		}
+		if(req.query.type) {
+			if(Conf.product.type.arr.includes(req.query.type)) {
+				url += "&type="+req.query.type;
+			} else {
+				errorInfo = "产品类型参数错误"
+			}
+		}
+
 		const crUser = req.session.crUser;
-		const products = await MdWoo.wooGet_Prom("products");
-		const media = await MdWoo.wooGet_Prom("media");
+		const products = await MdWoo.wooGet_Prom(url);
 		return res.render('./mger/product/list', {
 			title: '产品列表',
 			crUser,
+			errorInfo,
 			products,
 		})
 	} catch(error) {
