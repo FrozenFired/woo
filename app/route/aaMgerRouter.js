@@ -41,9 +41,10 @@ module.exports = function(app){
 	/* -------------------------------- Attr -------------------------------- */
 	app.post('/productPutAttributes', MdRole.mgerIsLogin, Product.productPutAttributes)
 	/* =================================== Variation =================================== */
-	app.get('/variation/:id/:productId', MdRole.mgerIsLogin, Variation.variation)
+	app.get('/variation/:id', MdRole.mgerIsLogin, Variation.variation)
 	app.post('/variationPost', MdRole.mgerIsLogin, postForm, MdFile.newFiles, Variation.variationPost)
 	app.put('/variationPut/:id', MdRole.mgerIsLogin, Variation.variationPutAjax)
+	app.delete('/variationDel/:id', MdRole.mgerIsLogin, Variation.variationDel)
 	/* -------------------------------- Media -------------------------------- */
 	app.post('/variationPutImages', MdRole.mgerIsLogin, postForm, MdFile.newFiles, Variation.variationPutImages)
 	app.get('/variationDelImage/:id', MdRole.mgerIsLogin, Variation.variationDelImage)

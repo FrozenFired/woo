@@ -1,49 +1,48 @@
-.row.my-5
-	.col-8
-		h3 产品SKU列表： 
-	.col-4.text-right
+if product.status != "publish"
+	-a;
+	.my-5
 		button.btn.btn-warning#variationAddBtn(type="button") 新SKU
-//- #variationAddPage(style="display:none")
-#variationAddPage.my-5
-	form#variationPostForm(method="post", action="/variationPost", enctype="multipart/form-data")
-		input(type="hidden", name="productId" value=product.id)
-		.row.border.rounded.py-3
-			label.text-right.col-4.col-sm-2.col-form-label 产品属性
-			- sub = -1;
-			each attribute in product.attributes
-				- sub++;
-				.col-4.col-sm-2
-					input.form-control(type="text", name="data[attributes]["+sub+"][name]", value=attribute.name)
-					select.form-control(name="data[attributes]["+sub+"][option]", data-style="btn-info")
-						option(value="") 所有的#{attribute.name}
-						each option in attribute.options
-							-a;
-							option(value=option) #{option}
-		.row.border.rounded.py-3
-			if variations && variations.length > 0
-				- regular_price = variations[0].regular_price;
-				- sales_price = variations[0].sales_price;
-			label.text-right.col-4.col-sm-2.col-form-label(for="regular_priceIpt") 售价
-			.col-8.col-sm-2
-				input#regular_priceIpt.form-control(type="text", name="data[regular_price]", value=regular_price)
-			.offset-4.offset-sm-2.col-8.col-sm-10#regular_priceOpt.text-danger(style="display:none")
-				span 请输入产品售价
-			label.text-right.col-4.col-sm-2.col-form-label(for="sales_priceIpt")#sales_priceLabel 折扣价
-			.col-8.col-sm-2
-				input#sales_priceIpt.form-control(type="text", name="data[sales_price]", value=sales_price)
-			.offset-4.offset-sm-2.col-8.col-sm-10#sales_priceOpt.text-danger(style="display:none")
-				span 请输入产品折扣价
-		.row.border.rounded.py-3
-			label.col-3.col-sm-2.col-form-label(for="imagesIpt") 产品图片
-			input#uploadImg.btn.btn-info.btn-block(type="file", name="fls", style="display:none")
-			.col-9
-				.row
-					.col-2
-						img#crtImg(src="/icon/img.jpg", width="100%")
-		hr
-		.form-group.row
-			.offset-sm-10.col-sm-2
-				button.btn.btn-success.btn-block#createPdBtn(type="submit") 提交
+	//- #variationAddPage.my-5
+	#variationAddPage.my-5(style="display:none")
+		form#variationPostForm(method="post", action="/variationPost", enctype="multipart/form-data")
+			input(type="hidden", name="product_id" value=product.id)
+			.row.border.rounded.py-3
+				label.text-right.col-4.col-sm-2.col-form-label 产品属性
+				- sub = -1;
+				each attribute in product.attributes
+					- sub++;
+					.col-4.col-sm-2
+						input.form-control(type="text", name="data[attributes]["+sub+"][name]", value=attribute.name)
+						select.form-control(name="data[attributes]["+sub+"][option]", data-style="btn-info")
+							option(value="") 所有的#{attribute.name}
+							each option in attribute.options
+								-a;
+								option(value=option) #{option}
+			.row.border.rounded.py-3
+				if variations && variations.length > 0
+					- regular_price = variations[0].regular_price;
+					- sales_price = variations[0].sales_price;
+				label.text-right.col-4.col-sm-2.col-form-label(for="regular_priceIpt") 售价
+				.col-8.col-sm-2
+					input#regular_priceIpt.form-control(type="text", name="data[regular_price]", value=regular_price)
+				.offset-4.offset-sm-2.col-8.col-sm-10#regular_priceOpt.text-danger(style="display:none")
+					span 请输入产品售价
+				label.text-right.col-4.col-sm-2.col-form-label(for="sales_priceIpt")#sales_priceLabel 折扣价
+				.col-8.col-sm-2
+					input#sales_priceIpt.form-control(type="text", name="data[sales_price]", value=sales_price)
+				.offset-4.offset-sm-2.col-8.col-sm-10#sales_priceOpt.text-danger(style="display:none")
+					span 请输入产品折扣价
+			.row.border.rounded.py-3
+				label.col-3.col-sm-2.col-form-label(for="imagesIpt") 产品图片
+				input#uploadImg.btn.btn-info.btn-block(type="file", name="fls", style="display:none")
+				.col-9
+					.row
+						.col-2
+							img#crtImg(src="/icon/img.jpg", width="100%")
+			hr
+			.form-group.row
+				.offset-sm-10.col-sm-2
+					button.btn.btn-success.btn-block#createPdBtn(type="submit") 提交
 
-script(src="/js/mger/product/pdNewVariation.js")
-script(src="/js/mger/attribute/attrImgEdit.js")
+	script(src="/js/mger/product/pdVariationPost.js")
+	script(src="/js/mger/attribute/attrImgEdit.js")

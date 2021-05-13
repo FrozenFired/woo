@@ -165,49 +165,13 @@ div(style="height: 100px")
 			.col-3 在同一个订单中是否只能被买一件
 	else if product.type == "variable"
 		-a;
-		h3.mt-5 产品SKU列表： 
-		table.table.table-triped
-			thead
-				tr
-					th #{variations.length}
-					th img
-					th 售价
-					th 打折价
-					th 是否在售
-					th 打折
-					th 缺货
-					th 销量
-			tbody
-				each variation in variations
-					-a;
-					tr
-						td
-							input(id="cb-select"+variation.id type="checkbox" name="post[]" value=variation.id)
-						td
-							a(href="/variation/"+variation.id+"/"+product.id)
-								if variation.image
-									-a;
-									img(width=50, src=variation.image.src)
-								else
-									span #{variation.id}
-						td #{variation.regular_price}
-						td #{variation.sale_price}
-						td
-							if !variation.purchasable
-								-a;
-								span.text-danger 否
-						td
-							if variation.on_sale
-								-a;
-								span 是
-						td
-							if variation.backordered
-								-a;
-								span.text-danger 是
-						td #{variation.total_sales}
-		//- each variation in variations
+		if product.attributes && product.attributes.length > 0
 			-a;
-			include ./variations
+			include ./variationPost
+
+			if variations && variations.length > 0
+				-a;
+				include ./variations
 
 
 div(style="height: 300px")

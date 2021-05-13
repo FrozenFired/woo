@@ -134,12 +134,12 @@ exports.productDelImage = async(req, res) => {
 		const crUser = req.session.crUser;
 		const id = req.params.id;
 
-		const productId = req.query.productId;
+		const product_id = req.query.product_id;
 
 		// console.log(id)
 		const media = await MdWoo.wooDelete_Prom("media/"+id+"?force=true");
 		// console.log(media)
-		return res.redirect('/product/'+productId)
+		return res.redirect('/product/'+product_id)
 	} catch(error) {
 		console.log(error);
 		return res.redirect('/?info=productDelImage&error='+error);
