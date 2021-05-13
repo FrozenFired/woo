@@ -128,7 +128,7 @@ exports.variationPutImages = async(req, res) => {
 		if(!image) return res.redirect('/?info=variationPutImages 请上传图片'); 
 
 		const data = new Object();
-		data.image = image;
+		data.image = process.env.DNS+image;
 
 		const id = req.body.id;
 		const product_id = req.body.product_id;
@@ -149,7 +149,6 @@ exports.variationPutImages = async(req, res) => {
 				const delMedia = await MdWoo.wooDelete_Prom("media/"+media.id+"?force=true");
 			}
 		}
-		console.log(data)
 		const variation = await MdWoo.wooPut_Prom("products/"+product_id+"/variations/"+id, data, "String");
 
 		if(!variation || !variation.id) {

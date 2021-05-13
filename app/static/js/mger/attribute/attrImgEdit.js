@@ -1,6 +1,6 @@
 $(function() {
 
-	$("#crtImg").click(function(e) {
+	$("body").on("click", ".crtImg", function(e) {
 		$("#uploadImg").click();
 	})
 	$("#uploadImg").change(function(e) {
@@ -16,7 +16,18 @@ $(function() {
 		$("#productPutImgForm").submit();
 	})
 
-	$("#imgEditBtn").click(function(e) {
-		$(".imgEdit").toggle();
+	$("#imgEditBox").click(function(e) {
+		$(".imgEdit").show();
+		$("#crtImg").addClass("crtImg");
+
+		$("#imgEditBox").hide();
+		$("#imgEditCancelBox").show();
+	})
+	$("#imgEditCancelBox").click(function(e) {
+		$(".imgEdit").hide();
+		$("#crtImg").removeClass("crtImg");
+
+		$("#imgEditBox").show();
+		$("#imgEditCancelBox").hide();
 	})
 })

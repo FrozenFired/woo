@@ -11,7 +11,8 @@
 	.col-3
 		.title image
 		.desp 产品图片 Array
-		button.mr-5.btn.btn-link.text-warning#imgEditBtn(type="button") 修改图片
+		button.mr-5.btn.btn-link.text-warning#imgEditBox(type="button") 修改图片
+		button.mr-5.btn.btn-link.text-warning#imgEditCancelBox(type="button", style="display:none") 取消修改
 		button.btn.btn-success#subBtnPutImg.imgEdit(type="button" style="display:none") 更新图片
 	.col-9
 		form#productPutImgForm(method="post", action="/variationPutImages", enctype="multipart/form-data")
