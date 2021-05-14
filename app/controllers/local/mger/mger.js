@@ -20,7 +20,9 @@ exports.loginUser = async(req, res) => {
 	try {
 		const code = req.body.code.replace(/^\s*/g,"").toUpperCase();
 		const pwd = String(req.body.pwd).replace(/^\s*/g,"");
-		const user = await User.findOne({code: code, role: Conf.roleUser.owner.num});
+
+		const user = await User.findOne({code: code, role: Conf.roleUser.owner.num})
+			.populate({path: "firm", select: "code nome wpdns wookey woosecret"})
 		if(!user) return res.redirect('/?info=没有此用户');
 
 		const isMatch = await bcrypt.compare(pwd, user.pwd);

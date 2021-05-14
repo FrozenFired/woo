@@ -4,7 +4,7 @@ exports.categories = async(req, res) => {
 		const crUser = req.session.crUser;
 
 		const url = "products"+req.url;
-		const categories = await MdWoo.wooGet_Prom(url);
+		const categories = await MdWoo.wooGet_Prom(url, crUser.firm);
 		return res.render('./mger/category/list', {
 			title: '产品分类',
 			crUser,
@@ -22,7 +22,7 @@ exports.category = async(req, res) => {
 		const crUser = req.session.crUser;
 
 		const url = "products"+req.url;
-		const category = await MdWoo.wooGet_Prom(url);
+		const category = await MdWoo.wooGet_Prom(url, crUser.firm);
 		let errorInfo = null;
 		if(!category || !category.id) {
 			errorInfo = "查无此分类";

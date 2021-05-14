@@ -5,6 +5,7 @@ const Conf = require('../../../config/conf');
 exports.products = async(req, res) => {
 	// console.log("/products")
 	try{
+		const crUser = req.session.crUser;
 		let url = "products?";
 		let errorInfo = null;
 
@@ -33,8 +34,7 @@ exports.products = async(req, res) => {
 			}
 		}
 
-		const crUser = req.session.crUser;
-		const products = await MdWoo.wooGet_Prom(url);
+		const products = await MdWoo.wooGet_Prom(url, crUser.firm);
 		return res.render('./mger/product/list', {
 			title: '产品列表',
 			crUser,
@@ -52,7 +52,7 @@ exports.productAdd = async(req, res) => {
 	try{
 		const crUser = req.session.crUser;
 
-		const categories = await MdWoo.wooGet_Prom("products/categories");
+		const categories = await MdWoo.wooGet_Prom("products/categories", crUser.firm);
 		return res.render('./mger/product/add', {
 			title: '新产品',
 			crUser,
@@ -67,6 +67,7 @@ exports.productAdd = async(req, res) => {
 exports.productPost = async(req, res) => {
 	// console.log("/productPost")
 	try{
+		const crUser = req.session.crUser;
 		const images = req.body.files;
 		const data= req.body.data;
 		data.images = new Array();
@@ -76,7 +77,7 @@ exports.productPost = async(req, res) => {
 			data.images.push(image)
 		})
 		data.status = "private";
-		const product = await MdWoo.wooPost_Prom("products", data);
+		const product = await MdWoo.wooPost_Prom("products", data, crUser.firm);
 		images.forEach(img => {
 			MdFile.delFile(img)
 		})
@@ -93,14 +94,14 @@ exports.product = async(req, res) => {
 	try{
 		const crUser = req.session.crUser;
 		const id = req.params.id;
-		const product = await MdWoo.wooGet_Prom("products/"+id);
+		const product = await MdWoo.wooGet_Prom("products/"+id, crUser.firm);
 
 		let errorInfo = null;
 		if(!product || !product.id) {
 			errorInfo = "查无此产品";
 		}
-		const categories = await MdWoo.wooGet_Prom("products/categories");
-		const variations = await MdWoo.wooGet_Prom("products/"+id+"/variations");
+		const categories = await MdWoo.wooGet_Prom("products/categories", crUser.firm);
+		const variations = await MdWoo.wooGet_Prom("products/"+id+"/variations", crUser.firm);
 		// console.log(variations)
 
 		return res.render('./mger/product/detail', {
@@ -117,10 +118,12 @@ exports.product = async(req, res) => {
 };
 exports.productPutAjax = async(req, res) => {
 	try {
+		const crUser = req.session.crUser;
+
 		const id = req.params.id;
 		let data = req.body.data;
 		const type = req.body.type;
-		const product = await MdWoo.wooPut_Prom("products/"+id, data, type);
+		const product = await MdWoo.wooPut_Prom("products/"+id, data, type, crUser.firm);
 		if(product && product.id) {
 			return res.json({status: 200, product})
 		} else {
@@ -135,23 +138,24 @@ exports.productPutAjax = async(req, res) => {
 exports.productDel = async(req, res) => {
 	// console.log("/product")
 	try{
+		const crUser = req.session.crUser;
 		const id = req.params.id;
 
-		const product = await MdWoo.wooGet_Prom("products/"+id);
+		const product = await MdWoo.wooGet_Prom("products/"+id, crUser.firm);
 		if(product.status == "publish") return res.redirect('/?info=productDel 请先下架 再删除');
 		let images = product.images;
 		if(!images) images = new Array();
 
-		const variations = await MdWoo.wooGet_Prom("products/"+id+"/variations");
+		const variations = await MdWoo.wooGet_Prom("products/"+id+"/variations", crUser.firm);
 		variations.forEach(variation => {
 			images.push(variation.image);
 		})
 
-		const delObject = await MdWoo.wooDelete_Prom("products/"+id);
+		const delObject = await MdWoo.wooDelete_Prom("products/"+id, crUser.firm);
 		if(!delObject || !delObject.id) return res.redirect("/?info=productDel 产品删除失败");
 
 		images.forEach(async(media) => {
-			const delMedia = await MdWoo.wooDelete_Prom("media/"+media.id+"?force=true");
+			const delMedia = await MdWoo.wooDelete_Prom("media/"+media.id+"?force=true", crUser.firm);
 		})
 
 		return res.redirect('/products')
@@ -176,7 +180,7 @@ exports.productDelImage = async(req, res) => {
 		const product_id = req.query.product_id;
 
 		// console.log(id)
-		const media = await MdWoo.wooDelete_Prom("media/"+id+"?force=true");
+		const media = await MdWoo.wooDelete_Prom("media/"+id+"?force=true", crUser.firm);
 		// console.log(media)
 		return res.redirect('/product/'+product_id)
 	} catch(error) {
@@ -188,6 +192,8 @@ exports.productDelImage = async(req, res) => {
 exports.productPutImages = async(req, res) => {
 	// console.log("/productPutImages")
 	try{
+		const crUser = req.session.crUser;
+
 		const id = req.body.id;
 		let data= req.body.data;
 		if(!data) data = new Object();
@@ -201,7 +207,7 @@ exports.productPutImages = async(req, res) => {
 		})
 		data.status = "private";
 		
-		const product = await MdWoo.wooPut_Prom("products/"+id, data, "String");
+		const product = await MdWoo.wooPut_Prom("products/"+id, data, "String", crUser.firm);
 
 		images.forEach(img => {MdFile.delFile(img) }); // 刪除本地服务器的图片
 
@@ -222,6 +228,8 @@ exports.productPutImages = async(req, res) => {
 exports.productPutAttributes = async(req, res) => {
 	console.log("/productPutAttributes")
 	try{
+		const crUser = req.session.crUser;
+
 		const id = req.body.id;
 		const attrs= req.body.attrs;
 		const data = new Object();
@@ -245,7 +253,7 @@ exports.productPutAttributes = async(req, res) => {
 			data.attributes.push(attribute);
 		}
 
-		const product = await MdWoo.wooPut_Prom("products/"+id, data, "String");
+		const product = await MdWoo.wooPut_Prom("products/"+id, data, "String", crUser.firm);
 
 		if(product && product.id) {
 			return res.redirect('/product/'+id);

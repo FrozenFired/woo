@@ -4,6 +4,7 @@ const Conf = require('../../../config/conf');
 exports.orders = async(req, res) => {
 	// console.log("/orders")
 	try{
+		const crUser = req.session.crUser;
 		let url = "orders?";
 		let errorInfo = null;
 
@@ -15,8 +16,7 @@ exports.orders = async(req, res) => {
 			}
 		}
 
-		const crUser = req.session.crUser;
-		const orders = await MdWoo.wooGet_Prom(url);
+		const orders = await MdWoo.wooGet_Prom(url, crUser.firm);
 		return res.render('./mger/order/list', {
 			title: '订单列表',
 			crUser,
@@ -34,7 +34,7 @@ exports.order = async(req, res) => {
 	try{
 		const crUser = req.session.crUser;
 		const id = req.params.id;
-		const order = await MdWoo.wooGet_Prom("orders/"+id);
+		const order = await MdWoo.wooGet_Prom("orders/"+id, crUser.firm);
 
 		let errorInfo = null;
 		if(!order || !order.id) {
@@ -53,10 +53,12 @@ exports.order = async(req, res) => {
 
 exports.orderPutAjax = async(req, res) => {
 	try {
+		const crUser = req.session.crUser;
+
 		const id = req.params.id;
 		const data = req.body.data;
 		const type = req.body.type;
-		const order = await MdWoo.wooPut_Prom("orders/"+id, data, type);
+		const order = await MdWoo.wooPut_Prom("orders/"+id, data, type, crUser.firm);
 		if(order && order.id) {
 			return res.json({status: 200, order})
 		} else {

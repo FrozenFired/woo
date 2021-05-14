@@ -17,6 +17,10 @@ const dbSchema = new Schema({
 	tel: String,
 	email: String,
 
+	wpdns: String,
+	wookey: String,
+	woosecret: String,
+
 	shelf: Number,	// 上架 下架
 	weight: Number,	// 权重 排序用的
 

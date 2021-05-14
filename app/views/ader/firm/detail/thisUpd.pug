@@ -24,7 +24,7 @@
 					.form-group.row
 						label.col-4.col-form-label(for="nickIpt")#nickLabel.text-info 公司代称
 						.col-8
-							input#nickIpt.form-control(type="text", name="obj[nick]", value=firm.nome)
+							input#nickIpt.form-control(type="text", name="obj[nick]", value=firm.nick)
 						.offset-4.col-8#nickOpt.text-danger(style="display:none")
 							span 请输入公司代称 至少#{Stint.extent.firm.nick.min}位
 					.form-group.row
@@ -37,6 +37,19 @@
 										option(value=categFirm.num, selected="selected") #{categFirm.val}
 									else
 										option(value=categFirm.num) #{categFirm.val}
+					.border.rounded.pt-3
+						.form-group.row
+							label.col-4.col-form-label(for="wpdnsIpt")#wpdnsLabel.text-info 前端网址
+							.col-8
+								input#wpdnsIpt.form-control(type="text", name="obj[wpdns]", value=firm.wpdns)
+						.form-group.row
+							label.col-4.col-form-label(for="wookeyIpt")#wookeyLabel.text-info 公钥
+							.col-8
+								input#wookeyIpt.form-control(type="text", name="obj[wookey]", value=firm.wookey)
+						.form-group.row
+							label.col-4.col-form-label(for="woosecretIpt")#woosecretLabel.text-info 密钥
+							.col-8
+								input#woosecretIpt.form-control(type="text", name="obj[woosecret]", value=firm.woosecret)
 					.form-group.row
 						label.col-4.col-form-label(for="shelfIpt")#shelfLabel 上下架
 						.col-8

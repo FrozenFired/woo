@@ -36,6 +36,19 @@ block content
 							-a;
 							option(value=categFirm.num) #{categFirm.val}
 				.offset-4.offset-sm-2.col-8.col-sm-6#categFirmOpt.text-danger(style="display:none") 请选择公司类型
+			.border.rounded
+				.form-group.row
+					label.col-4.col-sm-2.col-form-label(for="wpdnsIpt")#wpdnsLabel.text-info 前端网址
+					.col-8.col-sm-6
+						input#wpdnsIpt.form-control(type="text", name="obj[wpdns]")
+				.form-group.row
+					label.col-4.col-sm-2.col-form-label(for="wookeyIpt")#wookeyLabel.text-info 公钥
+					.col-8.col-sm-6
+						input#wookeyIpt.form-control(type="text", name="obj[wookey]")
+				.form-group.row
+					label.col-4.col-sm-2.col-form-label(for="woosecretIpt")#woosecretLabel.text-info 密钥
+					.col-8.col-sm-6
+						input#woosecretIpt.form-control(type="text", name="obj[woosecret]")
 			.form-group.row
 				label.col-4.col-sm-2.col-form-label(for="shelfIpt")#shelfLabel 上下架
 				.col-8.col-sm-6

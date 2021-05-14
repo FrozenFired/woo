@@ -6,8 +6,8 @@ exports.customers = async(req, res) => {
 	try{
 		const crUser = req.session.crUser;
 
-		const url = req.url.substr(1);
-		const customers = await MdWoo.wooGet_Prom(url);
+		const url = "customers";
+		const customers = await MdWoo.wooGet_Prom(url, crUser.firm);
 		// console.log(customers[0])
 
 		return res.render('./mger/customer/list', {
@@ -25,8 +25,9 @@ exports.customer = async(req, res) => {
 	try{
 		const crUser = req.session.crUser;
 
-		const url = req.url.substr(1);
-		const customer = await MdWoo.wooGet_Prom(url);
+		const id = req.params.id;
+		const url = "customers/"+id;
+		const customer = await MdWoo.wooGet_Prom(url, crUser.firm);
 		let errorInfo = null;
 		if(!customer || !customer.id) {
 			errorInfo = "查无此产品";
@@ -44,10 +45,13 @@ exports.customer = async(req, res) => {
 
 exports.customerPutAjax = async(req, res) => {
 	try {
-		const url = req.url.substr(1);
+		const crUser = req.session.crUser;
+
+		const id = req.params.id;
+		const url = "customers/"+id;
 		const data = req.body.data;
 		const type = req.body.type;
-		const customer = await MdWoo.wooPut_Prom(url, data, type);
+		const customer = await MdWoo.wooPut_Prom(url, data, type, crUser.firm);
 		if(customer && customer.id) {
 			return res.json({status: 200, customer})
 		} else {

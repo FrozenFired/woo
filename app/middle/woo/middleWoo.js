@@ -1,17 +1,20 @@
 const WooCommerceAPI = require('woocommerce-api');
-const WooCommerce = new WooCommerceAPI({
-	url: process.env.WPDNS,
-	consumerKey: process.env.WOOKEY,
-	consumerSecret: process.env.WOOSECRET,
-	wpAPI: true,
-	version: 'wc/v3'
-});
+
+const WooConnect = wooPath => {
+	return new WooCommerceAPI({
+		url: wooPath.wpdns,
+		consumerKey: wooPath.wookey,
+		consumerSecret: wooPath.woosecret,
+		wpAPI: true,
+		version: 'wc/v3'
+	});
+};
 
 
-exports.wooGet_Prom = async(url) => {
+exports.wooGet_Prom = async(url, wooPath) => {
 	return new Promise(async(resolve, reject) => {
 		try{
-			const result = await WooCommerce.getAsync(url);
+			const result = await WooConnect(wooPath).getAsync(url);
 			resolve(JSON.parse(result.toJSON().body));
 		} catch(error) {
 			console.log(error);
@@ -20,10 +23,10 @@ exports.wooGet_Prom = async(url) => {
 	})
 };
 
-exports.wooPost_Prom = async(url, data) => {
+exports.wooPost_Prom = async(url, data, wooPath) => {
 	return new Promise(async(resolve, reject) => {
 		try{
-			const result = await WooCommerce.postAsync(url, data);
+			const result = await WooConnect(wooPath).postAsync(url, data);
 			resolve(JSON.parse(result.toJSON().body));
 		} catch(error) {
 			console.log(error);
@@ -32,7 +35,7 @@ exports.wooPost_Prom = async(url, data) => {
 	})
 };
 
-exports.wooPut_Prom = async(url, data, type) => {
+exports.wooPut_Prom = async(url, data, type, wooPath) => {
 	return new Promise(async(resolve, reject) => {
 		try{
 			if(type != "String") {
@@ -52,7 +55,7 @@ exports.wooPut_Prom = async(url, data, type) => {
 					}
 				}
 			}
-			const result = await WooCommerce.putAsync(url, data);
+			const result = await WooConnect(wooPath).putAsync(url, data);
 			// console.log(result)
 			resolve(JSON.parse(result.toJSON().body));
 		} catch(error) {
@@ -62,10 +65,10 @@ exports.wooPut_Prom = async(url, data, type) => {
 	})
 };
 
-exports.wooDelete_Prom = async(url) => {
+exports.wooDelete_Prom = async(url, wooPath) => {
 	return new Promise(async(resolve, reject) => {
 		try{
-			const result = await WooCommerce.deleteAsync(url);
+			const result = await WooConnect(wooPath).deleteAsync(url);
 			resolve(JSON.parse(result.toJSON().body));
 		} catch(error) {
 			console.log(error);
