@@ -5,8 +5,9 @@ const bcrypt = require('bcryptjs');
 // get render  cookie值要在logout中设置
 exports.index = async(req, res) => {
 	const crUser = req.session.crUser;
+	if(crUser && crUser.role == Conf.roleUser.owner.num) return res.redirect("/mger");
 
-	res.render('./index', {
+	return res.render('./index', {
 		crUser,
 		info: req.query.info,
 		error: req.query.error,
@@ -29,7 +30,7 @@ exports.loginUser = async(req, res) => {
 		if(!isMatch) return res.redirect('/?info=密码不匹配');
 
 		req.session.crUser = user;
-		let redirectUrl = '/';
+		let redirectUrl = '/mger';
 		if(req.cookies.redirectUrl) redirectUrl = req.cookies.redirectUrl;
 		// console.log(redirectUrl)
 		return res.redirect(redirectUrl);

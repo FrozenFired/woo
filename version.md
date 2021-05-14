@@ -1,3 +1,4 @@
+0.1.1	调整首页为mger
 0.1.0	firm数据库 控制woocommerce
 0.0.8	variation Put other && product filter
 0.0.76	variation Put image OK
