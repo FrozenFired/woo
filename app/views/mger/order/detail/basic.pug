@@ -5,9 +5,13 @@
 		- lang = order.status.replace(/-/, "_");
 		.status 状态: #{Conf.order.status.lang[lang]}
 	.col-6.col-md-3
-		.cter 客人: #{order.customer_id}
-	.col-6.col-md-3
-		.total 订单总额: #{order.total} #{order.currency}
+		.cter 客人: [#{order.customer_id}] #{customer.username}
+	.col-6.col-md-4
+		.total.text-info 订单总额: #{order.total} #{order.currency}
+	.col-6.col-md-4
+		.payment_method 付款方式: #{order.payment_method}
+	.col-6.col-md-4
+		.payment_method 付款方式: #{order.payment_method_title}
 .row
 	.col-6.col-md-3
 		.date_created 开始: 
@@ -29,5 +33,9 @@ if order.customer_note
 		if status == order.status
 			- continue;
 		button.mr-5.btn.btn-warning.putObjBtnClick(type="button", data-url="/orderPut/"+order.id, data-key="status", data-val=status, data-type="String") #{Conf.order.status.lang[lang]}
+if order.status == "trash"
+	-a;
+	.text-right
+		button.btn.border-danger.text-danger.objDeleteAjax(type="button", data-url="/orderDel/", data-reurl="/orders" ,data-id=order.id) [del]
 
-	//- pending, processing, on-hold, completed, cancelled, refunded, failed and trash. Default is pending.
+	script(src="/js/global/delete.js")

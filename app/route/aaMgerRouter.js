@@ -65,6 +65,10 @@ module.exports = function(app){
 
 	/* =================================== Order =================================== */
 	app.get('/orders', MdRole.mgerIsLogin, Order.orders)
-	app.get('/orders/:id', MdRole.mgerIsLogin, Order.order)
+	app.get('/order/:id', MdRole.mgerIsLogin, Order.order)
 	app.put('/orderPut/:id', MdRole.mgerIsLogin, Order.orderPutAjax)
+	app.delete('/orderDel/:id', MdRole.mgerIsLogin, Order.orderDelAjax)
+	/* ----------------------- Payment gateways ----------------------- */
+	app.get('/payments', MdRole.mgerIsLogin, Order.payments)
+
 };

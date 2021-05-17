@@ -32,7 +32,7 @@ block content
 							td
 								input(id="cb-select"+order.id type="checkbox" name="post[]" value=order.id)
 							td
-								a(href="/orders/"+order.id) #{order.number}
+								a(href="/order/"+order.id) #{order.number}
 							td #{moment(order.date_created).format("YYYY/MM/DD HH:mm:ss")}
 							td #{order.total} #{order.currency}
 							td #{order.customer_id}

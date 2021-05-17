@@ -95,7 +95,7 @@ exports.categoryDelAjax = async(req, res) => {
 		const id = req.params.id;
 		const category = await MdWoo.wooDelete_Prom("products/categories/"+id+"?force=true", crUser.firm);
 		const image = category.image;
-		if(!category || !category.id) return res.json({status: 500, message: "categoryDelAjax 删除SKU失败"});
+		if(!category || !category.id) return res.json({status: 500, message: "categoryDelAjax 产品种类删除失败"});
 		if(image && image.id) {
 			const delMedia = await MdWoo.wooDelete_Prom("media/"+image.id+"?force=true", crUser.firm);
 		}

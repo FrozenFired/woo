@@ -1,0 +1,37 @@
+extends ../../aalayout/layout
+
+block content
+	.container-fluid.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/mger") 操作页面
+				li.breadcrumb-item: a(href="/payments") #{title}
+		if errorInfo
+			-a;
+			.text-danger.text-center #{errorInfo}
+		else
+			table.table.table-striped
+				thead
+					tr
+						th #{payments.length}
+						th 编号
+						th label
+						th description
+						th type
+						th value
+						th tip
+						th placeholder
+				tbody
+					each payment in payments
+						-a;
+						tr
+							td
+								input(id="cb-select"+payment.id type="checkbox" name="post[]" value=payment.id)
+							td #{payment.id}
+							td #{payment.label}
+							td #{payment.description}
+							td #{payment.type}
+							td #{payment.value}
+							td #{payment.default}
+							td #{payment.tip}
+							td #{payment.placeholder}

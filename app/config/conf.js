@@ -48,7 +48,7 @@ const Conf = {
 				processing: "处理中",
 				completed: "已完成",
 				cancelled: "取消",
-				trash: "删除"
+				trash: "废除"
 			}
 		}
 	},
