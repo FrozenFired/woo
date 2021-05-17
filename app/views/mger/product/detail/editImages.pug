@@ -7,7 +7,7 @@
 		button.mr-5.btn.btn-link.text-warning#imgsEditBtn(type="button") 修改图片
 		button.btn.btn-success#subBtnPutImgs.imgsEdit(type="button" style="display:none") 更新图片
 	.col-9
-		form#productPutImgsForm(method="post", action="/productPutImages", enctype="multipart/form-data")
+		form#objectPutImgsForm(method="post", action="/productPutImages", enctype="multipart/form-data")
 			input(type="hidden", name="id", value=product.id)
 			.row.border.rounded.p-2.mt-2
 				- sub = -1;
@@ -27,4 +27,4 @@
 					img#crtImgs.rounded-circle(src="/icon/img.jpg", width="100%")
 			input#uploadImgs.btn.btn-info.btn-block(type="file", name="fls", multiple, style="display:none")
 
-script(src="/js/mger/product/pdImgsEdit.js")
+script(src="/js/global/imagesEdit.js")

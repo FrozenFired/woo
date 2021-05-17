@@ -6,21 +6,26 @@ block content
 			ol.breadcrumb
 				li.breadcrumb-item: a(href="/mger") 操作页面
 				li.breadcrumb-item.active(aria-current="page") #{title}
-
-		table.table.table-triped
-			thead
-				tr
-					th #{categories.length}
-					th id
-					th name
-			tbody
-				each category in categories
-					-a;
-					tr
-						td
-							input(id="cb-select"+category.id type="checkbox" name="post[]" value=category.id)
-						td
-							a(href="/categories/"+category.id) #{category.id}
-						td
-							a(href="/categories/"+category.id) #{category.name}
+		if errorInfo
+			-a;
+			.text-center.my-5
+				h3.text-danger #{errorInfo}
+				a.btn.btn-success(href="/categories") 确认
+		include ./add
+		.row
+			- i = 0;
+			each category in categories
+				- i++;
+				.col-6.col-md-3.col-xl-3(id="objBox-"+category.id)
+					.m-2.p-2.card
+						div
+							span [#{i}] 
+							span.ml-4 编号: #{category.id}
+						.mt-2
+							span.text-info.valClickUpA(id="valClickUpA-"+category.id+"-name") #{category.name}
+							input(type="hidden", id="iptOrg-"+category.id+"-name", value=category.name)
+							input.form-control.iptNewBlurUpd(type="text", id="iptNewBlurUpd-"+category.id+"-name", value=category.name, data-url="/categoryPut/"+category.id, data-key="name", data-type="String", style="display:none")
+						div.text-right
+							button.btn.border-danger.text-danger.objDeleteAjax(type="button", data-url="/categoryDel/" data-id=category.id) [del]
+	script(src="/js/mger/category/list.js")
 	script(src="/js/woo/wooPut.js")

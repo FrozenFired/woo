@@ -43,7 +43,7 @@ exports.products = async(req, res) => {
 		})
 	} catch(error) {
 		console.log(error);
-		return res.redirect('/?info=您没有权限登陆操作界面&error='+error);
+		return res.redirect('/mger?errorInfo=您没有权限登陆操作界面&error='+error);
 	}
 };
 
@@ -60,7 +60,7 @@ exports.productAdd = async(req, res) => {
 		})
 	} catch(error) {
 		console.log(error);
-		return res.redirect('/?info=您没有权限登陆操作界面&error='+error);
+		return res.redirect('/mger?errorInfo=您没有权限登陆操作界面&error='+error);
 	}
 };
 
@@ -82,10 +82,10 @@ exports.productPost = async(req, res) => {
 			MdFile.delFile(img)
 		})
 		if(product && product.id) return res.redirect("/products")
-		return res.redirect('/?info=productPost 创建错误');
+		return res.redirect('/mger?errorInfo=productPost 创建错误');
 	} catch(error) {
 		console.log(error);
-		return res.redirect('/?info=productPost &error='+error);
+		return res.redirect('/mger?errorInfo=productPost &error='+error);
 	}
 };
 
@@ -96,10 +96,10 @@ exports.product = async(req, res) => {
 		const id = req.params.id;
 		const product = await MdWoo.wooGet_Prom("products/"+id, crUser.firm);
 
-		let errorInfo = null;
-		if(!product || !product.id) {
-			errorInfo = "查无此产品";
-		}
+		let errorInfo = "";
+		if(req.query.errorInfo) errorInfo = req.query.errorInfo;
+
+		if(!product || !product.id) errorInfo += "查无此产品";
 		const categories = await MdWoo.wooGet_Prom("products/categories", crUser.firm);
 		const variations = await MdWoo.wooGet_Prom("products/"+id+"/variations", crUser.firm);
 		// console.log(variations)
@@ -107,13 +107,14 @@ exports.product = async(req, res) => {
 		return res.render('./mger/product/detail', {
 			title: '产品: '+product.name,
 			crUser,
+			errorInfo,
 			product,
 			variations,
 			categories
 		})
 	} catch(error) {
 		// console.log(error);
-		return res.redirect('/?info=您没有权限登陆操作界面&error='+error);
+		return res.redirect('/errormger?errorInfo=您没有权限登陆操作界面&error='+error);
 	}
 };
 exports.productPutAjax = async(req, res) => {
@@ -142,7 +143,7 @@ exports.productDel = async(req, res) => {
 		const id = req.params.id;
 
 		const product = await MdWoo.wooGet_Prom("products/"+id, crUser.firm);
-		if(product.status == "publish") return res.redirect('/?info=productDel 请先下架 再删除');
+		if(product.status == "publish") return res.redirect("/product/"+id+"?errorInfo=删除时没有找到此产品");
 		let images = product.images;
 		if(!images) images = new Array();
 
@@ -152,7 +153,7 @@ exports.productDel = async(req, res) => {
 		})
 
 		const delObject = await MdWoo.wooDelete_Prom("products/"+id, crUser.firm);
-		if(!delObject || !delObject.id) return res.redirect("/?info=productDel 产品删除失败");
+		if(!delObject || !delObject.id) return res.redirect("/product/"+id+"?errorInfo=删除失败");
 
 		images.forEach(async(media) => {
 			const delMedia = await MdWoo.wooDelete_Prom("media/"+media.id+"?force=true", crUser.firm);
@@ -161,7 +162,7 @@ exports.productDel = async(req, res) => {
 		return res.redirect('/products')
 	} catch(error) {
 		console.log(error);
-		return res.redirect('/?info=您没有权限登陆操作界面&error='+error);
+		if(product.status == "publish") return res.redirect("/product/"+id+"?errorInfo=删除失败 error="+er);
 	}
 };
 
@@ -182,10 +183,10 @@ exports.productDelImage = async(req, res) => {
 		// console.log(id)
 		const media = await MdWoo.wooDelete_Prom("media/"+id+"?force=true", crUser.firm);
 		// console.log(media)
-		return res.redirect('/product/'+product_id)
+		return res.redirect("/product/"+product_id)
 	} catch(error) {
 		console.log(error);
-		return res.redirect('/?info=productDelImage&error='+error);
+		return res.redirect('/mger?errorInfo=productDelImage&error='+error);
 	}
 }
 
@@ -212,14 +213,14 @@ exports.productPutImages = async(req, res) => {
 		images.forEach(img => {MdFile.delFile(img) }); // 刪除本地服务器的图片
 
 		if(product && product.id) {
-			return res.redirect('/product/'+id);
+			return res.redirect("/product/"+id);
 		} else {
 			console.log(product)
-			return res.redirect('/?info=productPutImages 更新错误');
+			return res.redirect('/mger?errorInfo=productPutImages 更新错误');
 		}
 	} catch(error) {
 		console.log(error);
-		return res.redirect('/?info=productPutImages &error='+error);
+		return res.redirect('/mger?errorInfo=productPutImages &error='+error);
 	}
 };
 
@@ -256,13 +257,13 @@ exports.productPutAttributes = async(req, res) => {
 		const product = await MdWoo.wooPut_Prom("products/"+id, data, "String", crUser.firm);
 
 		if(product && product.id) {
-			return res.redirect('/product/'+id);
+			return res.redirect("/product/"+id);
 		} else {
 			console.log(product);
-			return res.redirect('/?info=productPutAttributes 更新错误');
+			return res.redirect('/mger?errorInfo=productPutAttributes 更新错误');
 		}
 	} catch(error) {
 		console.log(error);
-		return res.redirect('/?info=productPutAttributes &error='+error);
+		return res.redirect('/mger?errorInfo=productPutAttributes &error='+error);
 	}
 };

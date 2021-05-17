@@ -33,7 +33,7 @@ if product.status != "publish"
 				.offset-4.offset-sm-2.col-8.col-sm-10#sale_priceOpt.text-danger(style="display:none")
 					span 请输入产品折扣价
 			.row.border.rounded.py-3
-				label.col-3.col-sm-2.col-form-label(for="imagesIpt") 产品图片
+				label.col-3.col-sm-2.col-form-label 产品图片
 				input#uploadImg.btn.btn-info.btn-block(type="file", name="fls", style="display:none")
 				.col-9
 					.row
@@ -45,4 +45,4 @@ if product.status != "publish"
 					button.btn.btn-success.btn-block#createPdBtn(type="submit") 提交
 
 	script(src="/js/mger/product/pdVariationPost.js")
-	script(src="/js/mger/attribute/attrImgEdit.js")
+	script(src="/js/global/imageEdit.js")

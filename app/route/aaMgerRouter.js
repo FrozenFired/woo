@@ -47,7 +47,6 @@ module.exports = function(app){
 	app.delete('/variationDel/:id', MdRole.mgerIsLogin, Variation.variationDelAjax)
 	/* -------------------------------- Media -------------------------------- */
 	app.post('/variationPutImages', MdRole.mgerIsLogin, postForm, MdFile.newFiles, Variation.variationPutImages)
-	app.get('/variationDelImage/:id', MdRole.mgerIsLogin, Variation.variationDelImage)
 
 
 	/* =================================== Media =================================== */
@@ -56,7 +55,10 @@ module.exports = function(app){
 
 	/* =================================== Category =================================== */
 	app.get('/categories', MdRole.mgerIsLogin, Category.categories)
-	app.get('/categories/:id', MdRole.mgerIsLogin, Category.category)
+	app.get('/category/:id', MdRole.mgerIsLogin, Category.category)
+	app.post('/categoryPost', MdRole.mgerIsLogin, postForm, MdFile.newFiles, Category.categoryPost)
+	app.put('/categoryPut/:id', MdRole.mgerIsLogin, Category.categoryPutAjax)
+	app.delete('/categoryDel/:id', MdRole.mgerIsLogin, Category.categoryDelAjax)
 
 	/* =================================== Customer =================================== */
 	app.get('/customers', MdRole.mgerIsLogin, Customer.customers)

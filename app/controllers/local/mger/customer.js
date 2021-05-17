@@ -17,7 +17,7 @@ exports.customers = async(req, res) => {
 		})
 	} catch(error) {
 		console.log(error);
-		return res.redirect('/?info=您没有权限登陆操作界面&error='+error);
+		return res.redirect('/mger?errorInfo=您没有权限登陆操作界面&error='+error);
 	}
 };
 exports.customer = async(req, res) => {
@@ -39,7 +39,7 @@ exports.customer = async(req, res) => {
 		})
 	} catch(error) {
 		console.log(error);
-		return res.redirect('/?info=您没有权限登陆操作界面&error='+error);
+		return res.redirect('/mger?errorInfo=您没有权限登陆操作界面&error='+error);
 	}
 };
 

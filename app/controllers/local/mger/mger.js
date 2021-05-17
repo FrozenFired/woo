@@ -24,10 +24,10 @@ exports.loginUser = async(req, res) => {
 
 		const user = await User.findOne({code: code, role: Conf.roleUser.owner.num})
 			.populate({path: "firm", select: "code nome wpdns wookey woosecret"})
-		if(!user) return res.redirect('/?info=没有此用户');
+		if(!user) return res.redirect('/mger?errorInfo=没有此用户');
 
 		const isMatch = await bcrypt.compare(pwd, user.pwd);
-		if(!isMatch) return res.redirect('/?info=密码不匹配');
+		if(!isMatch) return res.redirect('/mger?errorInfo=密码不匹配');
 
 		req.session.crUser = user;
 		let redirectUrl = '/mger';
@@ -36,7 +36,7 @@ exports.loginUser = async(req, res) => {
 		return res.redirect(redirectUrl);
 	} catch(error) {
 		console.log(error);
-		return res.redirect('/?info=请输入登陆账户密码error='+error)
+		return res.redirect('/mger?errorInfo=请输入登陆账户密码error='+error)
 	}
 }
 
@@ -52,13 +52,15 @@ exports.mger = async(req, res) => {
 	try{
 		res.cookie('redirectUrl', '/mger');
 		const crUser = req.session.crUser;
-
+		let errorInfo = "";
+		if(req.query.errorInfo) errorInfo = req.query.errorInfo;
 		return res.render('./mger/index', {
 			title: '管理页面',
 			crUser,
+			errorInfo,
 		})
 	} catch(error) {
 		console.log(error);
-		return res.redirect('/?info=您没有权限登陆操作界面&error='+error)
+		return res.redirect('/mger?errorInfo=您没有权限登陆操作界面&error='+error)
 	}
 };

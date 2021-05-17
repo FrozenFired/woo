@@ -10,7 +10,9 @@ block content
 
 		if errorInfo
 			-a;
-			.text-danger.text-center #{errorInfo}
+			.text-center
+				h3.text-danger #{errorInfo}
+				a.btn.btn-success(href="/variation/"+variation.id+"?product_id="+product.id) 确认
 		else if product.status == "publish"
 			-a;
 			include ./detail/basicPublish

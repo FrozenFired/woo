@@ -20,7 +20,7 @@ exports.users = async(req, res) => {
 		})
 	} catch(error) {
 		console.log(error);
-		return res.redirect('/?info=您没有权限登陆操作界面&error='+error)
+		return res.redirect('/mger?errorInfo=您没有权限登陆操作界面&error='+error)
 	}
 }
 
@@ -29,13 +29,13 @@ exports.userNew = async(req, res) => {
 	try {
 		const crUser = req.session.crUser;
 		const obj = req.body.obj;
-		if(crUser.role >= obj.role) return res.redirect('/?info=添加用户错误&redirectUrl=/users&error=您无权此操作');
+		if(crUser.role >= obj.role) return res.redirect('/mger?errorInfo=添加用户错误&redirectUrl=/users&error=您无权此操作');
 		obj.code = await MdFilter.userCode_FilterProm(obj.code);
 		obj.pwd = await MdFilter.userPwdBcrypt_FilterProm(obj.pwd);
 
 		const userSame = await User.findOne({'code': obj.code, 'firm': obj.firm});
 		// console.log(userSame)
-		if(userSame) return res.redirect('/?info=添加用户错误&redirectUrl=/users&error=此账号重复');
+		if(userSame) return res.redirect('/mger?errorInfo=添加用户错误&redirectUrl=/users&error=此账号重复');
 
 		const _object = new User(obj)
 		const userSave = await _object.save();
@@ -43,7 +43,7 @@ exports.userNew = async(req, res) => {
 
 	} catch(error) {
 		console.log(error);
-		return res.redirect('/?info=添加用户错误&redirectUrl=/users&error='+error)
+		return res.redirect('/mger?errorInfo=添加用户错误&redirectUrl=/users&error='+error)
 	}
 }
 
@@ -59,7 +59,7 @@ exports.user = async(req, res) => {
 		} else {
 			user = await User.findOne({_id: userId})
 			.where('role').gt(crUser.role)
-			if(!user) return res.redirect('/?info=查看用户信息错误&redirectUrl=/users&error=找不到此用户信息');
+			if(!user) return res.redirect('/mger?errorInfo=查看用户信息错误&redirectUrl=/users&error=找不到此用户信息');
 		}
 		return res.render('./mger/user/detail', {
 			title: '用户信息',
@@ -68,7 +68,7 @@ exports.user = async(req, res) => {
 		})
 	} catch(error) {
 		console.log(error);
-		return res.redirect('/?info=查看用户信息错误&redirectUrl=/users&error='+error)
+		return res.redirect('/mger?errorInfo=查看用户信息错误&redirectUrl=/users&error='+error)
 	}
 }
 
@@ -79,13 +79,13 @@ exports.userDel = async(req, res) => {
 		const userId = req.params.userId;
 		const user = await User.findOne({_id: userId})
 		.where('role').gt(crUser.role)
-		if(!user) return res.redirect('/?info=删除用户错误&redirectUrl=/users&error=找不到此用户信息');
+		if(!user) return res.redirect('/mger?errorInfo=删除用户错误&redirectUrl=/users&error=找不到此用户信息');
 
 		await User.deleteOne({_id: userId});
 		return res.redirect('/users')
 	} catch(error) {
 		console.log(error);
-		return res.redirect('/?info=删除用户错误&redirectUrl=/users&error='+error)
+		return res.redirect('/mger?errorInfo=删除用户错误&redirectUrl=/users&error='+error)
 	}
 }
 

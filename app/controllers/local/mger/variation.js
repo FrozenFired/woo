@@ -2,24 +2,29 @@ const MdWoo = require('../../../middle/woo/middleWoo');
 const MdFile = require('../../../middle/local/middleFile');
 
 exports.variation = async(req, res) => {
-	// console.log("/variation")
+	console.log("/variation")
 	try{
 		const crUser = req.session.crUser;
+		let errorInfo = "";
+		if(req.query.errorInfo) errorInfo = req.query.errorInfo;
 		const id = req.params.id;
 		const product_id = req.query.product_id;
 		const variation = await MdWoo.wooGet_Prom("products/"+product_id+"/variations/"+id, crUser.firm);
-		if(!variation || !variation.id) return res.redirect("/?info=variation 没有找到此SKU");
+		if(!variation || !variation.id) errorInfo="variation 没有找到此SKU";
 		const product = await MdWoo.wooGet_Prom("products/"+product_id, crUser.firm);
+		if(!product || !product.id) errorInfo = "variation 没有找到对应的产品";
 
 		return res.render('./mger/variation/detail', {
 			title: '产品sku: #'+variation.id,
 			crUser,
+			errorInfo,
+
 			variation,
 			product,
 		})
 	} catch(error) {
 		// console.log(error);
-		return res.redirect('/?info=variation &error='+error);
+		return res.redirect('/errormger?errorInfo=variation &error='+error);
 	}
 };
 
@@ -47,10 +52,10 @@ exports.variationPost = async(req, res) => {
 		const variation = await MdWoo.wooPost_Prom("products/"+product_id+"/variations", data, crUser.firm);
 		if(image) MdFile.delFile(image);
 		if(variation && variation.id) return res.redirect("/product/"+product_id);
-		return res.redirect('/?info=variationPost 创建错误');
+		return res.redirect('/mger?errorInfo=variationPost 创建错误');
 	} catch(error) {
 		console.log(error);
-		return res.redirect('/?info=variationPost &error='+error);
+		return res.redirect('/mger?errorInfo=variationPost &error='+error);
 	}
 };
 
@@ -111,24 +116,6 @@ exports.variationDelAjax = async(req, res) => {
 
 
 
-exports.variationDelImage = async(req, res) => {
-	// console.log("/variationDelImage")
-	try{
-		const crUser = req.session.crUser;
-		const id = req.params.id;
-
-		const variationId = req.query.variationId;
-
-		// console.log(id)
-		const media = await MdWoo.wooDelete_Prom("media/"+id+"?force=true", crUser.firm);
-		// console.log(media)
-		return res.redirect('/variation/'+variationId)
-	} catch(error) {
-		console.log(error);
-		return res.redirect('/?info=variationDelImage &error='+error);
-	}
-}
-
 exports.variationPutImages = async(req, res) => {
 	// console.log("/variationPutImages")
 	try{
@@ -138,7 +125,7 @@ exports.variationPutImages = async(req, res) => {
 		if(req.body.files) {
 			image = req.body.files[0];
 		}
-		if(!image) return res.redirect('/?info=variationPutImages 请上传图片'); 
+		if(!image) return res.redirect('/mger?errorInfo=variationPutImages 请上传图片'); 
 
 		const data = new Object();
 		data.image = new Object();
@@ -148,9 +135,9 @@ exports.variationPutImages = async(req, res) => {
 		const product_id = req.body.product_id;
 
 		const product = await MdWoo.wooGet_Prom("products/"+product_id, crUser.firm);
-		if(!product || !product.id) return res.redirect('/?info=variationPutImages 没有找到此产品');
+		if(!product || !product.id) return res.redirect('/mger?errorInfo=variationPutImages 没有找到此产品');
 		const org = await MdWoo.wooGet_Prom("products/"+product_id+"/variations/"+id, crUser.firm);
-		if(!org || !org.id) return res.redirect('/?info=variationPutImages 没有找到此产品SKU');
+		if(!org || !org.id) return res.redirect('/mger?errorInfo=variationPutImages 没有找到此产品SKU');
 		const media = org.image;
 		let images = product.images;
 		if(!images) images = new Array();
@@ -166,10 +153,11 @@ exports.variationPutImages = async(req, res) => {
 		const variation = await MdWoo.wooPut_Prom("products/"+product_id+"/variations/"+id, data, "String", crUser.firm);
 
 		if(image) MdFile.delFile(image);
-		if(!variation || !variation.id) return res.redirect('/?info=variationPutImages 图片更新错误');
-		return res.redirect("/variation/"+id);
+		if(!variation || !variation.id) return res.redirect("/variation/"+id+"?product_id="+product_id+"&errorInfo=variationPutImages 图片更新错误");
+
+		return res.redirect("/variation/"+id+"?product_id="+product._id);
 	} catch(error) {
 		console.log(error);
-		return res.redirect('/?info=variationPutImages &error='+error);
+		return res.redirect('/mger?errorInfo=variationPutImages &error='+error);
 	}
 };
