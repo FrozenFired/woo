@@ -1,3 +1,4 @@
+0.2.0	优化
 0.1.3	order & payment_gateways
 0.1.2	catogry
 0.1.1	调整首页为mger

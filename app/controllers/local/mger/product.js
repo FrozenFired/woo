@@ -180,9 +180,9 @@ exports.productDelImage = async(req, res) => {
 
 		const product_id = req.query.product_id;
 
-		// console.log(id)
+		console.log(id)
 		const media = await MdWoo.wooDelete_Prom("media/"+id+"?force=true", crUser.firm);
-		// console.log(media)
+		console.log(media)
 		return res.redirect("/product/"+product_id)
 	} catch(error) {
 		console.log(error);

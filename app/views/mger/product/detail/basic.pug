@@ -23,7 +23,7 @@ h3.text-secondary.text-center.p-2 下架
 
 
 .border.px-3
-	.row.py-3.border-bottom.rounded
+	//- .row.py-3.border-bottom.rounded
 		.col-3 精品 / featured
 		.col-9
 			if product.featured
@@ -96,7 +96,7 @@ div(style="height: 100px")
 	.py-3.border-bottom.rounded
 		include ./editAttributes
 	.row.py-3.border-bottom.rounded
-		.col-3: span.text-info.keyClickUpA(id="keyClickUpA-"+product.id+"-sku") 单位 / sku
+		.col-3: span.text-info.keyClickUpA(id="keyClickUpA-"+product.id+"-sku") 售卖单位
 		.col-9
 			span.valClickUpA(id="valClickUpA-"+product.id+"-sku") #{product.sku}
 			input(type="hidden", id="iptOrg-"+product.id+"-sku", value=product.sku)
