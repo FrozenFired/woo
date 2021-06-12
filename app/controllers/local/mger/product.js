@@ -34,6 +34,7 @@ exports.products = async(req, res) => {
 			}
 		}
 
+		url += "&per_page=100"
 		const products = await MdWoo.wooGet_Prom(url, crUser.firm);
 		return res.render('./mger/product/list', {
 			title: '产品列表',

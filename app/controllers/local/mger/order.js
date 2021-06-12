@@ -15,7 +15,7 @@ exports.orders = async(req, res) => {
 				errorInfo = "订单状态参数错误"
 			}
 		}
-
+		url += '&per_page=100'
 		const orders = await MdWoo.wooGet_Prom(url, crUser.firm);
 		return res.render('./mger/order/list', {
 			title: '订单列表',

@@ -26,6 +26,6 @@ block content
 							input(type="hidden", id="iptOrg-"+category.id+"-name", value=category.name)
 							input.form-control.iptNewBlurUpd(type="text", id="iptNewBlurUpd-"+category.id+"-name", value=category.name, data-url="/categoryPut/"+category.id, data-key="name", data-type="String", style="display:none")
 						div.text-right
-							button.btn.border-danger.text-danger.objDeleteAjax(type="button", data-url="/categoryDel/", data-reurl="" data-id=category.id) [del]
+							button.btn.border-danger.text-danger.objDeleteAjax(type="button", data-url="/categoryDel/", data-reurl="" data-id=category.id) [删除]
 	script(src="/js/global/delete.js")
 	script(src="/js/woo/wooPut.js")

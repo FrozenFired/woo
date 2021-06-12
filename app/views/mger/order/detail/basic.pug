@@ -36,6 +36,6 @@ if order.customer_note
 if order.status == "trash"
 	-a;
 	.text-right
-		button.btn.border-danger.text-danger.objDeleteAjax(type="button", data-url="/orderDel/", data-reurl="/orders" ,data-id=order.id) [del]
+		button.btn.border-danger.text-danger.objDeleteAjax(type="button", data-url="/orderDel/", data-reurl="/orders" ,data-id=order.id) [彻底删除]
 
 	script(src="/js/global/delete.js")

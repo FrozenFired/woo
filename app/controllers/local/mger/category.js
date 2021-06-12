@@ -5,7 +5,7 @@ exports.categories = async(req, res) => {
 		let errorInfo = "";
 		if(req.query.errorInfo) errorInfo = req.query.errorInfo;
 
-		const url = "products"+req.url;
+		const url = "products/categories?per_page=100";
 		const categories = await MdWoo.wooGet_Prom(url, crUser.firm);
 		return res.render('./mger/category/list', {
 			title: '产品分类',
