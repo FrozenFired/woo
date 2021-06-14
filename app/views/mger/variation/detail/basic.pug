@@ -18,7 +18,7 @@
 		form#productPutImgForm(method="post", action="/variationPutImages", enctype="multipart/form-data")
 			input(type="hidden", name="id", value=variation.id)
 			input(type="hidden", name="product_id", value=product.id)
-			input#uploadImg.btn.btn-info.btn-block(type="file", name="fls", style="display:none")
+			input#wooUploadImg.btn.btn-info.btn-block(type="file", name="fls", style="display:none")
 			- image = "/icon/img.jpg";
 			if variation.image && variation.image.src
 				-image = variation.image.src;

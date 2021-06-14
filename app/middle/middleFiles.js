@@ -19,8 +19,8 @@ exports.mkPicture = async(req, res, next) => {
 	console.log("/mkPicture")
 
 	const crUser = req.user;
-	const defaultSrc = path.join(__dirname, '../../public/upload');	// niu/public/upload/***/
-	const form = formidable({ multiples: true, uploadDir: defaultSrc});
+	const defaultSrc = path.join(__dirname, '../../public/wooUpload');	// niu/public/wooUpload/***/
+	const form = formidable({ multiples: true, wooUploadDir: defaultSrc});
 	form.parse(req, (err, fields, files) => {
 		if (err) return res.json({status: 500, message: 'mkPicture form parse error'});
 
@@ -39,8 +39,8 @@ exports.mkPicture = async(req, res, next) => {
 			const file = files.logo
 			const oldfliepath = file.path;
 			// 接收 图片的路由信息 以便分类存储图片， 如果路由信息不存在, 则放入默认文件夹
-			const pubSrc = path.join(__dirname, '../../public');	// niu/public/upload/***/
-			const pic = "/upload/brand/logo/" + crUser.firm + '-brand-logo-' + Date.now() + '.' + file.type.split('/')[1];
+			const pubSrc = path.join(__dirname, '../../public');	// niu/public/wooUpload/***/
+			const pic = "/wooUpload/brand/logo/" + crUser.firm + '-brand-logo-' + Date.now() + '.' + file.type.split('/')[1];
 			const newfilepath = pubSrc + pic;
 
 			fs.rename(oldfliepath, newfilepath, err => {
@@ -71,6 +71,6 @@ exports.mkPicture = async(req, res, next) => {
 // 		const fileData = await fs.readFile(filePath);
 		
 // 		await fs.writeFile(picture, fileData);
-// 		obj.photo = '/upload'+picDir+picNome;
+// 		obj.photo = '/wooUpload'+picDir+picNome;
 // 	}
 // }

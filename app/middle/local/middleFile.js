@@ -44,11 +44,11 @@ const recuPics = (fl, fgName) => {
 			fs.readFile(flPath, (err, data) => {
 				const type = fl.type.split('/')[1];		// 图片类型
 				const photoName = Date.now() + '_' + fgName + '.' + type;	// 图片名称 code_2340.jpg
-				const photoSrc = path.join(__dirname, '../../../public/upload/');	// niu/public/upload/***/
+				const photoSrc = path.join(__dirname, '../../../public/wooUpload/');	// niu/public/wooUpload/***/
 				const photo = photoSrc + photoName;
 				// console.log(photo)
 				fs.writeFile(photo, data, (err) => {
-					resolve('/upload/'+photoName);
+					resolve('/wooUpload/'+photoName);
 				});
 			});
 		} catch(error) {

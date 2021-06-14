@@ -1,10 +1,10 @@
 $(function() {
 	$("#crtImgs").click(function(e) {
-		$("#uploadImgs").click();
+		$("#wooUploadImgs").click();
 	})
-	$("#uploadImgs").change(function(e) {
+	$("#wooUploadImgs").change(function(e) {
 		$(".postsCrtBox").remove();
-		const files = document.getElementById('uploadImgs').files;
+		const files = document.getElementById('wooUploadImgs').files;
 		let elem = ""
 		for(let i=0; i<files.length; i++) {
 			let src = window.URL.createObjectURL(files[i]);

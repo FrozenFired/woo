@@ -1,11 +1,11 @@
 $(function() {
 
 	$("body").on("click", ".crtImg", function(e) {
-		$("#uploadImg").click();
+		$("#wooUploadImg").click();
 	})
-	$("#uploadImg").change(function(e) {
+	$("#wooUploadImg").change(function(e) {
 		$(".postsCrtBox").remove();
-		const newFile = document.getElementById('uploadImg').files[0];
+		const newFile = document.getElementById('wooUploadImg').files[0];
 		const src = window.URL.createObjectURL(newFile);
 		document.getElementById('crtImg').src = src;
 	})
