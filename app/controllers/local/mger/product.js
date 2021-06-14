@@ -101,8 +101,8 @@ exports.product = async(req, res) => {
 		if(req.query.errorInfo) errorInfo = req.query.errorInfo;
 
 		if(!product || !product.id) errorInfo += "查无此产品";
-		const categories = await MdWoo.wooGet_Prom("products/categories", crUser.firm);
-		const variations = await MdWoo.wooGet_Prom("products/"+id+"/variations", crUser.firm);
+		const categories = await MdWoo.wooGet_Prom("products/categories?per_page=100", crUser.firm);
+		const variations = await MdWoo.wooGet_Prom("products/"+id+"/variations?per_page=100", crUser.firm);
 		// console.log(variations)
 
 		return res.render('./mger/product/detail', {
@@ -206,6 +206,7 @@ exports.productPutImages = async(req, res) => {
 			const image = new Object();
 			image.src=process.env.DNS+img
 			data.images.push(image)
+			console.log(image)
 		})
 		data.status = "private";
 		
