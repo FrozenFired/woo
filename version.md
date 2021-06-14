@@ -1,3 +1,4 @@
+0.2.22	bug test2 
 0.2.21	bug test1 
 0.2.2	bug
 0.2.1	per_page=100

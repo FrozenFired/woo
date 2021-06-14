@@ -202,6 +202,7 @@ exports.productPutImages = async(req, res) => {
 
 		const images = req.body.files;
 		if(!data.images) data.images = new Array();
+		console.log(data.images)
 		images.forEach(img => {
 			const image = new Object();
 			image.src=process.env.DNS+img
@@ -213,7 +214,7 @@ exports.productPutImages = async(req, res) => {
 		console.log(crUser.firm)
 		const product = await MdWoo.wooPut_Prom("products/"+id, data, "String", crUser.firm);
 
-		images.forEach(img => {MdFile.delFile(img) }); // 刪除本地服务器的图片
+		// images.forEach(img => {MdFile.delFile(img) }); // 刪除本地服务器的图片
 
 		if(product && product.id) {
 			return res.redirect("/product/"+id);
