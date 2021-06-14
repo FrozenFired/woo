@@ -209,7 +209,8 @@ exports.productPutImages = async(req, res) => {
 			console.log(image)
 		})
 		data.status = "private";
-		
+		console.log(data);
+		console.log(crUser.firm)
 		const product = await MdWoo.wooPut_Prom("products/"+id, data, "String", crUser.firm);
 
 		images.forEach(img => {MdFile.delFile(img) }); // 刪除本地服务器的图片
