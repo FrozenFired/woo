@@ -1,0 +1,22 @@
+.row
+	.col-3
+		.title 产品图片
+	.col-9
+		each image in prod.images
+			-a;
+			.row.border.rounded.p-2.mt-2
+				.col-2
+					img(src=image.src, width="100%")
+				.col-10
+					.row.mt-2
+						.col-2 id
+						.col-10 #{image.id}
+					.row.mt-2
+						.col-2 src
+						.col-10 #{image.src}
+					.row.mt-2
+						.col-2 name
+						.col-10 #{image.name}
+					.row.mt-2
+						.col-2 alt
+						.col-10 #{image.alt}

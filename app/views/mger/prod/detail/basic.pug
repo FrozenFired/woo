@@ -1,0 +1,32 @@
+.row.py-3.border-bottom.border-top.rounded
+	.col-3 产品名称
+	.col-9 #{prod.name}
+.row.py-3.border-bottom.rounded
+	.col-3
+		span 唯一编号 / slug
+		span.text-warning.ml-2(title="这是产品唯一标识符, 不可与其他产品重复") ?
+	.col-3 #{prod.slug}
+	.col-6
+		span EX:
+		span.text-warning.ml-2(title="做推广时, 要做优化") ?
+		span.ml-4 #{prod.permalink}
+.row.py-3.border-bottom.rounded
+	.col-3
+		.title categories
+	.col-9
+		each categ in prod.categories
+			-a;
+			span.mr-5 #{categ.name}
+.row.py-3.border-bottom.rounded
+	.col-3
+		span 精品
+		span.text-warning.ml-2(title="如果是精品, 则在首页展示") ?
+	.col-9
+		if prod.featured
+			-nt="false";
+			span 是
+		else
+			span 否
+.row.py-3.rounded
+	.col-3 产品简述
+	.col-9 #{short_description}

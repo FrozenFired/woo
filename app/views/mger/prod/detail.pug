@@ -1,0 +1,64 @@
+extends ../../aalayout/layout
+
+block content
+	.container.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/mger") 操作页面
+				li.breadcrumb-item: a(href="/prods") 产品列表
+				li.breadcrumb-item.active(aria-current="page") 产品: [#{prod.id}] #{prod.name}
+
+		if prod.status == "publish"
+			-a;
+			.row.text-success.py-2
+				.col-4 产品已发布 
+				.col-8.text-right
+					//- a.mr-5.btn.btn-info(href='/prodUp/'+prod.id+'?status=private') 下架编辑
+					button.btn.btn-warning.putObjBtnClick(type="button", data-url="/prodPutAjax/"+prod.id, data-key="status", data-val="private", data-type="String") 下架
+		else if prod.status == "private"
+			-a;
+			.row.text-danger.py-2
+				.col-4 产品已下架 
+				.col-8.text-right
+					a.mr-5.btn.btn-danger(href='/prodDel/'+prod.id) 删除
+					button.btn.btn-success.putObjBtnClick(type="button", data-url="/prodPutAjax/"+prod.id, data-key="status", data-val="publish", data-type="String") 发布
+
+
+		.border.rounded.p-3
+			if prod.status == "private"
+				-a;
+				.text-right.py-3
+					button.btn.btn-warning#basicDetail(type="button") 编辑
+					button.btn.btn-secondary#basicUpdate(type="button", style="display:none") 返回
+			.basicDetail
+				include ./detail/basic
+			.basicUpdate(style="display:none")
+				include ./update/basic
+
+
+		.border.rounded.p-3.mt-5
+			if prod.status == "private"
+				-a;
+				.text-right.py-3
+					button.btn.btn-warning#imageDetail(type="button") 编辑
+					button.btn.btn-secondary#imageUpdate(type="button", style="display:none") 返回
+			.imageDetail
+				include ./detail/image
+			.imageUpdate(style="display:none")
+				include ./update/image
+
+		.border.rounded.p-3.mt-5
+			if prod.status == "private"
+				-a;
+				.text-right.py-3
+					button.btn.btn-warning#manageDetail(type="button") 编辑
+					button.btn.btn-secondary#manageUpdate(type="button", style="display:none") 返回
+			.manageDetail
+				include ./detail/manage
+			.manageUpdate(style="display:none")
+				include ./update/manage
+
+	div(style="height: 300px")
+	script(src="/js/woo/wooPut.js")
+	script(src="/js/mger/prod/edit.js")
+	script(src="/js/mger/prod/detail.js")

@@ -1,5 +1,6 @@
 const Mger = require('../controllers/local/mger/mger');
 const Product = require('../controllers/local/mger/product');
+const Prod = require('../controllers/local/mger/prod');
 const Variation = require('../controllers/local/mger/variation');
 const Category = require('../controllers/local/mger/category');
 const Customer = require('../controllers/local/mger/customer');
@@ -48,6 +49,19 @@ module.exports = function(app){
 	/* -------------------------------- Media -------------------------------- */
 	app.post('/variationPutImages', MdRole.mgerIsLogin, postForm, MdFile.newFiles, Variation.variationPutImages)
 
+	/* =================================== Prod =================================== */
+	app.get('/prodAdd', MdRole.mgerIsLogin, Prod.prodAdd)
+	app.post('/prodPost', MdRole.mgerIsLogin, postForm, MdFile.newFiles, Prod.prodPost)
+	app.get('/prods', MdRole.mgerIsLogin, Prod.prods)
+	app.get('/prod/:id', MdRole.mgerIsLogin, Prod.prod)
+	app.get('/prodDel/:id', MdRole.mgerIsLogin, Prod.prodDel)
+	app.put('/prodPutAjax/:id', MdRole.mgerIsLogin, postForm, Prod.prodPutAjax)
+	app.post('/prodPut/:id', MdRole.mgerIsLogin, postForm, Prod.prodPut)
+	/* -------------------------------- Media -------------------------------- */
+	app.post('/prodPutImages', MdRole.mgerIsLogin, postForm, MdFile.newFiles, Prod.prodPutImages)
+	app.get('/prodDelImage/:id', MdRole.mgerIsLogin, Prod.prodDelImage)
+	/* -------------------------------- Attr -------------------------------- */
+	app.post('/prodPutAttributes', MdRole.mgerIsLogin, Prod.prodPutAttributes)
 
 	/* =================================== Media =================================== */
 	app.get('/medias', MdRole.mgerIsLogin, Media.medias)

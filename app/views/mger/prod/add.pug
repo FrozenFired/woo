@@ -1,0 +1,81 @@
+extends ../../aalayout/layout
+
+block content
+	.container.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/mger") 操作页面
+				li.breadcrumb-item: a(href="/prods") 产品列表
+				li.breadcrumb-item.active(aria-current="page") #{title}
+
+		hr
+		form#createPdForm(method="post", action="/prodPost", enctype="multipart/form-data")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="nameIpt") 产品名称
+				.col-8.col-sm-10
+					input#nameIpt.form-control(type="text", name="data[name]")
+				.offset-4.offset-sm-2.col-8.col-sm-10#nameOpt.text-danger(style="display:none")
+					span 请输入产品名称
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="regular_priceIpt") 产品价格
+				.col-8.col-sm-10
+					input#regular_priceIpt.form-control(type="text", name="data[regular_price]")
+				.offset-4.offset-sm-2.col-8.col-sm-10#regular_priceOpt.text-danger(style="display:none")
+					span 请输入产品价格
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="sale_priceIpt") 折扣价
+				.col-8.col-sm-10
+					input#sale_priceIpt.form-control(type="text", name="data[sale_price]")
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="typeSel") 产品类型
+				.col-8.col-sm-10
+					select.form-control#typeSel(name="data[type]")
+						each key in Conf.product.type.arr
+							- val = Conf.product.type.lang[key];
+							option(value=key) #{val} / #{key}
+			.form-group.row#attributes-box(style="display:none")
+				label.col-4.col-sm-2.col-form-label 产品属性
+				.col-8.col-sm-10#attributes-list
+					.row.mt-2
+						.col-4
+							input.form-control(id="attributes-0-name", type="text", name="attributes[0][name]", placeholder="产品属性.(如 color, size)", value="size")
+						.col-8
+							input.form-control(id="attributes-0-options", type="text", name="attributes[0][options]", placeholder="属性值 用 | 分割.(如: red | blu)", value="S|M|L|XL")
+					.row.mt-2
+						.col-4
+							input.form-control(id="attributes-1-name", type="text", name="attributes[1][name]", placeholder="产品属性.(如 颜色, 形状)")
+						.col-8
+							input.form-control(id="attributes-1-options", type="text", name="attributes[1][options]", placeholder="属性值 用 | 分割.(如: red | blu)")
+			script(src="/js/mger/prod/pdAttrEdit.js")
+
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="categoriesIpt") 产品分类
+				.col-8.col-sm-10
+					- let i = 0;
+					each category in categories
+						- i++;
+						.form-check.form-check-inline
+							input.form-check-input.cbxIpt.cbxIpt-categories(type="checkbox" name="data[categories]["+i+"][id]" id="cbxIpt-categories-"+category.id value=category.id)
+							label.form-check-label(for="cbxIpt-categories-"+category.id) #{category.name}
+			.form-group.row
+				label.col-4.col-sm-2.col-form-label(for="short_descriptionIpt") 简述
+				.col-8.col-sm-10
+					textarea.form-control#short_descriptionIpt(name="data[short_description]",rows="10", placeholder="产品描述")
+			.form-group.row
+				label.col-3.col-sm-2.col-form-label(for="imagesIpt") 产品图片
+				input#wooUploadImgs.btn.btn-info.btn-block(type="file", name="fls", multiple, style="display:none")
+				.col-9
+					.row#newImgs
+						.col-2
+							img#crtImgs.rounded-circle(src="/icon/img.jpg", width="100%")
+
+			
+			//- input(type="text" name="data[images][0][src]" value="https://www.poliform.it/ContentsFiles/19-10-07_OMAR-POLIFORM-VILLA-106-7774B-RID.jpg")
+			//- input(type="text" name="data[images][1][src]" value="https://www.poliform.it/ContentsFiles/Code-home(0).jpg")
+
+			hr
+			.form-group.row
+				.offset-sm-10.col-sm-2
+					button.btn.btn-success.btn-block#createPdBtn(type="submit") 提交
+	script(src="/js/mger/prod/edit.js")
+	script(src="/js/global/imagesEdit.js")

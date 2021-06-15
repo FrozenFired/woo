@@ -1,0 +1,77 @@
+extends ../../aalayout/layout
+
+block content
+	.container-fluid.mt-3
+		nav(aria-label="breadcrumb")
+			ol.breadcrumb
+				li.breadcrumb-item: a(href="/mger") 操作页面
+				li.breadcrumb-item.active(aria-current="page") #{title}
+		if errorInfo
+			-a;
+			.text-danger.text-center #{errorInfo}
+		else
+			.filterPage.my-4.row
+				.col-md-4
+					a.mr-5.btn.btn-default(href="/prods") 全部
+
+					each status in Conf.product.status.arr
+						- lang = status.replace(/-/, "_");
+						a.ml-3.btn.btn-info(href="/prods?status="+status) #{Conf.product.status.lang[lang]}
+
+					//- a.ml-5.btn.btn-success(href="/prods?featured=true") 精选
+					//- a.ml-3.mr-5.btn.btn-success(href="/prods?featured=false") 非精选
+
+				.col-md-4
+					each type in Conf.product.type.arr
+						- lang = type.replace(/-/, "_");
+						a.ml-3.btn.btn-info(href="/prods?type="+type) #{Conf.product.type.lang[lang]}
+				.col-md-4
+					form(method="get", action="/prods")
+						.row
+							.col-10
+								input.form-control(type="text", name="search", placeholder="请输入产品名称")
+							.col-2
+								button.btn.btn-success(type="submit") 查
+
+			.text-right.my-4
+				a.btn.btn-warning(href="/prodAdd") 新增产品
+			table.table.table-triped
+				thead
+					tr
+						//- th #{prods.length}
+						th #{prods.length}条
+						th 产品名称
+						th 价格
+						th.text-center(width="10%") 状态
+				tbody
+					each prod in prods
+						-a;
+						tr
+							//- td
+								input(id="cb-select"+prod.id type="checkbox" name="post[]" value=prod.id)
+							td
+								a(href="/prod/"+prod.id)
+									if prod.images && prod.images.length > 0
+										-a;
+										img(width=50, src=prod.images[0].src)
+									else
+										span #{prod.id}
+							td #{prod.name}
+							td
+								if prod.sale_price
+									-a;
+									span.mr-3.text-danger: s #{prod.regular_price}
+									span #{prod.sale_price}
+								else
+									span #{prod.regular_price}
+							td
+								select.putObjSelChange.form-control(data-url="/prodPut/"+prod.id, data-key="status", data-type="String")
+									each key in Conf.product.status.arr
+										- val = Conf.product.status.lang[key];
+										if prod.status == key
+											-a;
+											option(value=key, selected="selected") #{val}
+										else
+											option(value=key) #{val}
+
+			script(src="/js/woo/wooPut.js")

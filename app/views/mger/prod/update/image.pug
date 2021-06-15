@@ -1,0 +1,26 @@
+.row
+	.col-3
+		.title 产品图片
+	.col-9
+		form#objectPutImgsForm(method="post", action="/prodPutImages", enctype="multipart/form-data")
+			input(type="hidden", name="id", value=prod.id)
+			.row.border.rounded.p-2.mt-2
+				- sub = -1;
+				each image in prod.images
+					- sub++;
+					.col-2
+						//- input(type="hidden", name="data[images]["+sub+"][src]", value=image.src)
+						input(type="hidden", name="data[images]["+sub+"][id]", value=image.id)
+						input(type="hidden", name="data[images]["+sub+"][name]", value=image.name)
+						input(type="hidden", name="data[images]["+sub+"][alt]", value=image.alt)
+
+						img.css-img-neat.border.rounded(src=image.src, width="100%", height="150px")
+						.text-center.imgsEdit
+							a.text-danger(href="/prodDelImage/"+image.id+"?prod_id="+prod.id) [删除]
+			.row#newImgs.imgsEdit
+				.col-2
+					img#crtImgs.rounded-circle(src="/icon/img.jpg", width="100%")
+			input#wooUploadImgs.btn.btn-info.btn-block(type="file", name="fls", multiple, style="display:none")
+	button.btn.btn-success#subBtnPutImgs.imgsEdit(type="button" style="display:none") 确认更新
+
+script(src="/js/global/imagesEdit.js")

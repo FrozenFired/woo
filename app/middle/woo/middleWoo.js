@@ -38,7 +38,7 @@ exports.wooPost_Prom = async(url, data, wooPath) => {
 exports.wooPut_Prom = async(url, data, type, wooPath) => {
 	return new Promise(async(resolve, reject) => {
 		try{
-			if(type != "String") {
+			if(type != "String" && type != "Object") {
 				for(val in data) {
 					if(type == "Boolean") {
 						if(data[val] == "true") {

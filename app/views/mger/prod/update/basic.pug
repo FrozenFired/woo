@@ -1,0 +1,60 @@
+form#basicForm(method="post", action="/prodPut/"+prod.id, enctype="multipart/form-data")
+	.form-group.row
+		label.col-4.col-sm-2.col-form-label(for="nameIpt") 产品名称
+		.col-8.col-sm-10
+			input#nameIpt.form-control(type="text", name="data[name]", value=prod.name)
+		.offset-4.offset-sm-2.col-8.col-sm-10#nameOpt.text-danger(style="display:none")
+			span 请输入产品名称
+	.form-group.row
+		label.col-4.col-sm-2.col-form-label(for="slugIpt")#slugLabel 唯一编号 / slug
+		.col-8.col-sm-10
+			input#slugIpt.form-control(type="text", name="data[slug]", value=prod.slug)
+	.form-group.row
+		label.col-4.col-sm-2.col-form-label 产品分类
+		.col-8.col-sm-10
+			- var i = 0;
+			each category in categories
+				- i++;
+				- flag = false;
+				each categ in prod.categories
+					-a;
+					if category.id == categ.id
+						- flag = true;
+						- break;
+				.form-check.form-check-inline
+					if flag == true
+						-a;
+						input.form-check-input.cbxIpt.cbxIpt-categories(type="checkbox" name="data[categories]["+i+"][id]" id="cbxIpt-categories-"+category.id value=category.id, checked="checked")
+					else
+						input.form-check-input.cbxIpt.cbxIpt-categories(type="checkbox" name="data[categories]["+i+"][id]" id="cbxIpt-categories-"+category.id value=category.id)
+					label.form-check-label(for="cbxIpt-categories-"+category.id) #{category.name}
+	.form-group.row
+		label.col-4.col-sm-2.col-form-label 精品
+		.col-8.col-sm-10
+			if prod.featured
+				-a;
+				.custom-control.custom-radio.custom-control-inline
+					input.form-check-input.cbxIpt.cbxIpt-featured(type="radio" name="data[featured]" id="cbxIpt-featured-1" value=1, checked="checked")
+					label.form-check-label(for="cbxIpt-featured-1") 是
+				.custom-control.custom-radio.custom-control-inline
+					input.form-check-input.cbxIpt.cbxIpt-featured(type="radio" name="data[featured]" id="cbxIpt-featured-0" value=0)
+					label.form-check-label(for="cbxIpt-featured-0") 否
+			else
+				.custom-control.custom-radio.custom-control-inline
+					input.form-check-input.cbxIpt.cbxIpt-featured(type="radio" name="data[featured]" id="cbxIpt-featured-1" value=1)
+					label.form-check-label(for="cbxIpt-featured-1") 是
+
+				.custom-control.custom-radio.custom-control-inline
+					input.form-check-input.cbxIpt.cbxIpt-featured(type="radio" name="data[featured]" id="cbxIpt-featured-0" value=0, checked="checked")
+					label.form-check-label(for="cbxIpt-featured-0") 否
+	- var short_description = prod.short_description;
+	- short_description = short_description.substring(3, short_description.length - 5);
+	.form-group.row
+		label.col-4.col-sm-2.col-form-label 产品简述
+		.col-8.col-sm-10
+			input#short_description-ipt(type="hidden", value=short_description)
+			textarea.form-control#short_description-txa(type="text", rows="3", name="data[short_description]")
+	hr
+	.form-group.row
+		.offset-sm-10.col-sm-2
+			button.btn.btn-success.btn-block#basicForm-btn(type="submit") 提交

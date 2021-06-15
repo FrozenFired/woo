@@ -1,0 +1,142 @@
+.row.py-3.border-bottom.rounded
+	.col-3.col-md-3 类型 / type:
+	.col-9.col-md-3
+		select.putObjSelChange.form-control(data-url="/prodPutAjax/"+prod.id, data-key="type", data-type="String")
+			each key in Conf.product.type.arr
+				- val = Conf.product.type.lang[key];
+				if prod.type == key
+					-a;
+					option(value=key, selected="selected") #{val} / #{key}
+				else
+					option(value=key) #{val} / #{key}
+.py-3.border-bottom.rounded.mb-3
+	.row
+		.col-3
+			.title attributes
+			.desp 产品属性 Array
+			button.mr-4.btn.btn-link.text-warning#attrEdit(type="button") 修改
+			button.attrInput.btn.btn-success#subBtnPutAttrs(type="button" style="display:none") 提交
+		.col-9
+			form#prodPutAttrForm(method="post", action="/prodPutAttributes")
+				input(type="hidden", name="id", value=prod.id)
+				- sub = -1;
+				each attribute in prod.attributes
+					- sub++;
+					.border.rounded.p-2.mt-2
+						.row.mt-2
+							.col-3
+								.attrText #{attribute.name}
+								.attrInput(style="display:none")
+									input.form-control(type="text", name="attrs["+sub+"][name]", value=attribute.name)
+							.col-9
+								- i = 0;
+								- options = "";
+								.attrText
+									each option in  attribute.options
+										- i++;
+										- options += option;
+										span #{option}
+										if i != attribute.options.length
+											-a;
+											- options += "|";
+											span.mx-3 |
+								.attrInput(style="display:none")
+									input.form-control(type="text", name="attrs["+sub+"][options]", value=options)
+				- sub++;
+				.border.rounded.p-2.mt-2.row.attrInput(style="display:none")
+					.col-4
+						input.form-control(type="text", name="attrs["+sub+"][name]", placeholder="产品属性.(如 color, size)")
+					.col-8
+						input.form-control(type="text", name="attrs["+sub+"][options]", placeholder="属性值 用 | 分割.(如: red | blu)")
+
+	script(src="/js/mger/prod/pdAttrEdit.js")
+//- .row.py-3.border-bottom.rounded
+	.col-3: span.text-info.keyClickUpA(id="keyClickUpA-"+prod.id+"-sku") 售卖单位
+	.col-9
+		span.valClickUpA(id="valClickUpA-"+prod.id+"-sku") #{prod.sku}
+		input(type="hidden", id="iptOrg-"+prod.id+"-sku", value=prod.sku)
+		input.form-control.iptNewBlurUpd(type="text", id="iptNewBlurUpd-"+prod.id+"-sku", value=prod.sku, data-url="/prodPut/"+prod.id, data-key="sku", data-type="String", placeholder="售卖单位 [如 个 盒 份 公斤]", style="display:none")
+- let skuPut = null;
+- let formAction = null;
+if prod.type == "simple"
+	- skuPut = prod;
+	- formAction = "/prodPut/"+prod.id;
+else if prod.type == "variable"
+	- skuPut = variations[0];
+	- formAction = "/prodPut/"+prod.id+"?variation"+skuPut.id;
+if skuPut
+	-a;
+	form#manageForm(method="post", action=formAction, enctype="multipart/form-data")
+		.form-group.row
+			label.col-4.col-sm-3.col-form-label(for="regular_priceIpt") 产品价格
+			.col-8.col-sm-9
+				input#regular_priceIpt.form-control(type="text", name="data[regular_price]", value=skuPut.regular_price)
+			.offset-4.offset-sm-3.col-8.col-sm-10#regular_priceOpt.text-danger(style="display:none")
+				span 请输入产品价格
+		.form-group.row
+			label.col-4.col-sm-3.col-form-label(for="sale_priceIpt") 折扣价
+			.col-8.col-sm-9
+				input#sale_priceIpt.form-control(type="text", name="data[sale_price]", value=skuPut.sale_price)
+		.form-group.row.border-top.pt-3
+			label.col-4.col-sm-3.col-form-label 是否管理库存
+			.col-8.col-sm-9
+				select.form-control#manage_stockSel(name="data[manage_stock]")
+					- let yes_manage_stok = "none";
+					- let no_manage_stok = "";
+					if skuPut.manage_stock
+						-yes_manage_stok = "";
+						-no_manage_stok = "none";
+						option(value=1, selected="selected") 是
+						option(value=0) 否
+					else
+						option(value=1) 是
+						option(value=0, selected="selected") 否
+
+		.form-group.row.yes_manage_stok(style="display:"+yes_manage_stok)
+			label.col-4.col-sm-3.col-form-label(for="stock_quantityIpt") 库存数量 / stock_quantity
+			.col-8.col-sm-9
+				input#stock_quantityIpt.form-control(type="number", name="data[stock_quantity]", value=skuPut.stock_quantity)
+			.offset-4.offset-sm-3.col-8.col-sm-10#stock_quantityOpt.text-danger(style="display:none")
+				span 请输入库存
+
+		.form-group.row.yes_manage_stok(style="display:"+yes_manage_stok)
+			label.col-4.col-sm-3.col-form-label 缺货允许 / backorders:
+			.col-8.col-sm-9
+				select.form-control(name="data[backorders]")
+					each key in Conf.product.backorders.arr
+						- val = Conf.product.backorders.lang[key];
+						if skuPut.backorders == key
+							-a;
+							option(value=key, selected="selected") #{val} / #{key}
+						else
+							option(value=key) #{val} / #{key}
+		.form-group.row.no_manage_stok(style="display:"+no_manage_stok)
+			label.col-4.col-sm-3.col-form-label 货物状态
+			.col-8.col-sm-9
+				select.form-control(name="data[stock_status]")
+					each key in Conf.product.stock_status.arr
+						- val = Conf.product.stock_status.lang[key];
+						if skuPut.stock_status == key
+							-a;
+							option(value=key, selected="selected") #{val} / #{key}
+						else
+							option(value=key) #{val} / #{key}
+
+		//- .row.py-3.rounded.border.border-top
+			.col-3 唯一购买 / sold_individually
+			.col-3
+				if prod.sold_individually
+					-nt="false";
+					button.mr-5.btn.btn-success(type="button") 是
+					button.btn.btn-secondary.putObjBtnClick(type="button", data-url="/prodPut/"+prod.id, data-key="sold_individually", data-val=nt, data-type="Boolean") 否
+				else
+					-nt="true";
+					button.btn.btn-secondary.putObjBtnClick(type="button", data-url="/prodPut/"+prod.id, data-key="sold_individually", data-val=nt, data-type="Boolean") 是
+					button.ml-5.btn.btn-success(type="button") 否
+
+			.col-3
+			.col-3 在同一个订单中是否只能被买一件
+		hr
+		.form-group.row
+			.offset-sm-10.col-sm-2
+				button.btn.btn-success.btn-block#manageForm-btn(type="submit") 提交

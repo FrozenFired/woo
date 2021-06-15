@@ -49,9 +49,11 @@ exports.variationPost = async(req, res) => {
 			}
 		}
 		data.status = "publish";
+		data.attributes = []
 		const variation = await MdWoo.wooPost_Prom("products/"+product_id+"/variations", data, crUser.firm);
 		if(image) MdFile.delFile(image);
 		if(variation && variation.id) return res.redirect("/product/"+product_id);
+		console.log(variation)
 		return res.redirect('/mger?errorInfo=variationPost 创建错误');
 	} catch(error) {
 		console.log(error);

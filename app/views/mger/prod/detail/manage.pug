@@ -1,0 +1,71 @@
+.row.py-3.border-bottom.rounded
+	.col-3.col-md-3 类型 / type:
+	.col-9.col-md-3 #{Conf.product.type.lang[prod.type]} / #{prod.type}
+if prod.type == "variable"
+	-a;
+	.row.py-3.border-bottom.rounded
+		.col-3
+			.title attributes
+			.desp 产品属性 Array
+		.col-9
+			each attribute in prod.attributes
+				-a;
+				.border.rounded.p-2.mt-2
+					.row.mt-2
+						.col-4 #{attribute.name}
+						.col-8
+							- i = 0;
+							each option in  attribute.options
+								- i++;
+								span #{option}
+								if i != attribute.options.length
+									-a;
+									span.mx-3 |
+- let sku = null
+if prod.type == "simple"
+	- sku = prod;
+else if prod.type == "variable"
+	- sku = variations[0];
+if sku
+	-a;
+	.row.py-3.border-bottom.rounded
+		.col-3 价格 / regular_price
+		.col-9 #{sku.regular_price}
+	.row.py-3.border-bottom.rounded
+		.col-3 折扣价 / sale_price
+		.col-9 #{sku.sale_price}
+
+	//- stock
+	.row.py-3.border-bottom.rounded
+		.col-3 是否管理库存 / manage_stock
+		.col-9
+			if sku.manage_stock
+				-a;
+				span 是
+			else
+				span 否
+	if sku.manage_stock
+		-a;
+		.row.ml-3.py-3.border-bottom.rounded
+			.col-3 库存数量 / stock_quantity #{sku.stock_quantity}
+		.row.ml-3.py-3.border-bottom.rounded
+			.col-3 缺货允许 / backorders:
+			.col-3 #{Conf.product.backorders.lang[sku.backorders]} / #{sku.backorders}
+			.col-3
+			.col-3 在缺货的情况下， 是否允许客户下单
+	else
+		.row.py-3.border-bottom.rounded
+			.col-3 货物状态 / stock_status:
+			.col-3 #{Conf.product.stock_status.lang[sku.stock_status]} / #{sku.stock_status}
+
+	//- .row.py-3.rounded
+		.col-3 唯一购买 / sold_individually
+		.col-3
+			if sku.sold_individually
+				-a;
+				span 是
+			else
+				span  否
+
+		.col-3
+		.col-3 在同一个订单中是否只能被买一件
