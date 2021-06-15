@@ -21,17 +21,6 @@ h3.bg-success.text-center.p-2 发布
 
 
 .border.px-3
-	//- .row.py-3.border-bottom.rounded
-		.col-3 精品 / featured
-		.col-9
-			if product.featured
-				-nt="false";
-				button.mr-5.btn.btn-success(type="button") 是
-				button.btn.btn-secondary.putObjBtnClick(type="button", data-url="/productPut/"+product.id, data-key="featured", data-val=nt, data-type="Boolean") 否
-			else
-				-nt="true";
-				button.btn.btn-secondary.putObjBtnClick(type="button", data-url="/productPut/"+product.id, data-key="featured", data-val=nt, data-type="Boolean") 是
-				button.ml-5.btn.btn-success(type="button") 否
 	.row.py-3.border-bottom.rounded
 		.col-3: span.text-info.keyClickUpA(id="keyClickUpA-"+product.id+"-name") 产品名称 / name
 		.col-9
@@ -52,6 +41,17 @@ h3.bg-success.text-center.p-2 发布
 			each categ in product.categories
 				-a;
 				span.mr-5 #{categ.name}
+	.row.py-3.border-bottom.rounded
+		.col-3 精品 / featured
+		.col-9
+			if product.featured
+				-nt="false";
+				button.mr-5.btn.btn-success(type="button") 是
+				button.btn.btn-secondary.putObjBtnClick(type="button", data-url="/productPut/"+product.id, data-key="featured", data-val=nt, data-type="Boolean") 否
+			else
+				-nt="true";
+				button.btn.btn-secondary.putObjBtnClick(type="button", data-url="/productPut/"+product.id, data-key="featured", data-val=nt, data-type="Boolean") 是
+				button.ml-5.btn.btn-success(type="button") 否
 	- let description = product.description;
 	- description = description.substring(3, description.length - 5);
 	//- .row.py-3.border-bottom.rounded
@@ -97,6 +97,9 @@ h3.bg-success.text-center.p-2 发布
 div(style="height: 100px")
 .border.px-3
 	.row.py-3.border-bottom.rounded
+		.col-3.col-md-3 类型 / type:
+		.col-9.col-md-3 #{Conf.product.type.lang[product.type]} / #{product.type}
+	.row.py-3.border-bottom.rounded
 		.col-3
 			.title attributes
 			.desp 产品属性 Array
@@ -114,12 +117,9 @@ div(style="height: 100px")
 								if i != attribute.options.length
 									-a;
 									span.mx-3 |
-	.row.py-3.border-bottom.rounded
+	//- .row.py-3.border-bottom.rounded
 			.col-3 单位
 			.col-9 #{product.sku}
-	.row.py-3.border-bottom.rounded
-		.col-3.col-md-3 类型 / type:
-		.col-9.col-md-3 #{Conf.product.type.lang[product.type]} / #{product.type}
 	if product.type == "simple"
 		-a;
 		.row.py-3.border-bottom.rounded

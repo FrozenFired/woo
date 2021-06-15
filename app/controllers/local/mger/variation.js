@@ -44,7 +44,7 @@ exports.variationPost = async(req, res) => {
 			data.image.src = process.env.DNS + image;
 		} else {
 			const product =  await MdWoo.wooGet_Prom("products/"+product_id, crUser.firm);
-			if(product && product.images) {
+			if(product && product.images && product.images[0]) {
 				data.image.src = product.images[0].src;
 			}
 		}

@@ -23,17 +23,6 @@ h3.text-secondary.text-center.p-2 下架
 
 
 .border.px-3
-	//- .row.py-3.border-bottom.rounded
-		.col-3 精品 / featured
-		.col-9
-			if product.featured
-				-nt="false";
-				button.mr-5.btn.btn-success(type="button") 是
-				button.btn.btn-secondary.putObjBtnClick(type="button", data-url="/productPut/"+product.id, data-key="featured", data-val=nt, data-type="Boolean") 否
-			else
-				-nt="true";
-				button.btn.btn-secondary.putObjBtnClick(type="button", data-url="/productPut/"+product.id, data-key="featured", data-val=nt, data-type="Boolean") 是
-				button.ml-5.btn.btn-success(type="button") 否
 	.row.py-3.border-bottom.rounded
 		.col-3: span.text-info.keyClickUpA(id="keyClickUpA-"+product.id+"-name") 产品名称 / name
 		.col-9
@@ -69,6 +58,17 @@ h3.text-secondary.text-center.p-2 下架
 						input.form-check-input.cbxIpt.cbxIpt-categories(type="checkbox" id="cbxIpt-categories-"+category.id value=category.id)
 						label.form-check-label(for="cbxIpt-categories-"+category.id) #{category.name}
 			button.btn.btn-info.cbxBtnSubmit(type="button", data-url="/productPut/"+product.id, data-type="categories", data-key="categories") 提交
+	.row.py-3.border-bottom.rounded
+		.col-3 精品 / featured
+		.col-9
+			if product.featured
+				-nt="false";
+				button.mr-5.btn.btn-success(type="button") 是
+				button.btn.btn-secondary.putObjBtnClick(type="button", data-url="/productPut/"+product.id, data-key="featured", data-val=nt, data-type="Boolean") 否
+			else
+				-nt="true";
+				button.btn.btn-secondary.putObjBtnClick(type="button", data-url="/productPut/"+product.id, data-key="featured", data-val=nt, data-type="Boolean") 是
+				button.ml-5.btn.btn-success(type="button") 否
 	- let description = product.description;
 	- description = description.substring(3, description.length - 5);
 	//- .row.py-3.border-bottom.rounded
@@ -93,15 +93,6 @@ h3.text-secondary.text-center.p-2 下架
 
 div(style="height: 100px")
 .border.px-3
-	.py-3.border-bottom.rounded
-		include ./editAttributes
-	.row.py-3.border-bottom.rounded
-		.col-3: span.text-info.keyClickUpA(id="keyClickUpA-"+product.id+"-sku") 售卖单位
-		.col-9
-			span.valClickUpA(id="valClickUpA-"+product.id+"-sku") #{product.sku}
-			input(type="hidden", id="iptOrg-"+product.id+"-sku", value=product.sku)
-			input.form-control.iptNewBlurUpd(type="text", id="iptNewBlurUpd-"+product.id+"-sku", value=product.sku, data-url="/productPut/"+product.id, data-key="sku", data-type="String", placeholder="售卖单位 [如 个 盒 份 公斤]", style="display:none")
-
 	.row.py-3.border-bottom.rounded
 		.col-3.col-md-3 类型 / type:
 		.col-9.col-md-3
@@ -113,6 +104,15 @@ div(style="height: 100px")
 						option(value=key, selected="selected") #{val} / #{key}
 					else
 						option(value=key) #{val} / #{key}
+	.py-3.border-bottom.rounded
+		include ./editAttributes
+	//- .row.py-3.border-bottom.rounded
+		.col-3: span.text-info.keyClickUpA(id="keyClickUpA-"+product.id+"-sku") 售卖单位
+		.col-9
+			span.valClickUpA(id="valClickUpA-"+product.id+"-sku") #{product.sku}
+			input(type="hidden", id="iptOrg-"+product.id+"-sku", value=product.sku)
+			input.form-control.iptNewBlurUpd(type="text", id="iptNewBlurUpd-"+product.id+"-sku", value=product.sku, data-url="/productPut/"+product.id, data-key="sku", data-type="String", placeholder="售卖单位 [如 个 盒 份 公斤]", style="display:none")
+
 	if product.type == "simple"
 		-a;
 		.row.py-3.border-bottom.rounded
@@ -190,7 +190,7 @@ div(style="height: 100px")
 
 			.col-3
 			.col-3 在同一个订单中是否只能被买一件
-	else if product.type == "variable"
+	if product.type == "variable"
 		-a;
 		if product.attributes && product.attributes.length > 0
 			-a;

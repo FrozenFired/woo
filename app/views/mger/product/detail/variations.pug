@@ -6,6 +6,15 @@ if product.status != "publish"
 		.col-4.text-right
 			button.btn.border-danger.text-danger#variationDelBox(type="button") 删除
 	script(src="/js/mger/product/pdVariations.js")
+.row
+	each variation in variations
+		-a;
+		.col-6.col-md-4.col-xl-3
+			.card
+				div #{variation.id}
+				if variation.attributes && variation.attributes.length > 0
+					-a;
+					div #{variation.attributes[0].name}
 table.table.table-triped.mt-3
 	thead
 		tr
@@ -13,10 +22,7 @@ table.table.table-triped.mt-3
 			th img
 			th 售价
 			th 打折价
-			th 是否在售
-			th 打折
 			th 缺货
-			th 销量
 			th.variationDelElem(style="display:none") 删除
 	tbody
 		each variation in variations
@@ -34,17 +40,8 @@ table.table.table-triped.mt-3
 				td #{variation.regular_price}
 				td #{variation.sale_price}
 				td
-					if !variation.purchasable
-						-a;
-						span.text-danger 否
-				td
-					if variation.on_sale
-						-a;
-						span 是
-				td
 					if variation.backordered
 						-a;
 						span.text-danger 是
-				td #{variation.total_sales}
 				td.variationDelElem(style="display:none")
 					button.btn.btn-link.text-danger.variationDelBtn(type="button", data-id=variation.id, data-product_id=product.id) [删除]

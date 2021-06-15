@@ -53,7 +53,7 @@ exports.productAdd = async(req, res) => {
 	try{
 		const crUser = req.session.crUser;
 
-		const categories = await MdWoo.wooGet_Prom("products/categories", crUser.firm);
+		const categories = await MdWoo.wooGet_Prom("products/categories?per_page=100", crUser.firm);
 		return res.render('./mger/product/add', {
 			title: '新产品',
 			crUser,
@@ -82,7 +82,7 @@ exports.productPost = async(req, res) => {
 		images.forEach(img => {
 			MdFile.delFile(img)
 		})
-		if(product && product.id) return res.redirect("/products")
+		if(product && product.id) return res.redirect("/product/"+product.id);
 		return res.redirect('/mger?errorInfo=productPost 创建错误');
 	} catch(error) {
 		console.log(error);
@@ -227,7 +227,7 @@ exports.productPutImages = async(req, res) => {
 
 
 exports.productPutAttributes = async(req, res) => {
-	console.log("/productPutAttributes")
+	// console.log("/productPutAttributes")
 	try{
 		const crUser = req.session.crUser;
 
