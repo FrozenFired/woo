@@ -6,7 +6,7 @@ exports.customers = async(req, res) => {
 	try{
 		const crUser = req.session.crUser;
 
-		const url = "customers/per_page=100";
+		const url = "customers?per_page=100";
 		const customers = await MdWoo.wooGet_Prom(url, crUser.firm);
 		// console.log(customers[0])
 

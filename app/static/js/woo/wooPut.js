@@ -54,6 +54,8 @@ $(() => {
 		const key = target.data("key");
 		const val = $(this).val().replace(/^\s*/g,"");
 		const body = "data["+key+"]="+val+"&type="+type;
+		console.log(url)
+		console.log(body)
 		wooPutAjax(url, body);
 	})
 

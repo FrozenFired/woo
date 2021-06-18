@@ -4,11 +4,11 @@
 .row.py-3.border-bottom.rounded
 	.col-3
 		span 唯一编号 / slug
-		span.text-warning.ml-2(title="这是产品唯一标识符, 不可与其他产品重复") ?
+		//- span.text-warning.ml-2(title="这是产品唯一标识符, 不可与其他产品重复") ?
 	.col-3 #{prod.slug}
 	.col-6
 		span EX:
-		span.text-warning.ml-2(title="做推广时, 要做优化") ?
+		//- span.text-warning.ml-2(title="做推广时, 要做优化") ?
 		span.ml-4 #{prod.permalink}
 .row.py-3.border-bottom.rounded
 	.col-3
@@ -20,7 +20,7 @@
 .row.py-3.border-bottom.rounded
 	.col-3
 		span 精品
-		span.text-warning.ml-2(title="如果是精品, 则在首页展示") ?
+		//- span.text-warning.ml-2(title="如果是精品, 则在首页展示") ?
 	.col-9
 		if prod.featured
 			-nt="false";

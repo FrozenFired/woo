@@ -41,7 +41,7 @@ block content
 						//- th #{prods.length}
 						th #{prods.length}条
 						th 产品名称
-						th 价格
+						//- th 价格
 						th.text-center(width="10%") 状态
 				tbody
 					each prod in prods
@@ -57,7 +57,8 @@ block content
 									else
 										span #{prod.id}
 							td #{prod.name}
-							td
+							//- 如果 type == variable 需要找到variations
+							//- td
 								if prod.sale_price
 									-a;
 									span.mr-3.text-danger: s #{prod.regular_price}

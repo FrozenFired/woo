@@ -18,7 +18,7 @@ block content
 		else if prod.status == "private"
 			-a;
 			.row.text-danger.py-2
-				.col-4 产品已下架 
+				.col-4 产品未发布
 				.col-8.text-right
 					a.mr-5.btn.btn-danger(href='/prodDel/'+prod.id) 删除
 					button.btn.btn-success.putObjBtnClick(type="button", data-url="/prodPutAjax/"+prod.id, data-key="status", data-val="publish", data-type="String") 发布

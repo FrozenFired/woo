@@ -80,6 +80,10 @@ exports.prodPost = async(req, res) => {
 		if(data.type == "variable") {
 			if(!attributes || attributes.length == 0) return res.json({status: 400, message: "因为您上传的是多规格产品, 需要上传属性"});
 			if(!attributes[0] || !attributes[0].name) return res.json({status: 400, message: "因为您上传的是多规格产品, 需要上传属性"});
+			attributes.forEach(item => {
+				item.visible = true;
+				item.variation = true;
+			});
 			data.attributes = attributes;
 		}
 
