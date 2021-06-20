@@ -27,15 +27,20 @@ if order.customer_note
 	- customer_note = order.customer_note;
 	.customer_note 客户留言: #{customer_note}
 
-.mt-3
-	each status in Conf.order.status.arr
-		- lang = status.replace(/-/, "_");
-		if status == order.status
-			- continue;
-		button.mr-5.btn.btn-warning.putObjBtnClick(type="button", data-url="/orderPut/"+order.id, data-key="status", data-val=status, data-type="String") #{Conf.order.status.lang[lang]}
-if order.status == "trash"
-	-a;
-	.text-right
-		button.btn.border-danger.text-danger.objDeleteAjax(type="button", data-url="/orderDel/", data-reurl="/orders" ,data-id=order.id) [彻底删除]
+.row.mt-3
+	.col-6.col-md-3
+		select.putObjSelChange.form-control(data-url="/orderPut/"+order.id, data-key="status", data-type="String")
+			each key in Conf.order.status.arr
+				- lang = key.replace(/-/, "_");
+				- val = Conf.order.status.lang[lang];
+				if order.status == key
+					-a;
+					option(value=key, selected="selected") #{val}
+				else
+					option(value=key) #{val}
+	if order.status == "trash"
+		-a;
+		.col-6.col-md-9.text-right
+			button.btn.border-danger.text-danger.objDeleteAjax(type="button", data-url="/orderDel/", data-reurl="/orders" ,data-id=order.id) [彻底删除]
 
-	script(src="/js/global/delete.js")
+		script(src="/js/global/delete.js")

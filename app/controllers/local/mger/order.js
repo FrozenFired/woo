@@ -37,7 +37,7 @@ exports.order = async(req, res) => {
 
 		const id = req.params.id;
 		const order = await MdWoo.wooGet_Prom("orders/"+id, crUser.firm);
-		if(!order || !order.id) errorInfo = "查无此订单";
+		if(!order || !order.id || !order.number) errorInfo = "查无此订单";
 
 		const customer = await MdWoo.wooGet_Prom("customers/"+order.customer_id, crUser.firm);
 		// console.log(customer)
@@ -61,6 +61,7 @@ exports.orderPutAjax = async(req, res) => {
 		const data = req.body.data;
 		const type = req.body.type;
 		let order = null;
+		if(data.status == "on_hlod") data.status = "on-hold";
 		if(data.status && data.status == "trash") {
 			order = await MdWoo.wooDelete_Prom("orders/"+id, crUser.firm);
 		} else {

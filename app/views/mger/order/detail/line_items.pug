@@ -3,7 +3,7 @@ table.table.table-striped
 		tr
 			th 序号
 			th 产品名称
-			th sku
+			th 
 			th 数量
 			th 单价
 			th.text-right 总价
@@ -15,14 +15,24 @@ table.table.table-striped
 			- tot += parseFloat(line_item.subtotal);
 			tr
 				td #{num}
-				td #{line_item.name}
-				td sku
+				td
+					.item(id="pd-"+line_item.product_id+"-vr-"+line_item.variation_id) #{line_item.name}
+					div(id="item-"+line_item.product_id)
+				td
+					each attr in line_item.meta_data
+						-a;
+						if attr.key != '_reduced_stock'
+							-a;
+							div
+								span #{attr.key}: 
+								span.text-info #{attr.value}
 				td #{line_item.quantity}
 				td #{line_item.price} #{order.currency}
 				td.text-right #{line_item.subtotal} #{order.currency}
 		tr
 			th(colspan=5) 货值:
 			th.text-right #{(tot).toFixed(2)} #{order.currency}
+//- script(src="/js/mger/order/detail/item.js")
 		//- id: 3,
 		//- name: 'Printed Green Tshirt',
 		//- sku: '',

@@ -142,6 +142,28 @@ exports.prod = async(req, res) => {
 	}
 };
 
+exports.itemAjax = async(req, res) => {
+	// console.log("/itemAjax")
+	try{
+		const crUser = req.session.crUser;
+		const pd = parseInt(req.params.pd);
+		const vr = parseInt(req.params.vr);
+
+		let object = null;
+		if(vr && vr != 0) {
+			object = await MdWoo.wooGet_Prom("products/"+pd+"/variations/"+vr, crUser.firm);
+		} else {
+			object = await MdWoo.wooGet_Prom("products/"+pd, crUser.firm);
+		}
+
+		if(!object || !object.id) return res.status(400).json({status: 400, message: '没有找到此产品, 请给客户打电话确认'});
+		return res.status(200).json({status: 200, data: {object}})
+	} catch(error) {
+		console.log(error);
+		return res.status(500).json({status: 500, message: "[服务器错误] itemAjax"});
+	}
+};
+
 exports.prodPut = async(req, res) => {
 	// console.log("/prodPut")
 	try {

@@ -41,14 +41,17 @@ const Conf = {
 	/* ===================== woocommerce ===================== */
 	order: {
 		status: {
-			list: ["pending", "processing", "on-hold", "completed", "cancelled", "refunded", "failed", "trash"],
-			arr: ["on-hold", "processing", "completed", "cancelled", "trash"],
+			list: ["on-hold", "processing", "pending", "completed", "cancelled", "refunded", "failed", "trash"],
+			arr: ["on-hold", "processing", "pending", "completed", "cancelled", "refunded", "failed", "trash"],
 			lang: {
-				on_hold: "待处理",
-				processing: "处理中",
-				completed: "已完成",
-				cancelled: "取消",
-				trash: "废除"
+				on_hold: "In sospeso",
+				processing: "In lavorazione",
+				pending: "In attesa di pagamento",
+				completed: "Completato",
+				cancelled: "Annullato",
+				refunded: "Rimborsato",
+				failed: "Fallito",
+				trash: "Cestino"
 			}
 		}
 	},

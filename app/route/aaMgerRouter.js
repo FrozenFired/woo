@@ -54,6 +54,7 @@ module.exports = function(app){
 	app.post('/prodPost', MdRole.mgerIsLogin, postForm, MdFile.newFiles, Prod.prodPost)
 	app.get('/prods', MdRole.mgerIsLogin, Prod.prods)
 	app.get('/prod/:id', MdRole.mgerIsLogin, Prod.prod)
+	app.get('/itemAjax/:pd/:vr', MdRole.mgerIsLogin, Prod.itemAjax)
 	app.get('/prodDel/:id', MdRole.mgerIsLogin, Prod.prodDel)
 	app.put('/prodPutAjax/:id', MdRole.mgerIsLogin, postForm, Prod.prodPutAjax)
 	app.post('/prodPut/:id', MdRole.mgerIsLogin, postForm, Prod.prodPut)

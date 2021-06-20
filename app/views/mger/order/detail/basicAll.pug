@@ -45,6 +45,7 @@ each firKey in Object.keys(order)
 							.row.mt-3
 								.col-4 #{secKey}
 								.col-8
+									span
 									if !secVal
 										-a;
 										span #{secVal}
@@ -55,6 +56,18 @@ each firKey in Object.keys(order)
 											.row.border-bottom.mt-3
 												.col-md-4 #{thdKey}
 												.col-md-8 #{thdVal}
+									else if secVal.constructor === Array
+										-a;
+										each thdArr in secVal
+											-a;
+											each thdObj in thdArr
+												-a;
+												div #{thdObj}
+												//- each thdKey in Object.keys(thdObj)
+													- thdVal = thdObj[thdKey];
+													.row.border-bottom.mt-3
+														.col-md-4 #{thdKey}
+														.col-md-8 #{thdVal}
 									else
 										span #{secVal}
 			else
