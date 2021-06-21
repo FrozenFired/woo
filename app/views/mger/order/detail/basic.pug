@@ -38,6 +38,10 @@ if order.customer_note
 					option(value=key, selected="selected") #{val}
 				else
 					option(value=key) #{val}
+	if order.status == "processing"
+		-a;
+		.col-6.col-md-9
+			button.btn.btn-success.putObjBtnClick(type="button", data-url="/orderPut/"+order.id, data-key="status", data-val="completed", data-type="String") 完成
 	if order.status == "trash"
 		-a;
 		.col-6.col-md-9.text-right

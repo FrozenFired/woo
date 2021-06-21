@@ -36,4 +36,12 @@ block content
 							td #{moment(order.date_created).format("YYYY/MM/DD HH:mm:ss")}
 							td #{order.total} #{order.currency}
 							td #{order.customer_id}
-							td #{Conf.order.status.lang[lang]}
+							td
+								- textColor = "text-default";
+								if order.status == "processing"
+									- textColor = "text-info";
+								else if order.status == "trash"
+									- textColor = "text-danger";
+								else if order.status == "failed" || order.status == "refunded" || order.status == "on-hold"
+									- textColor = "text-warning";
+								span(class=textColor) #{Conf.order.status.lang[lang]}

@@ -1,3 +1,4 @@
+1.1.1 	order status 优化
 1.1.0 	stripe
 1.0.1	小bug优化
 1.0.0 	省级后台版本
