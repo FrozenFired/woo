@@ -185,7 +185,24 @@ exports.prodPut = async(req, res) => {
 		return res.json({status: 500, message: "/prodPut error"})
 	}
 }
+exports.prodPut = async(req, res) => {
+	try {
+		const crUser = req.session.crUser;
 
+		const id = req.params.id;
+		let data = req.body.data;
+		const type = req.body.type;
+		const product = await MdWoo.wooPut_Prom("products/"+id, data, type, crUser.firm);
+		if(product && product.id) {
+			return res.json({status: 200, product})
+		} else {
+			return res.json({status: 500, message: "操作错误"})
+		}
+	} catch(error) {
+		console.log(error);
+		return res.json({status: 500, message: "/productPutAjax error"})
+	}
+}
 exports.prodPutAjax = async(req, res) => {
 	// console.log("/prodPutAjax")
 	try {
