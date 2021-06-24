@@ -2,6 +2,7 @@ table.table.table-striped
 	thead
 		tr
 			th 序号
+			th 
 			th 产品名称
 			th 
 			th 数量
@@ -15,6 +16,7 @@ table.table.table-striped
 			- tot += parseFloat(line_item.subtotal);
 			tr
 				td #{num}
+				td(id="img-pd-"+line_item.product_id+"-vr-"+line_item.variation_id)
 				td
 					.item(id="pd-"+line_item.product_id+"-vr-"+line_item.variation_id) #{line_item.name}
 					div(id="item-"+line_item.product_id)
@@ -30,9 +32,9 @@ table.table.table-striped
 				td #{line_item.price} #{order.currency}
 				td.text-right #{line_item.subtotal} #{order.currency}
 		tr
-			th(colspan=5) 货值:
+			th(colspan=6) 货值:
 			th.text-right #{(tot).toFixed(2)} #{order.currency}
-//- script(src="/js/mger/order/detail/item.js")
+script(src="/js/mger/order/detail/item.js")
 		//- id: 3,
 		//- name: 'Printed Green Tshirt',
 		//- sku: '',

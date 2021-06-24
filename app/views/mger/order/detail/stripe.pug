@@ -8,10 +8,12 @@ each orderMeta in order.meta_data
 	if orderMeta.key == "_stripe_net"
 		-stripe_net = orderMeta.value;
 
-.stripe.mt-5
-	.text-right.mt-3
-		span stripe 费用: 
-		span.mx-3 #{stripe_fee} #{stripe_currency}
-	.text-right.mt-3
-		span stripe 净值:
-		span.mx-3 #{stripe_net} #{stripe_currency}
+if stripe_fee
+	-a;
+	.stripe.mt-5
+		.text-right.mt-3
+			span stripe 费用: 
+			span.mx-3 #{stripe_fee} #{stripe_currency}
+		.text-right.mt-3
+			span stripe 净值:
+			span.mx-3 #{stripe_net} #{stripe_currency}
