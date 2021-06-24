@@ -141,6 +141,19 @@ exports.prod = async(req, res) => {
 		return res.redirect('/errormger?errorInfo=您没有权限登陆操作界面&error='+error);
 	}
 };
+exports.prodAjax = async(req, res) => {
+	// console.log("/prodAjax")
+	try{
+		const crUser = req.session.crUser;
+		const id = req.params.id;
+		const prod = await MdWoo.wooGet_Prom("products/"+id, crUser.firm);
+
+		return res.json({status: 200, data: {object: prod}})
+	} catch(error) {
+		// console.log(error);
+		return res.redirect('/errormger?errorInfo=您没有权限登陆操作界面&error='+error);
+	}
+};
 
 exports.itemAjax = async(req, res) => {
 	// console.log("/itemAjax")
