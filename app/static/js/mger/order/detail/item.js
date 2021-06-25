@@ -1,12 +1,9 @@
 $(() => {
 	const getItem = (pd, vr) => {
-		console.log(pd)
-		console.log(vr)
 		$.ajax({
 			type: "GET",
 			url: "/prodAjax/"+pd,
 			success: (result)=> {
-				console.log(result)
 				let src = "/icon/firm.jpg";
 				if(result.data && result.data.object && result.data.object.images) {
 					const images = result.data.object.images;

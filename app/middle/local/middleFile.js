@@ -15,10 +15,13 @@ exports.newFiles = async(req, res, next) => {
 		const dataFls = req.files.fls;	// 图片数据
 		const files = new Array();
 		if(dataFls instanceof Array) {
+			let iFile = 0;
 			for(let i=0;  i<dataFls.length; i++) {
+				iFile++;
+				if(iFile == 6) break;
 				const fl = dataFls[i];
 				if(fl && fl.originalFilename) {
-					const file = await recuPics(fl, i,);
+					const file = await recuPics(fl, i);
 					files.push(file);
 				}
 			}
