@@ -23,7 +23,6 @@ block content
 						th 编号
 						th 时间
 						th 价格
-						th 客户
 						th 状态
 				tbody
 					each order in orders
@@ -35,7 +34,6 @@ block content
 								a(href="/order/"+order.id) #{order.number}
 							td #{moment(order.date_created).format("YYYY/MM/DD HH:mm:ss")}
 							td #{order.total} #{order.currency}
-							td #{order.customer_id}
 							td
 								- textColor = "text-default";
 								if order.status == "processing"
