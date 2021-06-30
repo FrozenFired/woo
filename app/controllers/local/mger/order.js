@@ -15,13 +15,23 @@ exports.orders = async(req, res) => {
 				errorInfo = "订单状态参数错误"
 			}
 		}
-		url += '&per_page=100'
+		
+		let per_page = 10;
+		if(req.query.per_page && !isNaN(parseInt(req.query.per_page))) per_page=parseInt(req.query.per_page);
+		url += "&per_page="+per_page;
+
+		let page = 1;
+		if(req.query.page && !isNaN(parseInt(req.query.page))) page = parseInt(req.query.page);
+		url += "&page="+page;
+
 		const orders = await MdWoo.wooGet_Prom(url, crUser.firm);
 		return res.render('./mger/order/list', {
 			title: '订单列表',
 			crUser,
 			errorInfo,
 			orders,
+			page,
+			per_page
 		})
 	} catch(error) {
 		console.log(error);

@@ -5,7 +5,7 @@ block content
 		nav(aria-label="breadcrumb")
 			ol.breadcrumb
 				li.breadcrumb-item: a(href="/mger") 操作页面
-				li.breadcrumb-item.active(aria-current="page") #{title}
+				li.breadcrumb-item: a(href="/prods") #{title}
 		if errorInfo
 			-a;
 			.text-danger.text-center #{errorInfo}
@@ -74,5 +74,13 @@ block content
 											option(value=key, selected="selected") #{val}
 										else
 											option(value=key) #{val}
-
+			.row.my-5
+				.col-6
+					if page > 1
+						-a;
+						a.btn.btn-info(href="/prods?page="+(page-1)+"&per_page="+per_page) 上一页
+				.col-6.text-right
+					if prods && prods.length >= per_page
+						-a;
+						a.btn.btn-info(href="/prods?page="+(page+1)+"&per_page="+per_page) 下一页
 			script(src="/js/woo/wooPut.js")

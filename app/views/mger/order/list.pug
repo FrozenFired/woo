@@ -43,3 +43,13 @@ block content
 								else if order.status == "failed" || order.status == "refunded" || order.status == "on-hold"
 									- textColor = "text-warning";
 								span(class=textColor) #{Conf.order.status.lang[lang]}
+
+			.row.my-5
+				.col-6
+					if page > 1
+						-a;
+						a.btn.btn-info(href="/orders?page="+(page-1)+"&per_page="+per_page) 上一页
+				.col-6.text-right
+					if orders && orders.length >= per_page
+						-a;
+						a.btn.btn-info(href="/orders?page="+(page+1)+"&per_page="+per_page) 下一页

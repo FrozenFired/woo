@@ -34,17 +34,22 @@ exports.prods = async(req, res) => {
 			}
 		}
 
-		if(req.query.per_page && !isNaN(parseInt(req.query.per_page))) {
-			url += "&per_page="+parseInt(req.query.per_page);
-		} else {
-			url += "&per_page=100"
-		}
+		let per_page = 10;
+		if(req.query.per_page && !isNaN(parseInt(req.query.per_page))) per_page=parseInt(req.query.per_page);
+		url += "&per_page="+per_page;
+
+		let page = 1;
+		if(req.query.page && !isNaN(parseInt(req.query.page))) page = parseInt(req.query.page);
+		url += "&page="+page;
+
 		const prods = await MdWoo.wooGet_Prom(url, crUser.firm);
 		return res.render('./mger/prod/list', {
 			title: '产品列表',
 			crUser,
 			errorInfo,
 			prods,
+			page,
+			per_page
 		})
 	} catch(error) {
 		console.log(error);
