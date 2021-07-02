@@ -38,17 +38,17 @@ block content
 			table.table.table-triped
 				thead
 					tr
-						//- th #{prods.length}
-						th #{prods.length}条
+						th.text-center(width="8%") 本页#{prods.length}条
+						th 照片
 						th 产品名称
 						//- th 价格
 						th.text-center(width="10%") 状态
 				tbody
+					- let num = (page-1) * per_page;
 					each prod in prods
-						-a;
+						- num ++;
 						tr
-							//- td
-								input(id="cb-select"+prod.id type="checkbox" name="post[]" value=prod.id)
+							td.text-center #{num}
 							td
 								a(href="/prod/"+prod.id)
 									if prod.images && prod.images.length > 0
