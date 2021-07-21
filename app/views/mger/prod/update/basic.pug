@@ -52,7 +52,7 @@ form#basicForm(method="post", action="/prodPut/"+prod.id, enctype="multipart/for
 	.form-group.row
 		label.col-4.col-sm-2.col-form-label 产品简述
 		.col-8.col-sm-10
-			input#short_description-ipt(type="hidden", value=short_description)
+			input#short_description-ipt(type="hidden", value=prod.short_description)
 			textarea.form-control#short_description-txa(type="text", rows="3", name="data[short_description]")
 	hr
 	.form-group.row

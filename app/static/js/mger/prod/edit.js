@@ -23,6 +23,7 @@ $(() => {
 			$("#attributes-box").hide();
 		}
 	})
+
 	/* =================== 新建prod =================== */
 	$("#createPdForm").submit(function(e) {
 		const name = $("#nameIpt").val().replace(/^\s*/g,"");
@@ -40,8 +41,17 @@ $(() => {
 			e.preventDefault();
 		}
 	})
+	$("#createPdBtn").click(function(e) {
+		$("#createPdBtn").hide();
+		$(".createPdBtn").show();
+	})
 
 	/* =================== 修改basic =================== */
+	let short_description = $("#short_description-ipt").val();
+	if(short_description) {
+		short_description = short_description.replace(/<p>/g, "").replace(/<\/p>/g, "").replace(/<br \/>/g, "")
+		$("#short_description-txa").val(short_description);
+	}
 	$("#basicForm").submit(function(e) {
 		const name = $("#nameIpt").val().replace(/^\s*/g,"");
 		if(name.length < 1) {

@@ -57,7 +57,7 @@ module.exports = function(app){
 	app.get('/prodAjax/:id', MdRole.mgerIsLogin, Prod.prodAjax)
 	app.get('/itemAjax/:pd/:vr', MdRole.mgerIsLogin, Prod.itemAjax)
 	app.get('/prodDel/:id', MdRole.mgerIsLogin, Prod.prodDel)
-	app.put('/prodPut/:id', MdRole.mgerIsLogin, Prod.prodPut)
+	app.put('/prodPut/:id', MdRole.mgerIsLogin, Prod.prodPut_Put)
 	app.put('/prodPutAjax/:id', MdRole.mgerIsLogin, postForm, Prod.prodPutAjax)
 	app.post('/prodPut/:id', MdRole.mgerIsLogin, postForm, Prod.prodPut)
 	/* -------------------------------- Media -------------------------------- */
