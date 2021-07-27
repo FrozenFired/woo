@@ -183,7 +183,7 @@ exports.itemAjax = async(req, res) => {
 };
 
 exports.prodPut_Put = async(req, res) => {
-	// console.log("/prodPut")
+	// console.log("/prodPut_Put")
 	try {
 		const crUser = req.session.crUser;
 
@@ -204,13 +204,14 @@ exports.prodPut_Put = async(req, res) => {
 	}
 }
 exports.prodPut = async(req, res) => {
+	// console.log("/prodPut")
 	try {
 		const crUser = req.session.crUser;
 
 		const id = req.params.id;
 		let data = req.body.data;
 		const type = req.body.type;
-		console.log(data)
+
 		// if(data.regular_price) data.regular_price = parseFloat(data.regular_price);
 		// if(data.sale_price) data.sale_price = parseFloat(data.sale_price);
 		if(data.featured == 1 || data.featured == "true") {data.featured = true;} else  {data.featured = false;}
@@ -221,14 +222,16 @@ exports.prodPut = async(req, res) => {
 			data.stock_quantity = parseInt(data.stock_quantity);
 		}
 
-		console.log(data)
-		const product = await MdWoo.wooPut_Prom("products/"+id, data, type, crUser.firm);
-		if(product && product.id) {
-			return res.redirect("/prod/"+id)
+
+		if(data.type === "variable") {
+			const vid = data.variation;
+			const variation = await MdWoo.wooPut_Prom("products/"+id+"/variations/"+vid, data, "Object", crUser.firm);
+			if(!variation || !variation.id) return res.json({status: 400, message: "错误操作"});
 		} else {
-			console.log(product)
-			return res.json({status: 500, message: "操作错误"})
+			const product = await MdWoo.wooPut_Prom("products/"+id, data, type, crUser.firm);
+			if(!product || !product.id) return res.json({status: 400, message: "操作错误"});
 		}
+		return res.redirect("/prod/"+id)
 	} catch(error) {
 		console.log(error);
 		return res.json({status: 500, message: "/productPutAjax error"})

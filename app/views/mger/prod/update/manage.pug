@@ -67,6 +67,8 @@ else if prod.type == "variable"
 if skuPut
 	-a;
 	form#manageForm(method="post", action=formAction, enctype="multipart/form-data")
+		input(type="hidden", name="data[type]", value=prod.type, readOnly)
+		input(type="hidden", name="data[variation]", value=skuPut.id, readOnly)
 		.form-group.row
 			label.col-4.col-sm-3.col-form-label(for="regular_priceIpt") 产品价格
 			.col-8.col-sm-9
